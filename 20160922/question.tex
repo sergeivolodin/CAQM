@@ -1,0 +1,83 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, left=25mm, right=25mm, top=25mm, bottom=25mm]{geometry}
+%\geometry{paperwidth=210mm, paperheight=2000pt, left=5pt, top=5pt}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst}
+\usepackage{tikz} %Рисование автоматов
+\usetikzlibrary{automata,positioning,arrows,trees}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[makeroom]{cancel} % зачеркивание
+\usepackage{multicol,multirow} %Несколько колонок
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\usepackage{wasysym}
+\date{\today}
+
+\begin{document}
+%{\bf Прошу указать, где подразумеваемое рассуждение в статье расходится с данным (получаются разные результаты)}
+	
+Пусть $f\colon \mathbb{R}^n\to\mathbb{R}^m$, $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i=A_i^T$.
+
+Обозначим $F=f(\mathbb{R}^n)$, $G=\mbox{conv}F$
+
+Обозначим $H_i=\left|\left|
+\begin{array}{cc}
+A_i & b_i\\
+b_i^T & 0
+\end{array}
+\right|\right|$
+
+Обозначим $X=\left|\left|
+\begin{array}{cc}
+x\\
+1
+\end{array}
+\right|\right|
+\left|\left|
+\begin{array}{cc}
+x^T & 1
+\end{array}
+\right|\right|=
+\left|\left|
+\begin{array}{cc}
+xx^T & x\\
+x^T & 1
+\end{array}
+\right|\right|$
+
+Тогда $f_i(x)=\mbox{tr} H_iX$, $f(x)=H(X)$
+
+Обозначим $V=\{X\in\mathbb{R}^{(n+1)\times (n+1)}|X=X^T,\,X\geqslant 0,\,X_{n+1,n+1}=1\}$
+
+Обозначим $G_1=H(V)$.
+
+Доказать: $G_1=G$ (On the feasibility for the system of quadratic equations, Theorem 3.1. (Convex hull))
+
+\begin{enumerate}
+	\item $G\subseteq G_1$. Пусть $y\in G$. Тогда $\exists \{y_i\}_{i=1}^l\subset F$, $\{\lambda_i\}_{i=1}^l\colon y=\sum\limits_{i=1}^l\lambda_iy_i$, где $\lambda_i\geqslant 0$, $\sum\lambda_i=1$. Поскольку $y_i\in F$, $\exists \{X_i\}\colon y_i=H(X_i)$, причем $X_i=\left|\left|
+	\begin{array}{cc}
+	x_ix_i^T & x_i\\
+	x_i^T & 1
+	\end{array}
+	\right|\right|\in V$. Рассмотрим $j$-ю компоненту $y^j=\sum \lambda_i y_i^j=\sum \lambda_i \mbox{tr}H_jX_i=\mbox{tr}H_j\underbrace{\sum\lambda_i X_i}_X$. То есть, найден $X\in V\colon y=H(X)$. Значит, $y\in G_1$
+	\item $G_1\subseteq G$. Пусть $y\in G_1$. Тогда $y=H(X)$, $X\in V$. Доказать: $y\in G=\mbox{conv}F$. Представим $X$ в виде выпуклой комбинации $X=\sum\lambda_i X_i$, где $X_i\in V$, причем $X_i=\left|\left|
+	\begin{array}{cc}
+	x_ix_i^T & x_i\\
+	x_i^T & 1
+	\end{array}
+	\right|\right|\in V$ для некоторого $x_i$. Это докажет $y\in G$.
+	
+	Рассмотрим $X=\sum \lambda_k s_ks_k^T$~--- спектральное разложение.
+
+\end{enumerate}
+ 
+{\bf Проблема:} У $s_k$ последняя компонента может быть нулем. Тогда $s_ks_k^T\not\in V$. А если брать линейные комбинации из $s_ks_k^T$, то их ранг может быть больше 1.
+	
+{\bf Вопрос:} правильная ли идея доказательства? Как исправить ситуацию с $s_k^{n+1}=0$?
+
+\end{document}

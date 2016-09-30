@@ -1,0 +1,53 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, left=25mm, right=25mm, top=25mm, bottom=25mm]{geometry}
+%\geometry{paperwidth=210mm, paperheight=2000pt, left=5pt, top=5pt}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst}
+\usepackage{tikz} %Рисование автоматов
+\usetikzlibrary{automata,positioning,arrows,trees}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[makeroom]{cancel} % зачеркивание
+\usepackage{multicol,multirow} %Несколько колонок
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\usepackage{wasysym}
+\date{}
+\title{Nonconvexity certificate in $b_i=0$ case}
+
+\begin{document}
+\maketitle
+\subsection*{Cases}
+
+Let $f\colon \mathbb{R}^n\to\mathbb{R}^m$ be a quadratic map: $f_i(x)=x^TA_ix$, $A_i=A_i^T$.
+
+Consider $c\in\mathbb{R}^m$ and boundary points $\partial F_c$:
+$$c\cdot f(x)\to \min\limits_c$$
+
+Where $A=\sum c_iA_i$. Assuming $A\geqslant 0$.
+
+Minimization leads to $Ax=0$. The following cases hold:
+\begin{enumerate}
+\item $RgA=n$. $x=0$ is a unique solution
+\item $RgA=n-1$. $x=\alpha e$, $f(x)=\alpha^2 f(e)$
+\item $RgA=n-2$. In this case $x=\alpha_1 e^1+\alpha_2 e^2$. Consider $f(x)=\alpha_1^2 f_{11}+2\alpha_1\alpha_2f_{12}+\alpha_2^2f_{22}$.
+\begin{enumerate}
+\item $f_{11}$, $f_{22}$, $f_{12}$ are linearly independent. In this case $\partial F_c$ is nonconvex
+\item $Rg ||f_{11} f_{12} f_{22}||=1$. $\partial F_c$ convex.
+\end{enumerate}
+\end{enumerate}
+
+
+\subsection*{Result}
+If exist $c\in\mathbb{R}^m$:
+\begin{enumerate}
+\item $RgA=n-2$
+\item $A\geqslant 0$
+\item $f_{ij}$ are linearly independent
+\end{enumerate}
+Then $F=\mbox{Im}f$ is nonconvex.
+\end{document}
