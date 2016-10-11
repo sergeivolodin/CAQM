@@ -16,6 +16,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\diag}{diag}
 \DeclareMathOperator{\conv}{conv}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \usepackage{wasysym}
@@ -35,6 +36,48 @@ Then why $A=\inf \limits_{y\in F} (c,y)=\inf\limits_{y\in\conv F} (c,y)=B$?
 
 $g_k(c,y_k)=\sum\limits_{i=1}^{n_k}\alpha^k_i(c,y^k_i)=\sum\limits_{i=1}^{n_k}\alpha^k_i g^k_i$. Define $g^k_0=\min\limits_{i\in \overline{1,n_k}}g^k_i$. Then $B\leqslant g^k_0\leqslant g^k$. Therefore, $g^k_0\to B$ also. This way, we have constructed a sequence $y^k_0\in F$ s.t. $(c,y^k_0)\to B$, therefore, $A\leqslant B$.
 \end{enumerate}
+
+\subsection*{Minimum of $f(x)$}
+Consider $f\colon \mathbb{R}^n\to\mathbb{R}^m$. $f_i(x)=x^TA_ix+2b_i^Tx$. $A_i^T=A_i$. Let $c\in\mathbb{R}^m$
+
+We want to find
+$g(c)=\inf\limits_{x\in\mathbb{R}^n} (c,f(x))$.
+
+Define $A_c\equiv c\cdot A=\sum\limits_{i=1}^m c_iA_i$, $b_c=c\cdot b=\sum\limits_{i=1}^m c_ib_i$.
+
+$(c,f(x))=\sum\limits_{i=1}^m c_i f_i(x)=\sum c_i (x^TA_ix+2b_i^Tx)=x^TA_cx+2b_c^Tx$.
+
+If $\exists v\colon -\alpha=v^TA_cv<0$ then $g(c)=-\infty$:
+$g(\beta v)=-\beta^2\alpha+\beta 2b_c^Tv\to-\infty,\,\beta\to+\infty$.
+
+From this point on, we assume $A_c\geqslant 0$. Let $R_0$ be a zero eigenspace of $A_c$: $R_0=\{v\colon A_cv=0\}$
+
+If $\exists v\in R_0\colon v^Tb_c\neq 0$ then $g(c)=-\infty$: Consider $f(\beta v)=\beta^2 v^T\cancelto{0}{(A_cv)}+2\beta \underbrace{b_c^Tv}_{\neq 0}\to-\infty,\, \beta\to\infty$
+
+Then $R_0\subseteq \{b_c\}^\bot$
+
+Consider $A=\sum\limits_{i=1}^n \lambda_i s_is_i^T=S\Lambda S^T$, $S=||s_1 ... s_n ||$, $S^TS=E$, $s_i^Ts_j=\delta_{ij}$.
+
+$f$ is differentiable, then for finding $g(c)$ the gradiend $\nabla (c,f(x))=2A_cx+2b_c=0$.
+
+$$S\Lambda S^Tx=-b_c\Leftrightarrow \Lambda S^Tx=-S^Tb_c$$.
+
+Let $x$ be $x=x^{\parallel}+x^\bot$, $x^{\parallel}\in R_0$, $x^\bot \bot R_0$.
+
+Then neither $f(x)$ nor $\Lambda S^T x$ depend on $x^{\parallel}$. This means that the $x$ minimizing $g(c)$ is defined in terms of $x^{\bot}$ and $x^{\parallel}$ is arbitrary.
+
+Define $\lambda^g_i=\begin{cases}
+0,&\lambda_i=0\\
+1/\lambda_i,&\lambda_i\neq 0
+\end{cases}$. Define $\Lambda^g=\diag(\lambda^g_1,...,\lambda^g_n)$. Then $\Lambda \Lambda^g=\delta_{ij}[\lambda_i\neq 0]$. Then $S\Lambda^g\Lambda S^T$ is a projector on $R_0^\bot$.
+
+Consider $\Lambda^g S^T(x^\parallel+x^\bot)=-\Lambda^gS^Tb_c$. But $\Lambda S^Tx^\parallel=0$, therefore, $S\Lambda^g S^Tx^\bot=-S\Lambda^gS^Tb_c$. But $x^\bot$ is already in $R_0^\bot$, therefore, $x^\bot=-\underbrace{S\Lambda^gS^T}_{A^g}b_c$. Here $A_c^g$ is a pseudoinverse of $A_c$.
+
+Therefore, $\boxed{x=-A_c^gb_c+x^\parallel}$, where $x^\parallel\in R_0$.
+
+Let us notice that since $A_c^{gT}=A_c^g$
+
+Consider $f(x)=f(x^\bot)=b_c^TA_c^gA_cA_c^gb_c-2b_c^TA_c^gb_c$. Consider $A_cA_c^gb_c=S\Lambda \cancelto{E}{S^TS}\Lambda^gS^Tb_c$. Because $R_0\in\{b_c\}^\bot$, $\Lambda\Lambda^gS^Tb_c=S^Tb_c$. Therefore, $A_cA_c^gb_c=b_c$. Then $f(x)=b_c^TA_c^gb_c-2b_c^TA_c^gb_c=\boxed{-b_c^TA_c^gb_c}$
 
 \subsection*{Finding $c$ provided $d$}
 Let $H\colon \mathbb{R}^{n+1, n+1}\to \mathbb{R}^n$ be a map s.t. $H_i(X)=\Tr(H_iX)$, $$H_i=\left|\left|
