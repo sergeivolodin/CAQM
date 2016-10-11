@@ -25,7 +25,7 @@
 
 \begin{document}
 \maketitle
-\subsection*{Theorem 3.2 (Sufficient condition)}
+\subsection*{1. Theorem 3.2 (Sufficient condition)}
 Consider $f\colon \mathbb{R}^n\to\mathbb{R}^m$, s.t. $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i=A_i^T$. Define $F=f(\mathbb{R}^n)$.
 
 Then why $A=\inf \limits_{y\in F} (c,y)=\inf\limits_{y\in\conv F} (c,y)=B$?
@@ -37,7 +37,7 @@ Then why $A=\inf \limits_{y\in F} (c,y)=\inf\limits_{y\in\conv F} (c,y)=B$?
 $g_k(c,y_k)=\sum\limits_{i=1}^{n_k}\alpha^k_i(c,y^k_i)=\sum\limits_{i=1}^{n_k}\alpha^k_i g^k_i$. Define $g^k_0=\min\limits_{i\in \overline{1,n_k}}g^k_i$. Then $B\leqslant g^k_0\leqslant g^k$. Therefore, $g^k_0\to B$ also. This way, we have constructed a sequence $y^k_0\in F$ s.t. $(c,y^k_0)\to B$, therefore, $A\leqslant B$.
 \end{enumerate}
 
-\subsection*{Minimum of $f(x)$}
+\subsection*{2. Minimum of $f(x)$}
 Consider $f\colon \mathbb{R}^n\to\mathbb{R}^m$. $f_i(x)=x^TA_ix+2b_i^Tx$. $A_i^T=A_i$. Let $c\in\mathbb{R}^m$
 
 We want to find
@@ -79,7 +79,7 @@ Let us notice that since $A_c^{gT}=A_c^g$
 
 Consider $f(x)=f(x^\bot)=b_c^TA_c^gA_cA_c^gb_c-2b_c^TA_c^gb_c$. Consider $A_cA_c^gb_c=S\Lambda \cancelto{E}{S^TS}\Lambda^gS^Tb_c$. Because $R_0\in\{b_c\}^\bot$, $\Lambda\Lambda^gS^Tb_c=S^Tb_c$. Therefore, $A_cA_c^gb_c=b_c$. Then $f(x)=b_c^TA_c^gb_c-2b_c^TA_c^gb_c=\boxed{-b_c^TA_c^gb_c}$
 
-\subsection*{Finding $c$ provided $d$}
+\subsection*{3. Finding $c$ provided $d$}
 Let $H\colon \mathbb{R}^{n+1, n+1}\to \mathbb{R}^n$ be a map s.t. $H_i(X)=\Tr(H_iX)$, $$H_i=\left|\left|
 \begin{array}{cc}
 A_i & b_i\\
@@ -87,12 +87,12 @@ b_i^T & 0
 \end{array}
 \right|\right|^{\Box}$$.
 
-Consider a boundary point $X$, which is a solution of:
-$$\sup\limits_{\begin{cases}
+Consider a boundary point $X$, which is a solution of (main article, (4)):
+$$\boxed{\sup\limits_{\begin{cases}
 H(X)=y^0+td\\
 X\geqslant 0\\
 X_{n+1,n+1}=1
-	\end{cases}} t$$.
+	\end{cases}} t}$$
 
 Define $f(t,X)=t$, $D_0=\{(t,X)\big| X\geqslant 0,\, X_{n+1,n+1}=1 \}$, $D_1=\{(t,X)\big| H(X)=y^0+td\}$.
 
@@ -100,7 +100,9 @@ Then supremum is equivalent to
 
 $$\sup\limits_{(t,X)\in D_0\cap D_1}f(t,X)$$
 
-Define a Lagrange function $L(c,t,X)=\underbrace{t}_{f(t,X)}+\sum\limits_{i=1}^m c_i(y^0_i+td_i-H_i(X))$
+Define a Lagrange function $L(c,t,X)=\underbrace{t}_{f(t,X)}+\sum\limits_{i=1}^m c_i(y^0_i+td_i-H_i(X))$.
+
+Here we divided the constraints into two parts: $D_1$ goes to the Lagrange function, $D_0$ goes to the inner supremum. {\em Stephen Boyd, Lieven Vandenberghe. Convex Optimization. Page ???. Cambridge University Press}
 
 Then the dual function is $g(c)=\sup\limits_{(t,X)\in D_0} L(c,t,X)$.
 
@@ -110,4 +112,40 @@ Now, $g(c)=\sup\limits_{X_{n+1,n+1}=1,X\geqslant 0} (c,y^0-H(X))=(c,y^0)+\sup\li
 
 Then the dual problem is
 $$g(c)\to\inf\limits_{(c,d)=-1}$$
+
+Let us prove that $\inf\limits_{y\in\conv F} (c,y)=\inf\limits_{H=\left|\left|
+\begin{array}{cc}
+A_c & b_c\\
+b_c^T&\gamma
+\end{array}
+\right|\right|\geqslant 0}(-\gamma)$
+
+Via Schur complement $H\geqslant 0\Leftrightarrow \begin{cases}
+A_c\geqslant 0\\
+\gamma-b_c^TA_c^gb_c\geqslant 0\\
+(E-A_cA_c^g)b_c=0
+\end{cases}$.
+
+$A_c\geqslant 0$ is a necessary condition for $\exists g(c) \in\mathbb{R}$ (see part 2).
+
+$(E-A_cA_c^g)b_c=0$ is another necessary condition for $\exists g(c)\in\mathbb{R}$.
+
+Statement $\gamma\geqslant b_c^TA_cb_c$ means $-\gamma\leqslant -b_c^TA_cb_c=\inf\limits_{y\in\conv F}(c,y)$, which means that $-\gamma$ is a lower bound for $\inf\limits_{y\in\conv F}(c,y)$.
+
+Then $H\geqslant 0\Leftrightarrow -\gamma\leqslant \inf\limits_{y\in\conv F}(c,y)$.
+
+Then $g(c)=(c,y^0)-\inf\limits_{H\geqslant 0}{-\gamma}$.
+
+Then the dual problem is:
+
+$\inf\limits_{(c,d)=-1}g(c)\Leftrightarrow \inf\limits_{(c,d)=-1}\left[(c,y^0)-\inf\limits_{H\geqslant 0}(-\gamma)\right]\Leftrightarrow \inf\limits_{(c,d)=-1}\inf\limits_{H\geqslant 0}(c,y^0)+\gamma=\boxed{\inf\limits_{\begin{cases}
+H\geqslant 0\\
+(c,d)=-1
+\end{cases}}\gamma+(c,y^0)}$.
+
+This problem is exactly (5) from main article $\blacksquare$.
+
+\subsection*{4. Finding minimum of $z(c)$ when $c$ is in manifold}
+$\bf TODO$
+
 \end{document}
