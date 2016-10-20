@@ -28,3 +28,9 @@ get_z(A_i', b_i', c', c_+'):
     (A_i, b_i, c, c_+) = _(A_i', b_i', c', c_+')
     while not (stop_condition):
         c_dot = _(A_i, b_i, c, c_+)
+        xmin = xmin(c*A)
+        n = n(A_i, b_i, c, x_0)
+        c_dot -= n (c_dot, n) / |n|^2
+        # projection
+        # step
+    return z
