@@ -171,6 +171,23 @@ We need to find a new pair of bases s.t. $\begin{cases}
 \begin{enumerate}
 \item Condition (1). Changing variables in the $x$ space: $x=S\tilde{x}\Leftrightarrow \tilde{x}=S^Tx$, $S^TS=E$. Then $f_i(x)=x^TA_ix+2b_i^Tx=\tilde{x}^T\tilde{A_i}x+2\tilde{b_i}^T\tilde{x}$. $\tilde{A_i}=S^TA_iS$. $c\tilde{A}=\sum c_i\tilde{A_i}=\sum\limits c_iS^TA_iS=S^TA_cS$. Therefore, condition $(1)$ is equal to diagonalising $A_c$. Consider $||c\cdot \tilde{b}||=||\sum c_iS^Tb_i||=||S^T\sum c_ib_i||=||\sum c_ib_i||$. Therefore, a change of variables in the $x$ space does not affect on the value of $c\cdot b$
 \item Condition (2) depends on $\mbox{Rg}\,b$.
+$y=R\tilde{y}\Leftrightarrow \tilde{y}=R^Ty$, $R^TR=E$.
+
+$\tilde{y}_i=R_{ji}y_j$.
+
+{\bf unchecked}
+
+$\tilde{A}_{ilk}=R_{ji}A_{jlk},\,\tilde{b}_{il}=R_{ji}b_{jl}$
+
+$(\tilde{c}\cdot \tilde{b})_l=\tilde{c}_i \tilde{b}_{il}=R_{ki}c_k R_{ji}b_{jl}=0\Leftrightarrow c^TRR^T\left|\left|
+\begin{array}{c}
+b_1^T\\
+...\\
+b_m^T
+\end{array}
+\right|\right|=0\Leftrightarrow || b_1 ... b_m ||RR^Tc=0 \Leftrightarrow ||b_1 ... b_m||c=0$
+
+Therefore, there is no point in changing $y$ space linearly.
 \end{enumerate}
 \subsection*{6. $z(c)=?$}
 Given: the map $f\colon\mathbb{R}^n\to\mathbb{R}^m$, $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i=A_i^T$, two vectors $c,c_+\in\mathbb{R}^m$. $c_+A=I$, $c_+b=0$.
