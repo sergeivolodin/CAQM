@@ -162,7 +162,7 @@ then $P-Q=\underline{x^TA_+x}-x_0^TA_+x_0+2b_+^Tx-2b_+^Tx_0-\underline{x^TA_+x}-
 $\boxed{\mbox{{\bf Therefore, the image of $B_\varepsilon^+$ is a {\em convex cut}} $\{y\big| (c_+,y)\in (c_+,f(x_0))+[0,z_{\max}]\}$}}$
 
 \subsection*{5. Variables s.t. $c\cdot A=I,\,c\cdot b=0$}
-Given: the map $f\colon\mathbb{R}^n\to\mathbb{R}^m$, $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i=A_i^T$, vector $c\in\mathbb{R}^m$
+Given: the map $f\colon\mathbb{R}^n\to\mathbb{R}^m$, $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i=A_i^T$, vector $c\in\mathbb{R}^m\colon c\cdot A>0$
 
 We need to find a new pair of bases s.t. $\begin{cases}
 \tilde{c}\cdot \tilde{A}=I & (1)\\
@@ -170,31 +170,36 @@ We need to find a new pair of bases s.t. $\begin{cases}
 \end{cases}$
 \begin{enumerate}
 \item Condition (1). Changing variables in the $x$ space: $x=S\tilde{x}\Leftrightarrow \tilde{x}=S^Tx$, $S^TS=E$. Then $f_i(x)=x^TA_ix+2b_i^Tx=\tilde{x}^T\tilde{A_i}x+2\tilde{b_i}^T\tilde{x}$. $\tilde{A_i}=S^TA_iS$. $c\tilde{A}=\sum c_i\tilde{A_i}=\sum\limits c_iS^TA_iS=S^TA_cS$. Therefore, condition $(1)$ is equal to diagonalising $A_c$. Consider $||c\cdot \tilde{b}||=||\sum c_iS^Tb_i||=||S^T\sum c_ib_i||=||\sum c_ib_i||$. Therefore, a change of variables in the $x$ space does not affect on the value of $c\cdot b$
-\item Condition (2) depends on $\mbox{Rg}\,b$.
-$y=R\tilde{y}\Leftrightarrow \tilde{y}=R^Ty$, $R^TR=E$.
+\item Condition (2). New variables: $\tilde{x},\,\tilde{y}$,
+$$\begin{cases}
+x=\tilde{x}+x^0\\
+y=\tilde{y}+y^0
+\end{cases}$$
+Function $y_i(x)=\tilde{y}_i(\tilde{x})+y^0_i$. Consider $y_i(x)=x^TA_ix+2b_i^Tx=(\tilde{x}+x^0)^TA_i(\tilde{x}+x^0)+2b_i^T(\tilde{x}+x^0)=\tilde{x}^TA_i\tilde{x}+2x^{0T}A_i\tilde{x}+x^{0T}A_ix^0+2b_i^Tx^0+2b_i^T\tilde{x}=\tilde{x}^TA_i\tilde{x}+2(\underbrace{b_i+A_ix^0}_{\tilde{b}_i})^T\tilde{x}+\underbrace{x^{0T}A_ix^0+2b_i^Tx^0}_{y^0_i}$.
 
-$\tilde{y}_i=R_{ji}y_j$.
-
-{\bf unchecked}
-
-$\tilde{A}_{ilk}=R_{ji}A_{jlk},\,\tilde{b}_{il}=R_{ji}b_{jl}$
-
-$(\tilde{c}\cdot \tilde{b})_l=\tilde{c}_i \tilde{b}_{il}=R_{ki}c_k R_{ji}b_{jl}=0\Leftrightarrow c^TRR^T\left|\left|
-\begin{array}{c}
-b_1^T\\
-...\\
-b_m^T
-\end{array}
-\right|\right|=0\Leftrightarrow || b_1 ... b_m ||RR^Tc=0 \Leftrightarrow ||b_1 ... b_m||c=0$
-
-Therefore, there is no point in changing $y$ space linearly.
+Consider $\sum c_i\tilde{b}_i=c\cdot b +(c\cdot A)x^0$. Therefore, $x^0=-(c\cdot A)^{-1}(c\cdot b)$
 \end{enumerate}
+
+The algorithm:
+\begin{enumerate}
+\item Compute $S$ via the eigenbasis of $c\cdot A$, $S^T(c\cdot A)S=I$
+\item Compute $\tilde{A}_i=S^TA_iS$, $\tilde{b}_i=S^Tb_i$
+\item Compute $\tilde{x}^0=-(c\cdot \tilde{b})$, $y^0_i=(\tilde{x}^0)^T\tilde{A}_i\tilde{x}^0+2\tilde{b}_i^T\tilde{x}^0$
+\item Compute $\hat{A}_i=\tilde{A}_i$, $\hat{b}_i=\tilde{b}_i+\tilde{A}_i\tilde{x}^0$
+\end{enumerate}
+Then $\hat{y}_i=\hat{x}^T\hat{A}_i\hat{x}+2\hat{b}_i^T\hat{x}$, $x=S(\hat{x}+\tilde{x}^0)$, $y=\hat{y}+\tilde{y}^0$
 \subsection*{6. $z(c)=?$}
 Given: the map $f\colon\mathbb{R}^n\to\mathbb{R}^m$, $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i=A_i^T$, two vectors $c,c_+\in\mathbb{R}^m$. $c_+A=I$, $c_+b=0$.
 Find: $z(c)=\inf\limits_{y\in Y} (c_+, y)$ where $Y$ is an intersection of $f(\mathbb{R}^n)$ with a tangent hyperplane defined by its normal vector $c$.
 
+Define $\sigma(Q)=\{\lambda\big |\dim\Ker (Q-\lambda E)>0\}$. Define $\lambda_{\min}(Q)=\min\sigma(Q)$~--- minimal eigenvalue of $Q$.
+
 \begin{enumerate}
-\item In part 2 $Y$ was found explicitly: $Y=\{f(x)\big|x=x^\parallel-A_c^gb_c, x^\parallel \in\Ker A_c\}$. Then for $y\in Y$ $(c_+,y)=x^T(\cancelto{I}{c_+\cdot A})x+2(\cancelto{0}{c_+\cdot b})^Tx=\boxed{x^Tx}$
-\item $x^Tx=||x||^2=||x^\parallel||^2+||A_c^gb_c||^2$. We want to minimize $(c_+,y)$, therefore, we choose $x^\parallel=0$. Then $z(c)=||A_c^gb_c||^2=\boxed{\big|(c \cdot A)^{-1}c\cdot b \big|^2}$
+\item If $\lambda_{\min}(c\cdot A)<0$ then the tangent hyperplane does not exist, and $z(c)=+\inf$
+\item Then $\lambda_{\min}(c\cdot A)>0$, then there is no nonconvexity, and $z(c)=\inf$
+\item For $\lambda_{\min}=0$ in part 2 $Y$ was found explicitly: $Y=\{f(x)\big|x=x^\parallel-A_c^gb_c, x^\parallel \in\Ker A_c\}$. Then for $y\in Y$ $(c_+,y)=x^T(\cancelto{I}{c_+\cdot A})x+2(\cancelto{0}{c_+\cdot b})^Tx=\boxed{x^Tx}$
+\item $x^Tx=||x||^2=||x^\parallel||^2+||A_c^gb_c||^2$. We want to minimize $(c_+,y)$, therefore, we choose $x^\parallel=0$. Then $z(c)=||A_c^gb_c||^2=\boxed{\big|(c \cdot A)^g(c\cdot b) \big|^2}$
+\item Consider $\inf\limits_{x\in\mathbb{R}^n} (c_+,f(x))=-(\cancelto{0}{c_+\cdot b})(\cancelto{I}{A_{c_+}})^{-1}(c_+\cdot b)=0$. Therore, $z(c)=\inf\limits_{y\in Y}(c_+,y)-\inf\limits_{y\in F}(c_+,y)$
 \end{enumerate}
+
 \end{document}
