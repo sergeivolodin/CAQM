@@ -19,4 +19,16 @@ y0 = [0 1 1];
 %c
 
 c_plus = get_c_plus(A);
-c = get_nonconvex_c(A, b, y0, 1000);
+%c = get_nonconvex_c(A, b, y0, 1000);
+
+A_plus = get_Ac(A, c_plus);
+
+
+[S, ~] = eig(A_plus);
+
+A_tilde = zeros(size(A));
+b_tilde = zeros(size(b));
+for i = 1:m
+    A_tilde(:, :, i) = S' * A(:, :, i) * S;
+    b_tilde(:, i) = S' * b(:, i);
+end
