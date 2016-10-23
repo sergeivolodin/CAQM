@@ -202,4 +202,20 @@ Define $\sigma(Q)=\{\lambda\big |\dim\Ker (Q-\lambda E)>0\}$. Define $\lambda_{\
 \item Consider $\inf\limits_{x\in\mathbb{R}^n} (c_+,f(x))=-(\cancelto{0}{c_+\cdot b})(\cancelto{I}{A_{c_+}})^{-1}(c_+\cdot b)=0$. Therore, $z(c)=\inf\limits_{y\in Y}(c_+,y)-\inf\limits_{y\in F}(c_+,y)$
 \end{enumerate}
 
+\subsection*{7. Theorem 3.4 (Nonconvexity certificate)}
+Given.
+\begin{enumerate}
+\item The map $f\colon\mathbb{R}^n\to\mathbb{R}^m$, $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i=A_i^T$, $m,n\geqslant 3$. The vector $c\in\mathbb{R}^m$.
+\item $A_c\geqslant 0$, $\dim\Ker A_c=1$ (=simple zero eigenvalue), $\Ker A_c=\mbox{Lin}\{e\}$
+\item $b_c\bot \Ker A_c$
+\item $b\bot\Ker A_c$, $e^0=-A_c^gb_c$
+\item $f(\alpha e+e^0)=f^0+2\alpha f^1+\alpha^2f^2$, $f^1\nparallel f^2$
+\end{enumerate}
+Then $F=\mbox{Im} f$ is nonconvex.
+
+Consider $\inf\limits_{y\in F}(c,y)$ (part 2). $x=\underbrace{x^{\parallel}}_{\alpha e}+(\underbrace{-A_c^gb_c}_{e^0})$. Then
+
+$$f_i(\alpha e + e^0)=\alpha^2 \underbrace{e^TA_ie}_{f^2_i}+2\alpha(\underbrace{b_i^Te+e^TA_ie^0}_{f^1_i})+\underbrace{2b_i^Te^0+e^{0T}A_ie^0}_{f^0_i}$$
+
+If $f^1\nparallel f^2$, then $\{f(\alpha e+e^0\big| \alpha\in\mathbb{R})\}=F\cap \{y\big| (c,y)=\inf\limits_{y\in F} (c,y)\}$ is nonconvex. Then F is nonconvex.
 \end{document}
