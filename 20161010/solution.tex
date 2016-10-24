@@ -229,4 +229,34 @@ Consider $\inf\limits_{y\in F}(c,y)$ (part 2). $x=\underbrace{x^{\parallel}}_{\a
 $$f_i(\alpha e + e^0)=\alpha^2 \underbrace{e^TA_ie}_{f^2_i}+2\alpha(\underbrace{b_i^Te+e^TA_ie^0}_{f^1_i})+\underbrace{2b_i^Te^0+e^{0T}A_ie^0}_{f^0_i}$$
 
 If $f^1\nparallel f^2$, then $\{f(\alpha e+e^0\big| \alpha\in\mathbb{R})\}=F\cap \{y\big| (c,y)=\inf\limits_{y\in F} (c,y)\}$ is nonconvex. Then F is nonconvex.
+\subsection*{8. Equations (0.18)-(0.21)}
+Consider $A(t)\colon n\times n$, $\exists \dot{A}$, $A^T=A$, $A\geqslant 0$, $A$ has a simple zero eigenvalue: $\forall t\,A(t)x_0(t)=0$, $x_0^Tx_0=0$.
+
+Then $A=S\Lambda S^T$, $S^TS=E$, $A^g=S\Lambda^gS^T$. Define $\lambda_i=\Lambda_{ii}$. $\Lambda^g_{ii}=\begin{cases}
+\frac{1}{\lambda_i},& \lambda_i\neq 0\\
+0, &\lambda_i=0
+\end{cases}$.
+
+Then $AA^g=A^gA=S\Lambda S^TS\Lambda^gS^T=S\Lambda\Lambda^gS^T=\sum\limits_{\lambda_i\neq 0} s_is_i^T=1-x_0x_0^T$ (0.20)
+
+Consider $\frac{d}{dt}Ax_0=\dot{A}x_0+A\dot{x}_0$. Multiplying by $A^g$ from the left: $A^g\dot{A}x_0+A^gA\dot{x}_0=0$.
+Consider $A^gA\dot{x}_0=(1-x_0x_0^T)\dot{x}_0=\dot{x}_0-x_0x_0^T\dot{x}_0$. Since $||x_0||^2=x_0^Tx_0=1$, $x_0^T\dot{x}_0=0$. Then $-A^g\dot{A}x_0=\dot{x}_0$ (0.19).
+
+Consider $\dot{A}x_0+A\dot{x}_0=0$. Multiplying by $x_0^T$ from the left: $x_0^T\dot{A}x_0+\cancelto{0}{x_0^TA}\dot{x}_0=0$. Then $x_0^T\dot{A}x_0=0$ (0.18)
+
+Consider $AA^g=1-x_0x_0^T$. Then $\dot{A}A^g+A\dot{A}^g=-\dot{x}_0x_0^T-x_0\dot{x}_0^T=A^g\dot{A}x_0x_0^T+x_0x_0^T\dot{A}A^g$ (a)
+
+Consider $A^gx_0=S\Lambda^gS^Tx_0=0$.
+
+Multiplying (a) by $x_0$ from the right: $A\dot{A}^gx_0=A^g\dot{A}x_0$. Multiplying by $A^g$ from the left: $AA^g\dot{A}^gx_0=A^gA^g\dot{A}x_0$. Then $(1-x_0x_0^T)\dot{A}^gx_0=A^gA^g\dot{A}x_0$. Then $\dot{A}^gx_0=A^{-2}\dot{A}x_0+x_0x_0^T\dot{A}^gx_0$.
+
+Let's multiply (a) by $A^g$ from the left: $A^g\dot{A}A^g+A^gA\dot{A}^g=A^{-2}\dot{A}x_0x_0^T+\cancelto{0}{A^gx_0}x_0^T\dot{A}A^g$.
+
+Consider $A^gA\dot{A}^g=\dot{A}^g-x_0x_0^T\dot{A}^g=\dot{A}^g-x_0x_0^T\dot{A}A^{-2}-x_0x_0^T\dot{A}^gx_0x_0^T$.
+
+Consider $x_0^T\dot{A}^gx_0=x_0^T(\dot{S}\Lambda^gS^T+S\dot{\Lambda^g}S^T+S\Lambda^g\dot{S}^T)x_0=x_0^T\dot{S}\Lambda^gS^Tx_0=0$.
+
+Then $\frac{d}{dt}A^{-1}=-A^{-1}\dot{A}A^{-1}+x_0x_0^T\dot{A}A^{-2}+A^{-2}\dot{A}x_0x_0^T$ (0.21).
+
+Case $\mbox{Rg}A<n-1$ is not considered since probability of such event is small.
 \end{document}
