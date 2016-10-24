@@ -295,5 +295,9 @@ Thus, $\boxed{\frac{\partial z}{\partial c_i}=2v^TQ^{-1}(b_i-(A_i-x_0^TA_ix_0)v)
 {\bf not the same as (0.8) in draft.pdf}:
 
 $\dot{z}_{(0.8)}=2\underbrace{(c\cdot b)^TQ^{-2}}_{v^TQ^{-1}}(\dot{c}\cdot b)-v^T(Q^{-1}\dot{Q}+\dot{Q}Q^{-1})v=2v^TQ^{-1}(\dot{c}\cdot b)-v^TQ^{-1}\dot{Q}v-v^T\dot{Q}Q^{-1}v$
+\item (0.10). If $\dot{c}=\beta c_+$, then $\dot{z}=2v^TQ^{-1}(\dot{c}\cdot b-\dot{Q}v)=\boxed{=}$. Since $c_+\cdot b=0$, $c_+\cdot A=I$, $\dot{Q}=c_+\cdot A-x_0^T(c_+\cdot A)x_0=I-x_0^Tx_0=I-1=0$. And $\boxed{=}0$ (correct with new $\dot{z}$).
+\item (0.14) $n_i=\left(b_i^T-v^T(A_i-x_0^TA_ix_0)\right)x_0$
+\item (0.16) $P(\lambda)=Q^{-1}Q=S\Lambda^gS^TS\Lambda S^T=S\Lambda\Lambda^g S^T=1-x_0x_0^T$~--- projector on $(\Ker Q)^\bot$ (correct)
+\item (0.15) $P(\lambda)(c(\lambda)\cdot b)=c(\lambda)\cdot b\Leftrightarrow \underbrace{(c(\lambda)\cdot b)\bot \Ker Q}_{\Leftrightarrow c(\lambda)\in c_{\mbox{\tiny bad}}}\Leftrightarrow c(\lambda)\cdot b\in\mbox{Im}Q\Leftrightarrow \exists \hat{x}\colon\, Q\hat{x}=c(\lambda)\cdot b$ (0.17) (correct)
 \end{enumerate}
 \end{document}
