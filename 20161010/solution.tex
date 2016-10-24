@@ -19,6 +19,8 @@
 \DeclareMathOperator{\diag}{diag}
 \DeclareMathOperator{\conv}{conv}
 \DeclareMathOperator{\Ker}{Ker}
+\newcommand{\matrixl}{\left|\left|}
+\newcommand{\matrixr}{\right|\right|}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \usepackage{wasysym}
 \date{}
@@ -259,4 +261,39 @@ Consider $x_0^T\dot{A}^gx_0=x_0^T(\dot{S}\Lambda^gS^T+S\dot{\Lambda^g}S^T+S\Lamb
 Then $\frac{d}{dt}A^{-1}=-A^{-1}\dot{A}A^{-1}+x_0x_0^T\dot{A}A^{-2}+A^{-2}\dot{A}x_0x_0^T$ (0.21).
 
 Case $\mbox{Rg}A<n-1$ is not considered since probability of such event is small.
+\subsection*{9. Gradient descent}
+\begin{enumerate}
+\item (0.5): $(\underbrace{c\cdot A-\lambda_{\min}(c\cdot A)}_Q)x_0=0$, then $\dot{x}_0=-Q^{-1}\dot{Q}x_0$. $\frac{d}{dt}\lambda_{\min}=\frac{d}{dt}x_0^T(c\cdot A)x_0=2\dot{x}_0\underbrace{(c\cdot A)x_0}_{\lambda_{\min}x_0}+x_0^T(\dot{c}\cdot A)x_0=2\lambda_{\min}\cancelto{0}{\dot{x}_0^Tx_0}+x_0^T(\dot{c}\cdot A)x_0$.
+
+Then $\dot{x}_0=-(A_c-\lambda_{\min}(Ac))^{-1}(\dot{c}\cdot A-x_0^T(\dot{c}\cdot A)x_0)x_0$ (correct).
+\item (0.6). $x_0^T(c\cdot b)=0$, use (0.5) (correct).
+\item (0.7). $\frac{\partial}{\partial t}||v(c)||^2=\frac{\partial}{\partial t}\sum\limits_j v_j^2(c)=2\sum\limits_j v_j\frac{\partial}{\partial t}v_j=2v^T(c)\frac{d}{dt} v(c(t))$ (correct). $v(c)=(\underbrace{c\cdot A-\lambda_{\min}(c\cdot A}_Q)^{-1}(c\cdot b)=Q^{-1}(c\cdot b)$.
+\item (0.8) Define $Q=c\cdot A-\lambda_{\min}(c\cdot A)$. Define $v=Q^{-1}(c\cdot b)$. Then $z(c)=||v||^2$ and $\dot{z}=2v^T\dot{v}$.
+
+$\dot{v}=\dot{Q}^{-1}(c\cdot b)+Q^{-1}(\dot{c}\cdot b)$.
+
+Consider (0.21) $\dot{Q}^{-1}=-Q^{-1}\dot{Q}Q^{-1}+x_0x_0^T\dot{Q}Q^{-2}+Q^{-2}\dot{Q}x_0x_0^T$.
+
+Then $\dot{z}=2v^T\left(Q^{-1}(\dot{c}\cdot b)+(-Q^{-1}\dot{Q}Q^{-1}+x_0x_0^T\dot{Q}Q^{-2}+Q^{-2}\dot{Q}x_0x_0^T)(c\cdot b)\right)\boxed{=}$
+
+$\boxed{=}2v^TQ^{-1}(\dot{c}\cdot b)-2v^TQ^{-1}\dot{Q}Q^{-1}(c\cdot b)+2\cancelto{0}{v^Tx_0}x_0^T\dot{Q}Q^{-2}(c\cdot b)+2v^TQ^{-2}\dot{Q}x_0\cancelto{0}{x_0^T(c\cdot b)}\boxed{=}$
+
+Since $x_0\in \Ker Q\bot (c\cdot b)$, we have $x_0^T(c\cdot b)=0$.
+
+Since $Qx_0=0$, $Q^{-1}x_0=0$: $Q^{-1}x_0=S\Lambda^{-1}S^Tx_0=S*0=0$. Since $v^T=(c\cdot b)^TQ^{-1}$. Then $v^Tx_0=0$
+
+$\boxed{=}2v^TQ^{-1}(\dot{c}\cdot b)-2v^TQ^{-1}\dot{Q}\underbrace{Q^{-1}(c\cdot b)}_v=2v^TQ^{-1}(\dot{c}\cdot b)-2v^TQ^{-1}\dot{Q}v=\boxed{\dot{z}=2v^TQ^{-1}(\dot{c}\cdot b-\dot{Q}v)}$,
+
+$\dot{Q}=\dot{c}\cdot A-x_0^T(\dot{c}\cdot A)x_0$
+
+Since $\dot{z}=\sum \frac{\partial z}{\partial c_i}\frac{\partial c_i}{\partial t}$, $\frac{\partial z}{\partial c_i}$ can be found as a coefficient at $\dot{c}_i$ in $\dot{z}$
+
+$\dot{z}=2v^TQ^{-1}\sum\limits_i\left(\dot{c}_ib_i-\dot{c}_iA_iv+x_0^T\dot{c}_iA_ix_0v\right)=\sum\limits_i \dot{c}_i\left[2v^TQ^{-1}(b_i-(A_i-x_0^TA_ix_0)v)\right]$
+
+Thus, $\boxed{\frac{\partial z}{\partial c_i}=2v^TQ^{-1}(b_i-(A_i-x_0^TA_ix_0)v)}$, $Q=c\cdot A-\lambda_{\min}(c\cdot A)$, $v=Q^{-1}(c\cdot b)$, $x_0\in\Ker Q$, $||x_0||=1$
+
+{\bf not the same as (0.8) in draft.pdf}:
+
+$\dot{z}_{(0.8)}=2\underbrace{(c\cdot b)^TQ^{-2}}_{v^TQ^{-1}}(\dot{c}\cdot b)-v^T(Q^{-1}\dot{Q}+\dot{Q}Q^{-1})v=2v^TQ^{-1}(\dot{c}\cdot b)-v^TQ^{-1}\dot{Q}v-v^T\dot{Q}Q^{-1}v$
+\end{enumerate}
 \end{document}
