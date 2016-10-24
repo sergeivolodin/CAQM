@@ -168,8 +168,9 @@ We need to find a new pair of bases s.t. $\begin{cases}
 \tilde{c}\cdot \tilde{A}=I & (1)\\
 \tilde{c}\cdot \tilde{b}=0 & (2)
 \end{cases}$
+{\em Problem here: $c\cdot A=\Lambda$}
 \begin{enumerate}
-\item Condition (1). Changing variables in the $x$ space: $x=S\tilde{x}\Leftrightarrow \tilde{x}=S^Tx$, $S^TS=E$. Then $f_i(x)=x^TA_ix+2b_i^Tx=\tilde{x}^T\tilde{A_i}x+2\tilde{b_i}^T\tilde{x}$. $\tilde{A_i}=S^TA_iS$. $c\tilde{A}=\sum c_i\tilde{A_i}=\sum\limits c_iS^TA_iS=S^TA_cS$. Therefore, condition $(1)$ is equal to diagonalising $A_c$. Consider $||c\cdot \tilde{b}||=||\sum c_iS^Tb_i||=||S^T\sum c_ib_i||=||\sum c_ib_i||$. Therefore, a change of variables in the $x$ space does not affect on the value of $c\cdot b$
+\item Condition (1). Changing variables in the $x$ space: $x=S\tilde{x}\Leftrightarrow \tilde{x}=S^{-1}x$. Then $f_i(x)=x^TA_ix+2b_i^Tx=\tilde{x}^TS^TA_iS\tilde{x}+2\tilde{b_i}^TS\tilde{x}$. $\tilde{A_i}=S^TA_iS$. $c\tilde{A}=\sum c_i\tilde{A_i}=\sum\limits c_iS^TA_iS=S^TA_cS$. Therefore, condition $(1)$ is equal to diagonalising $A_c$. Consider $||c\cdot \tilde{b}||=||\sum c_iS^Tb_i||=||S^T\sum c_ib_i||=||\sum c_ib_i||$. Therefore, a change of variables in the $x$ space does not affect on the value of $c\cdot b$
 \item Condition (2). New variables: $\tilde{x},\,\tilde{y}$,
 $$\begin{cases}
 x=\tilde{x}+x^0\\
@@ -202,6 +203,16 @@ Define $\sigma(Q)=\{\lambda\big |\dim\Ker (Q-\lambda E)>0\}$. Define $\lambda_{\
 \item Consider $\inf\limits_{x\in\mathbb{R}^n} (c_+,f(x))=-(\cancelto{0}{c_+\cdot b})(\cancelto{I}{A_{c_+}})^{-1}(c_+\cdot b)=0$. Therore, $z(c)=\inf\limits_{y\in Y}(c_+,y)-\inf\limits_{y\in F}(c_+,y)$
 \end{enumerate}
 
+Now consider $z(c)=\begin{cases}
+|(c\cdot A)^g(c\cdot b)|^2,&\lambda_{\min}(c\cdot A)=0\\
++\infty, & \mbox{otherwise}
+\end{cases}$
+
+Consider $z(c+\alpha c_+)=|(c\cdot A+\alpha \cancelto{I}{c_+\cdot A})^gb_c|^2=|(c\cdot A+\alpha I)^gb_c|^2$. We need $\alpha$ s.t. $\lambda_{\min}(c\cdot A+\alpha I)=0$, therefore, $\alpha=-\lambda_{\min}(c\cdot A)$.
+
+Define $\hat{z}(c)=|(c\cdot A-\lambda_{\min}(A))^g(c\cdot b)|^2$. Consider $\mathbb{R}^m\ni c=c^{\parallel}+c^{\bot}$, $c^{\parallel}\parallel c_+$, $(c_+,c^{\bot})=0$.
+
+Then $\hat{z}(c)=\hat{z}(c^{\bot})$, i.e. $\hat{z}$ does not depend on $c^{\parallel}$. It depends only on $c^{\bot}$, and $c^{\parallel}$ is chosen in a way that $\lambda_{\min}(c\cdot A)=0$.
 \subsection*{7. Theorem 3.4 (Nonconvexity certificate)}
 Given.
 \begin{enumerate}
