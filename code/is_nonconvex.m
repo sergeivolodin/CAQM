@@ -10,6 +10,8 @@ function r = is_nonconvex(A, b, c)
     bc = b * c;
     Ac = get_Ac(A, c);
     [q1, q2] = eig(Ac);
+    [q2, q3] = sort(diag(q2));
+    q1 = q1(:, q3);
     inde = find(abs(eig(Ac)) < eps0);
     if size(inde,1) == 1
         %display('simple zero')
@@ -25,6 +27,7 @@ function r = is_nonconvex(A, b, c)
                 f2(j) = e' * A(:, :, j) * e;
             end
 
+            r = 1;
             costheta = abs(dot(f1, f2)/(norm(f1) * norm(f2)));
             if costheta < 1 - eps0
                 r = 1;
