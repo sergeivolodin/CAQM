@@ -1,8 +1,8 @@
 clear all
 
 % example set
-n = 3;
-m = 3;
+n = 4;
+m = 4;
 %A(:, :, 1) = [1 1 1; 1 2 0; 1 0 2];
 %A(:, :, 2) = [3 -1 0; -1 0 -1; 0 -1 1];
 %A(:, :, 3) = eye(n, n);
@@ -11,33 +11,42 @@ m = 3;
 %b(:, 2) = [1 0 -1];
 %b(:, 3) = [0 0 0];
 
-A(:, :, 1) = sqrt(2) * [1 0 0 ; 0 0 0; 0 0 0.5];
-A(:, :, 2) = sqrt(2) * [0 -1 0; -1 0 0; 0 0 -0.5];
-A(:, :, 3) = sqrt(2) * [0 0 0 ; 0 1 0; 0 0 0.5];
-b(:, 1) = [0 0 1];
-b(:, 2) = [0 0 0];
-b(:, 3) = [0 0 -1];
+A(:, :, 1) = eye(4);
+A(:, :, 2) = rand(4, 4);
+A(:, :, 3) = rand(4, 4);
+A(:, :, 4) = rand(4, 4);
 
-% TODO: check infeasibility of y0
+for i = 1:m
+    A(:, :, i) = A(:, :, i) + A(:, :, i)';
+end
 
-% c, s.t. Theorem 3.4 holds
-%c = get_nonconvex_c(A, b, y0, 1000);
+b(:, 1) = rand(4, 1);
+b(:, 2) = rand(4, 1);
+b(:, 3) = rand(4, 1);
+b(:, 4) = rand(4, 1);
 
 % c, s.t. c * A > 0
-%c_plus = get_c_plus(A);
-%c_plus = [3.5604, 2.2273, 2.4196]';
+c_plus = get_c_plus(A);
+
+display('c+ found');
 
 % A_+ = c_+ * A
-c_plus = [1; 0; 1]/sqrt(2);
 [A_, b_] = change_basis(A, b, c_plus);
 
+display('new basis found');
+
 % a point inside F
-x0_ = [1; -2; 3];
+x0_ = rand(4, 1);
 y0_ = quadratic_map(A_, b_, x0_);
 
+display('y0_ found');
+
+% c, s.t. Theorem 3.4 holds
 c = get_nonconvex_c(A_, b_, y0_, 1000);
 
-c
+display('c_bad found');
+
+lambda = 0;
 
 while 1
 Ac = get_Ac(A_, c);
@@ -54,7 +63,14 @@ Q_inv = pinv(Q, 1e-5);
 v = Q_inv * b_c;
 
 z = norm(v) ^ 2;
-fprintf('norm=%f z=%f c=%f %f %f\n', norm(Q_inv), z, c(1), c(2), c(3));
+cbad_distance = x_0' * b_c;
+
+if ~(rank(Q, 1e-5) == n - 1)
+    display('Rank Q error');
+    break;
+end
+
+fprintf('norm=%f z=%f c=%f %f %f lambda=%f distance=%f\n', norm(Q_inv), z, c(1), c(2), c(3), lambda, cbad_distance);
 
 dz_dc = zeros(m, 1);
 normal = zeros(m, 1);
@@ -72,19 +88,19 @@ end
 delta_c = -dz_dc * 0.01;
 normal = normal / norm(normal);
 
-if abs(dot(delta_c, normal)) / norm(delta_c) >= (1-eps0)
+if abs(dot(delta_c, normal)) / norm(delta_c) >= (1-1e-3)
     display('gradient parallel normal')
     break;
 end
 
 c_1 = c + delta_c - normal * dot(delta_c, normal);
 
-lambda_0 = norm(c_1 - c) * 10;
+lambda_0 = norm(c_1 - c);
 
 l = -lambda_0;
 r = lambda_0;
 
-while (r - l) > 0
+while (r - l) > 1e-3
     center = (r + l) / 2;
     sign_c = sign(get_m(A_, b_, c_1, normal, x_0, center));
     sign_p = sign(get_m(A_, b_, c_1, normal, x_0, r));
@@ -102,10 +118,10 @@ while (r - l) > 0
         r = center;
     else
         display('Error: all signs equal');
-        break;
+        return;
     end
     
-    %fprintf('l = %f r = %f val = %f\n', l, r, value);
+    fprintf('l = %f r = %f val = %f\n', l, r, value);
 end
 
 lambda = (l + r) / 2;
@@ -113,10 +129,7 @@ c_new = c_1 + lambda * normal;
 c_new = c_new / norm(c_new);
 c = c_new;
 
-if abs(lambda) < eps0
-    break
-end
-
-fprintf('lambda=%f\n', lambda);
-break;
+%if abs(lambda) < eps0
+%    break
+%end
 end

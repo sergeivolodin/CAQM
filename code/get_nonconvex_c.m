@@ -9,7 +9,7 @@ function c = get_nonconvex_c(A, b, y0, MAXITER)
     i = 0;
     
     while (~found) && (i < MAXITER)
-        %fprintf('%d\n', i);
+        fprintf('%d\n', i);
         d = rand(n, 1);
         %d = d / norm(d);
         c = get_c_from_d(H, y0, d);

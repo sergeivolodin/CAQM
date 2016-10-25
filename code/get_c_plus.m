@@ -8,7 +8,7 @@ function c = get_c_plus(A)
     cvx_quiet true;
     
     while ~found
-        %display('iteration');
+        display('iteration');
         p = randn(m, 1);  % random variable for diversity
 
         cvx_clear;
@@ -16,9 +16,9 @@ function c = get_c_plus(A)
             variable c(m)
             minimize(1)
             Ac = get_Ac(A, c);
-            Ac = Ac - eye(n);
+            Ac = Ac - 0.01 * eye(n);
             Ac  == semidefinite(n);
-            c' * p == 1;
+            %c' * p == 1;
          cvx_end
          
          if cvx_optval < Inf

@@ -17,6 +17,10 @@ function r = is_nonconvex(A, b, c)
         %display('simple zero')
         e = q1(:, inde);
         if abs(dot(q1(:, 1), bc)) < eps0
+            % remove parallel check
+            r = 1;
+            return;
+            
             %display('bc*e=0')
             e0 = -pinv(Ac) * bc;
             f1 = zeros(m, 1);
@@ -27,7 +31,6 @@ function r = is_nonconvex(A, b, c)
                 f2(j) = e' * A(:, :, j) * e;
             end
 
-            r = 1;
             costheta = abs(dot(f1, f2)/(norm(f1) * norm(f2)));
             if costheta < 1 - eps0
                 r = 1;
