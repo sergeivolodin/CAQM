@@ -20,4 +20,5 @@ function c = get_nonconvex_c(A, b, y0, MAXITER)
         end
         i = i + 1;
     end
+    c = c / norm(c);
 end

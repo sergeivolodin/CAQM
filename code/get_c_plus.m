@@ -4,6 +4,7 @@ function c = get_c_plus(A)
     m = size(A, 3);
     n = size(A, 1);
     
+    cvx_clear;
     cvx_quiet true;
     
     while ~found

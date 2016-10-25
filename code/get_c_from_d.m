@@ -25,7 +25,7 @@ function c = get_c_from_d(H_, y0, d)
         minimize(gam + dot(c, y0))
         
         % H = c * H_ (eq 5)
-        H = getAc(H_, c);
+        H = get_Ac(H_, c);
         H(end, end) = H(end, end) + gam;
         
         % (c, d) = -1 constraint
