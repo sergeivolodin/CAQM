@@ -300,4 +300,16 @@ $\dot{z}_{(0.8)}=2\underbrace{(c\cdot b)^TQ^{-2}}_{v^TQ^{-1}}(\dot{c}\cdot b)-v^
 \item (0.16) $P(\lambda)=Q^{-1}Q=S\Lambda^gS^TS\Lambda S^T=S\Lambda\Lambda^g S^T=1-x_0x_0^T$~--- projector on $(\Ker Q)^\bot$ (correct)
 \item (0.15) $P(\lambda)(c(\lambda)\cdot b)=c(\lambda)\cdot b\Leftrightarrow \underbrace{(c(\lambda)\cdot b)\bot \Ker Q}_{\Leftrightarrow c(\lambda)\in c_{\mbox{\tiny bad}}}\Leftrightarrow c(\lambda)\cdot b\in\mbox{Im}Q\Leftrightarrow \exists \hat{x}\colon\, Q\hat{x}=c(\lambda)\cdot b$ (0.17) (correct)
 \end{enumerate}
+\subsection*{10. Gradient descent. Projection}
+We have $c\in\mathbb{R}^m$, $c\in c_{\mbox{\tiny bad}}=\{c\big| ||c||=1,\,\Ker Q(c)\bot (c\cdot b)\}$. $Q=c\cdot A-\lambda_{\min}(c\cdot A)$, $v=Q^{-1}(c\cdot b)$, $x_0\in\Ker Q$, $||x_0||=1$
+\begin{enumerate}
+\item Calculate $\frac{\partial z}{\partial c_i}=2v^TQ^{-1}(b_i-(A_i-x_0^TA_ix_0)v)$. Define $\Delta c=-\nabla z(c)$
+\item Calculate $\hat{n}_i=\left(b_i^T-v^T(A_i-x_0^TA_ix_0)\right)x_0$, define $n_i=\frac{\hat{n}_i}{|\hat{n}|}$
+\item Define $c'=c+\Delta c-n(\Delta c, n)$
+\item Define $c(\lambda)=c'+\lambda n$. Define $x_0(\lambda)$ s.t. $x_0(\lambda)\in \Ker Q(\lambda)$, $x_0(\lambda)^Tx_0>0$, $||x_0(\lambda)||=1$. Define $m(\lambda)=(c(\lambda)\cdot b)^Tx_0(\lambda)$. Beware of $\mbox{Rg}Q<n-1$.
+\item Find root of $m(\lambda)$ using binary search on $[-\lambda^0,\lambda^0]$, $\lambda^0=||c-c'||$.
+\item Next $c$: $c(\lambda)$
+\end{enumerate}
+
+$m(\lambda)=0\Leftrightarrow (c(\lambda)\cdot b)\bot\{x_0\}=\Ker Q$ if $\mbox{Rg}Q=n-1$.
 \end{document}
