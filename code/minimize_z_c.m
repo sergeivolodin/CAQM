@@ -1,4 +1,4 @@
-function [z, c_array] = minimize_z_c(A_, b_, c)
+function [z, c_array, z_array] = minimize_z_c(A_, b_, c)
     % dimensions
     n = size(A_, 1);
     m = size(A_, 3);
@@ -16,11 +16,15 @@ function [z, c_array] = minimize_z_c(A_, b_, c)
     
     % array for resulting c_s
     c_array = zeros(m, 1);
+    z_array = zeros(1);
     
     while 1
-        c_array(:, iteration) = c;
-        
+        % calculating gradient
         [Q, Q_inv, x_0, ~, ~, z, dz_dc, normal] = get_gradient(A_, b_, c);
+        
+        % storing data
+        c_array(:, iteration) = c;
+        z_array(iteration) = z;
         
         eps0 = 1e-7;
 

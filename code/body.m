@@ -35,13 +35,14 @@ c = get_nonconvex_c(A_, b_, y0_, 1000);
 % minimizing z(c)
 display('=== Minimizing z(c) ===');
 
-[z, c_array] = minimize_z_c(A_, b_, c);
+[z, c_array, z_array] = minimize_z_c(A_, b_, c);
 
 display(z);
 
 %return;
 
-% drawing
+% drawing F
+
 %r = -10:0.5:10;
 %[x, y, z, w] = meshgrid(r, r, r, r);
 %points = [x(:), y(:), z(:), w(:)]';
@@ -54,8 +55,15 @@ display(z);
 
 %scatter3(ys(1, :), ys(2, :), ys(3, :));
 
-R = [0 0 0 0; 0 1 0 0; 0 0 1 0; 0 0 0 1];
-
+% drawing C_bad
+% projecting 4D to 3D
+R = [1 0 0 0; 0 1 0 1; 0 0 1 0];
 j = R * c_array;
 
-scatter3(j(1, :), j(2, :), j(3, :));
+z_min = min(z_array);
+z_max = max(z_array);
+
+color = 1-((z_array-z_min)/(z_max-z_min))';
+color = color * [1 0 0];
+
+scatter3(j(1, :), j(2, :), j(3, :), 36, color);
