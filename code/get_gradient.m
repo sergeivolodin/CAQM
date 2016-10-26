@@ -31,6 +31,7 @@ function [Q, Q_inv, x_0, v, lambda_min, z, dz_dc, normal] = get_gradient(A_, b_,
         dz_dc(i) = 2 * v' * Q_inv * (b_(:, i) - R * v);
         normal(i) = (b_(:, i)' - v' * R) * x_0;
     end
+    
     normal = normal / norm(normal);
 end
 

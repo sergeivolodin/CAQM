@@ -1,4 +1,7 @@
 function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal)
+    lambda = 0;
+    c_new = c;
+
     % calculating c' (c_1)
     c_1 = c + delta_c - normal * dot(delta_c, normal);
 
@@ -31,7 +34,7 @@ function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal)
             return;
         end
     
-        fprintf('   projection l = %f r = %f val = %f\n', l, r, value);
+        %fprintf('   projection l = %f r = %f val = %f\n', l, r, value);
     end
 
     % updating c

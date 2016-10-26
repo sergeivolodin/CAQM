@@ -49,8 +49,8 @@ function [z, c_array] = minimize_z_c(A_, b_, c)
             break;
         end
         
-        delta_c = -dz_dc * 0.01;
         % projecting c + delta_c to c_bad
+        delta_c = -dz_dc * 0.01;
         [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal);
         
         c = c_new;
