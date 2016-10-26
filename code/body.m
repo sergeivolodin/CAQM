@@ -39,6 +39,8 @@ display('=== Minimizing z(c) ===');
 
 display(z);
 
+%return;
+
 % drawing
 %r = -10:0.5:10;
 %[x, y, z, w] = meshgrid(r, r, r, r);
@@ -51,4 +53,9 @@ display(z);
 %end
 
 %scatter3(ys(1, :), ys(2, :), ys(3, :));
-%scatter3();
+
+R = [0 0 0 0; 0 1 0 0; 0 0 1 0; 0 0 0 1];
+
+j = R * c_array;
+
+scatter3(j(1, :), j(2, :), j(3, :));
