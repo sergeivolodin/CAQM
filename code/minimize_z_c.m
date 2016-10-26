@@ -1,4 +1,4 @@
-function z = minimize_z_c(A_, b_, c)
+function [z, c_array] = minimize_z_c(A_, b_, c)
     % dimensions
     n = size(A_, 1);
     m = size(A_, 3);
@@ -11,7 +11,14 @@ function z = minimize_z_c(A_, b_, c)
     % resulting z
     z = inf;
     
+    % iteration counter
+    iteration = 1;
+    
+    % array for resulting c_s
+    c_array = zeros(m, 1);
+    
     while 1
+        c_array(:, iteration) = c;
         % c * A
         Ac = get_Ac(A_, c);
         
@@ -109,4 +116,6 @@ function z = minimize_z_c(A_, b_, c)
         c_new = c_1 + lambda * normal;
         c_new = c_new / norm(c_new);
         c = c_new;
+        
+        iteration = iteration + 1;
     end

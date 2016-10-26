@@ -18,11 +18,13 @@ function c = get_c_plus(A)
             Ac = get_Ac(A, c);
             Ac = Ac - 0.01 * eye(n);
             Ac  == semidefinite(n);
-            %c' * p == 1;
+            c' * p == 1;
          cvx_end
          
          if cvx_optval < Inf
              found = 1;
          end
     end
+    
+    c = c / norm(c);
 end
