@@ -1,4 +1,4 @@
-function [z, c_array, z_array] = minimize_z_c(A_, b_, c)
+function [z, c_array, z_array] = minimize_z_c(A_, b_, c, search_area_size)
     % dimensions
     n = size(A_, 1);
     m = size(A_, 3);
@@ -55,7 +55,7 @@ function [z, c_array, z_array] = minimize_z_c(A_, b_, c)
         
         % projecting c + delta_c to c_bad
         delta_c = -dz_dc * 0.01;
-        [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal);
+        [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_size);
         
         c = c_new;
         iteration = iteration + 1;

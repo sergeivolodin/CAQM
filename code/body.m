@@ -35,7 +35,7 @@ c = get_nonconvex_c(A_, b_, y0_, 1000);
 % minimizing z(c)
 display('=== Minimizing z(c) ===');
 
-[z, c_array, z_array] = minimize_z_c(A_, b_, c);
+[z, c_array, z_array] = minimize_z_c(A_, b_, c, 1);
 
 display(z);
 

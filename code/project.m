@@ -1,4 +1,4 @@
-function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal)
+function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_size)
     lambda = 0;
     c_new = c;
 
@@ -6,7 +6,7 @@ function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal)
     c_1 = c + delta_c - normal * dot(delta_c, normal);
 
     % biggest lambda
-    lambda_0 = norm(c_1 - c);
+    lambda_0 = norm(c_1 - c) * search_area_size;
 
     % binary search forr m(lambda) = 0
     % (projection)
