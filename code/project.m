@@ -12,6 +12,9 @@ function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_
     % (projection)
     l = -lambda_0;
     r = lambda_0;
+    
+    enlarge_count = 0;
+    enlarge_count_max = 10;
 
     while (r - l) > 0
         center = (r + l) / 2;
@@ -30,9 +33,14 @@ function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_
         elseif ~(sign_c == sign_m)
             r = center;
         else
-            display('Error: all signs equal');
-            c_new = [];
-            return;
+            r = r * 2;
+            l = l * 2;
+            enlarge_count = enlarge_count + 1;
+            if enlarge_count >= enlarge_count_max 
+                display('Error: all signs equal');
+                c_new = [];
+                return;
+            end
         end
     
         %fprintf('   projection l = %f r = %f val = %f\n', l, r, value);
