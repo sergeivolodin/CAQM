@@ -31,6 +31,7 @@ function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_
             r = center;
         else
             display('Error: all signs equal');
+            c_new = [];
             return;
         end
     
