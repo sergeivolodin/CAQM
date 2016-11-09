@@ -57,7 +57,7 @@ function [z, c_array, z_array] = minimize_z_c(A_, b_, c)
         
         % projecting c + delta_c to c_bad
         shrink_base = 0.94;
-        shrink_max = 100;
+        shrink_max = 500;
         shrink_i = 0;
         while shrink_i <= shrink_max
             step = (shrink_base ^ shrink_i);
