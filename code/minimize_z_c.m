@@ -1,4 +1,4 @@
-function [z, c_array, z_array] = minimize_z_c(A_, b_, c, search_area_size)
+function [z, c_array, z_array] = minimize_z_c(A_, b_, c)
     % dimensions
     n = size(A_, 1);
     m = size(A_, 3);
@@ -17,6 +17,8 @@ function [z, c_array, z_array] = minimize_z_c(A_, b_, c, search_area_size)
     % array for resulting c_s
     c_array = zeros(m, 1);
     z_array = zeros(1);
+    
+    step = 1;
     
     while 1
         % calculating gradient
@@ -37,8 +39,8 @@ function [z, c_array, z_array] = minimize_z_c(A_, b_, c, search_area_size)
         % (b_c, x_0)
         cbad_distance = x_0' * (b_ * c);
         
-        fprintf('Gradient step cos=%f Q_norm=%f Rank_Q=%d z(c)=%f c=[%f %f %f] lambda=%f distance=%f\n', cos_theta, ...
-            norm(Q_inv), rank(Q, 1e-5), z, c(1), c(2), c(3), lambda, cbad_distance);
+        fprintf('Gradient step cos=%f Q_norm=%f Rank_Q=%d z(c)=%f c=[%f %f %f] lambda=%f distance=%f step=%f\n', cos_theta, ...
+            norm(Q_inv), rank(Q, 1e-5), z, c(1), c(2), c(3), lambda, cbad_distance, step);
 
         % too small gradient check
         if (norm(dz_dc) < eps0) || (norm(normal) < eps0)
@@ -54,8 +56,20 @@ function [z, c_array, z_array] = minimize_z_c(A_, b_, c, search_area_size)
         end
         
         % projecting c + delta_c to c_bad
-        delta_c = -dz_dc * 1;
-        [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_size);
+        shrink_base = 0.94;
+        shrink_max = 100;
+        shrink_i = 0;
+        while shrink_i <= shrink_max
+            step = (shrink_base ^ shrink_i);
+            delta_c = -dz_dc * step;
+            [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, 1);
+        
+            if size(c_new, 1) > 0
+                break;
+            end
+            
+            shrink_i = shrink_i + 1;
+        end
         
         if size(c_new, 1) == 0
             return;
