@@ -51,13 +51,15 @@ item_size = [];
 
 i = 1;
 j = 1;
-N = 10;
+N = 20;
 while i <= N
     % a point inside F
-    x0_ = rand(n, 1);
+    x0_ = rand(n, 1) * 2;
     y0_ = quadratic_map(A_, b_, x0_);
     
     c = get_nonconvex_c(A_, b_, y0_, 1000);
+    c = remove_component(c, c_plus);
+    c = c / norm(c);
     
     if ~is_new_cbad(c_start, c_plus, c)
         fprintf('i = %d j = %d Processed already\n', i, j);
