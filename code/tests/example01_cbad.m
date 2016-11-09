@@ -49,6 +49,7 @@ display('=== Looking for c_bad ===');
 
 c_start = [];
 c_array = [];
+z_value = [];
 
 item_size = [];
 
@@ -69,7 +70,7 @@ while i <= N
     % minimizing z(c)
     display('=== Minimizing z(c) ===');
 
-    [~, c_item_array, ~] = minimize_z_c(A_, b_, c, 1);
+    [~, c_item_array, ~] = minimize_z_c(A_, b_, c);
 
     s = size(c_item_array, 2);
     item_size(i) = s;
@@ -80,17 +81,32 @@ while i <= N
     j = j + 1;
 end
 
-%z_value = [];
+z_value = [];
+z_min = +inf;
+z_max = -inf;
+i_min = 0;
+j_min = 0;
 
-%for i = 1:size(c_array, 2)
-%    z_value(i) = get_z(A_, b_, c_array(:, i));
-%end
-
-%z_min = min(z_value);
-%z_max = max(z_value);
-
-%z_value = (z_value - z_min) / (z_max - z_min);
-%c_color = (c_color' .* repmat(z_value, 3, 1))'
+c = [];
+for i = 1:N
+    s = item_size(i);
+    c_item_array = [];
+    c_item_array(:, :) = c_array(i, :, 1:s);
+    for j = 1:s
+        c = c_item_array(:, j);
+        z = get_z(A_, b_, c);
+        z_value(i, j) = z;
+        if z > z_max
+            z_max = z;
+        end
+        if z < z_min
+            z_min = z;
+            c_ans = c;
+            i_min = i;
+            j_min = j;
+        end
+    end
+end
 
 % drawing C_bad
 % projecting 4D to 3D
@@ -107,7 +123,9 @@ for i = 1:N
     c_item_array(:, :) = c_array(i, :, 1:s);
     
     c_item_color = [];
-    c_item_color(:, 1 : s) = repmat([0.8 1 0.8]', 1, s);
+    z_item_value = (z_value(i, 1:s) - z_min) / (z_max - z_min);
+    c_item_color(:, 1 : s) = repmat([0 0 1]', 1, s) * diag(z_item_value)...
+        + repmat([1 0 0]', 1, s) * diag(1 - z_item_value);
     c_item_color(:, end) = [1 0 0]';
     c_item_color(:, 1) = [0 0 1]';
     
@@ -122,5 +140,9 @@ for i = 1:N
     scatter3(v(1, end), v(2, end), v(3, end), 1000, c_item_color(:, end)', '.');
     scatter3(v(1, 1), v(2, 1), v(3, 1), 1000, c_item_color(:, 1)', '.');
 end
+
+v = R * c_ans;
+v = v / norm(v);
+scatter3(v(1), v(2), v(3), 1000, [0 0 0], 'o');
 
 legend('Path', 'Gradient Descent', 'End point (argmin)', 'Start point (certificate)');
