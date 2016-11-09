@@ -19,13 +19,16 @@ function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_
     
     i = 1;
 
-    while (r - l) > 0
+    while (r - l) > 1e-8
         center = (r + l) / 2;
         sign_c = sign(get_m(A_, b_, c_1, normal, x_0, center));
-        sign_p = sign(get_m(A_, b_, c_1, normal, x_0, r));
-        sign_m = sign(get_m(A_, b_, c_1, normal, x_0, l));
+        value_p = get_m(A_, b_, c_1, normal, x_0, r);
+        sign_p = sign(value_p);
+        value_m = get_m(A_, b_, c_1, normal, x_0, l);
+        sign_m = sign(value_m);
         
         value = get_m(A_, b_, c_1, normal, x_0, center);
+        %fprintf('   projection l = %f (%f %d) r = %f (%f %d) val = %f\n', l, value_m, sign_m, r, value_p, sign_p, value);
     
         if abs(value) < 1e-9
             break;
@@ -43,19 +46,23 @@ function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_
             end
             r = r * coefficient;
             l = l * coefficient;
-            %fprintf('l = %f %d r = %f %d c = %f i = %d\n', l, sign_m, r, sign_p, coefficient, i);
+            %fprintf('Enlarge l = %f %d r = %f %d c = %f i = %d\n', l, sign_m, r, sign_p, coefficient, i);
             enlarge_count = enlarge_count + 1;
             if enlarge_count >= enlarge_count_max 
-                display('Error: all signs equal');
+                %display('Error: all signs equal');
                 c_new = [];
                 return;
             end
         end
     
-        %fprintf('   projection l = %f r = %f val = %f\n', l, r, value);
         i = i + 1;
     end
 
+    if abs(value) > 1e-3
+        c_new = [];
+        return;
+    end
+    
     % updating c
     lambda = (l + r) / 2;
     c_new = c_1 + lambda * normal;

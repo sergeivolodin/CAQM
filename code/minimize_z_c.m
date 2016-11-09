@@ -72,6 +72,7 @@ function [z, c_array, z_array] = minimize_z_c(A_, b_, c)
         end
         
         if size(c_new, 1) == 0
+            display('Projection failed');
             return;
         end
         
