@@ -1,41 +1,8 @@
 clear all
 
-% generating image
-n = 4;
-m = 4;
+% getting an image
 
-A(:,:,1) = eye(n);
-b(:,1) = zeros(n,1);   
-y(:,:,1) = [A(:,:,1), b(:,1); b(:,1)', 0];
-
-y(:,:,2) = [1  0  1  0 1;...
-            0  2 -1  4 0;...
-            1 -1  0  0 0;...
-            0  4  0  0 0;...
-            1  0  0  0 0];
-        
-y(:,:,3) = [ 0  0  0  -1 1;...
-             0  3 -1   0 1;...
-             0 -1 -1   0 0;...
-            -1  0  0  -1 0;...
-             1  1  0   0 0];
-        
-y(:,:,4) = [4  0  1   2 0;...
-             0  0  0   4 0;...
-             1  0  0   0 0;...
-             2  4  0  -2 1;...
-             0  0  0   1 0];
-for i = 1:m
-    A(:, :, i) = y(1:end-1, 1:end-1, i);
-    b(:, i) = y(1:end-1, end, i);
-end
-
-% c, s.t. c * A > 0
-display('=== Looking for c+ ===');
-
-%c_plus = get_c_plus(A);
-
-c_plus = [1 0 0 0]';
+load('example03.mat');
 
 % basis: c_+A=I, c_+b=0
 [A_, b_] = change_basis(A, b, c_plus);

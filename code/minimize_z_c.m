@@ -56,8 +56,8 @@ function [z, c_array, z_array] = minimize_z_c(A_, b_, c)
         end
         
         % projecting c + delta_c to c_bad
-        shrink_base = 0.94;
-        shrink_max = 500;
+        shrink_base = 0.5;
+        shrink_max = 50;
         shrink_i = 0;
         while shrink_i <= shrink_max
             step = (shrink_base ^ shrink_i);
@@ -65,7 +65,10 @@ function [z, c_array, z_array] = minimize_z_c(A_, b_, c)
             [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, 1);
         
             if size(c_new, 1) > 0
-                break;
+                [~, ~, ~, ~, ~, z_new, ~, ~] = get_gradient(A_, b_, c_new);
+                if z_new < z
+                    break;
+                end
             end
             
             shrink_i = shrink_i + 1;
