@@ -39,8 +39,13 @@ while i <= N
     % minimizing z(c)
     display('=== Minimizing z(c) ===');
 
-    [~, c_item_array, ~] = minimize_z_c(A_, b_, c);
+    [~, c_item_array, ~, success] = minimize_z_c(A_, b_, c);
 
+    if success == 0
+        display('Minimization failed');
+        return;
+    end
+    
     s = size(c_item_array, 2);
     item_size(i) = s;
     
