@@ -31,7 +31,7 @@
 \begin{document}
 \maketitle
 \section{The framework}
-In this section, the framework of finding convex cuts is discussed. We start from the definition of a quadratic map, then the task is set formally and then is formulated as a constrainted optimization problem.
+In this section, the framework for finding convex cuts is described. We start from the definition of a quadratic map, then the task is set formally and then is formulated as a constrainted optimization problem.
 
 Let $f\colon\mathbb{R}^n\to\mathbb{R}^m$ be a quadratic map: $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i^T=A_i$. We want to explore the image $F=f(\mathbb{R}^n)$ and find convex parts of $F$.
 \begin{enumerate}
@@ -48,14 +48,14 @@ $$
 $$
 
 
-The $x$, minimizing \ref{min} is ($Q^g$ is a pseudoinverse of $Q$)
+The $x$, minimizing \ref{min} are ($Q^g$ is a pseudoinverse of $Q$)
 $$x=\Ker(c\cdot A)-(c\cdot A)^g(c\cdot b)$$
 
-Define the boundary points of $F$ on the supporting hyperplane with a normal vector $c$:
+This way, we found pre-images $X(c)$ of boundary points of $F$ lying on the supporting hyperplane with a normal vector $c$:
 
 $$X(c)=\argmin (c, f(x))=\Ker(c\cdot A)-(c\cdot A)^g(c\cdot b)$$
 
-\item Let $c_+$ be a vector from $\mathbb{R}^m$ s.t. $c_+A>0$. Then the supporting hyperplane with the normal vector $c_+$ is touching $F$ at a single point $y_0=f(x_0)$, where $$x_0=-(c_+\cdot A)^{-1}(c_+\cdot b)$$
+\item Let $c_+$ be a vector from $\mathbb{R}^m$ s.t. $c_+\cdot A>0$. Then the supporting hyperplane with the normal vector $c_+$ is touching $F$ at a single point $y_0=f(x_0)$, where $$x_0=-(c_+\cdot A)^{-1}(c_+\cdot b)$$
 
 
 We want to find the maximum value $z_{\max}$ such that $Z\subseteq F$ is convex:
@@ -69,7 +69,7 @@ z_{\max}=\inf_c \tilde{z}(c),\, \tilde{z}(c)=\inf \big(c_+, f(X(c))-f(x_0)\big)
 \end{equation}
 
 
-\item To find $\tilde{z}(c)=\inf\limits_{x\in \Ker(c\cdot A)-(c\cdot A)^g(c\cdot b)}(c_+,f(x)-f(x_0)$, we introduce the plus norm
+\item To find $\tilde{z}(c)=\inf\limits_{x\in \Ker(c\cdot A)-(c\cdot A)^g(c\cdot b)}(c_+,f(x)-f(x_0))$, we introduce the plus norm in the $q\in\mathbb{R}^n$ space
 $$||q||^2_+=q^T(c_+\cdot A)q$$
 
 Note that \ref{norm} $(c_+,f(x)-f(x_0))=||x-x_0||_+^2$.
@@ -134,11 +134,11 @@ Each iteration has two key elements: gradient step and projection (see image bel
 Assume that we have done $k-1$ steps already and obtained a point $c=c^{(k)}$. The next two sections describe how to obtain the next point $\tilde{c}=c^{(k+1)}$.
 
 \subsection{Gradient step}
-Define $R_i=\hat{A}_i-k^T\hat{A}_ik$, $T_i=(\hat{b}_i-R_iv)$. Then \ref{gradient}
-$$\nabla_iz\equiv \frac{\partial z}{\partial c_i}=2v^TQ^gT_i$$
+Define $R_i=\hat{A}_i-k^T\hat{A}_ik$, $q_i=\hat{b}_i-R_iv$. Then \ref{gradient}
+$$\nabla_iz\equiv \frac{\partial z}{\partial c_i}=2v^TQ^gq_i$$
 
-Define $n_i=k^TT_i$. Then $n$ is a normal vector to $\cbad$ at point $c$ (see picture). We eliminate normal part of the gradient to decrease distance to $\cbad$ (see picture):
-$$c'=c-\beta\left(\hat{1}-n\frac{(\cdot, n)}{|n|^2}\right)\nabla z$$
+Define $n_i=k^Tq_i$. Then $n$ is a normal vector to $\cbad$ at a point $c$ (see picture). We eliminate normal part of the gradient to decrease the distance to $\cbad$ (see picture):
+$$c'=c-\beta\left(I-n\frac{(\cdot, n)}{|n|^2}\right)\nabla z$$
 
 \subsection{Projection}
 \includegraphics[width=0.8\textwidth]{c_bad_continuum.png}
