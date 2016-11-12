@@ -18,7 +18,7 @@ item_size = [];
 
 i = 1;
 j = 1;
-N = 20;
+N = 100;
 while i <= N
     % a point inside F
     x0_ = rand(n, 1) * 2;
@@ -57,10 +57,15 @@ i_min = 0;
 j_min = 0;
 
 c = [];
+N = size(item_size, 2);
 for i = 1:N
     s = item_size(i);
     c_item_array = [];
-    c_item_array(:, :) = c_array(i, :, 1:s);
+    if s == 1
+        c_item_array(:, 1) = c_array(i, :, 1)';
+    else
+        c_item_array(:, :) = c_array(i, :, 1:s);
+    end
     for j = 1:s
         c = c_item_array(:, j);
         z = get_z(A_, b_, c);
@@ -89,7 +94,13 @@ grid on;
 for i = 1:N
     s = item_size(i);
     c_item_array = [];
-    c_item_array(:, :) = c_array(i, :, 1:s);
+    
+    if s == 1
+        c_item_array(:, 1) = c_array(i, :, 1)';
+        c_item_array(:, 2) = c_array(i, :, 1)';
+    else
+        c_item_array(:, :) = c_array(i, :, 1:s);
+    end
     
     c_item_color = [];
     z_item_value = ((z_value(i, 1:s) - z_min) / (z_max - z_min)).^(1/10);
