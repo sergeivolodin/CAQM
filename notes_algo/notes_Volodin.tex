@@ -30,7 +30,9 @@
 
 \begin{document}
 \maketitle
-\section*{The framework}
+\section{The framework}
+In this section, the framework of finding convex cuts is discussed. We start from the definition of a quadratic map, then the task is set formally and then is formulated as a constrainted optimization problem.
+
 Let $f\colon\mathbb{R}^n\to\mathbb{R}^m$ be a quadratic map: $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i^T=A_i$. We want to explore the image $F=f(\mathbb{R}^n)$ and find convex parts of $F$.
 \begin{enumerate}
 \item Consider a problem
@@ -38,12 +40,13 @@ Let $f\colon\mathbb{R}^n\to\mathbb{R}^m$ be a quadratic map: $f_i(x)=x^TA_ix+2b_
 \label{min} g(c)=\min\limits_{x\in\mathbb{R}^n}(c,f(x))
 \end{equation}
 
-It has a finite solution iff
+It has a finite solution iff \ref{minimum}
 
 $$
 \begin{cases}c\cdot A\geqslant0\\
 (c\cdot b)^T\Ker (c\cdot A)=0\end{cases}
 $$
+
 
 The $x$, minimizing \ref{min} is ($Q^g$ is a pseudoinverse of $Q$)
 $$x=\Ker(c\cdot A)-(c\cdot A)^g(c\cdot b)$$
@@ -52,38 +55,34 @@ Define the boundary points of $F$ on the supporting hyperplane with a normal vec
 
 $$X(c)=\argmin (c, f(x))=\Ker(c\cdot A)-(c\cdot A)^g(c\cdot b)$$
 
-
-\item The boundary points $f(X(c))$ can be nonconvex.
-
-\item Let $c_+$ be a vector from $\mathbb{R}^m$ s.t. $c_+A>0$. Then the supporting hyperplane with the normal vector $c_+$ is touching $F$ at a single point $y_0=f(x_0)$, where $$x_0=-(c_+\cdot A)^{-1}(c\cdot b)$$
+\item Let $c_+$ be a vector from $\mathbb{R}^m$ s.t. $c_+A>0$. Then the supporting hyperplane with the normal vector $c_+$ is touching $F$ at a single point $y_0=f(x_0)$, where $$x_0=-(c_+\cdot A)^{-1}(c_+\cdot b)$$
 
 
-We want to find the maximum value $z_{\max}$ such that a convex cut $Z\subseteq F$ is convex:
+We want to find the maximum value $z_{\max}$ such that $Z\subseteq F$ is convex:
 $$Z=\{y\big| (c_+,y-y_0)\in[0,z_{\max}]\}$$
 
-To do that, we discover all of the nonvexities $f(X(c))$ and find
+To do that, we find c such that set $f(X(c))$ is nonconvex, project points of $f(X(c))$ to $c_+$ and find a minimum of the projection:
 
-$$z_{\max}=\inf_c \tilde{z}(c),\, \tilde{z}(c)=\inf \big(c_+, f(X(c))-f(x_0)\big)$$
+\begin{equation}
+\label{zc}
+z_{\max}=\inf_c \tilde{z}(c),\, \tilde{z}(c)=\inf \big(c_+, f(X(c))-f(x_0)\big)
+\end{equation}
 
 
-\item To find ${z}(c)=\inf\limits_{x\in \Ker(c\cdot A)-(c\cdot A)^g(c\cdot b)}(c_+,f(x))$, we introduce the plus norm
+\item To find $\tilde{z}(c)=\inf\limits_{x\in \Ker(c\cdot A)-(c\cdot A)^g(c\cdot b)}(c_+,f(x)-f(x_0)$, we introduce the plus norm
 $$||q||^2_+=q^T(c_+\cdot A)q$$
 
-Note that $(c_+,f(x)-f(x_0(c)))=||x-x_0(c||^2$.
-Therefore, $\tilde{z}(c)=\rho_+^2(\Ker(c\cdot A)-(c\cdot A)^g(c\cdot b),x_0(c)$
+Note that \ref{norm} $(c_+,f(x)-f(x_0))=||x-x_0||_+^2$.
+Therefore, $\tilde{z}(c)=\rho_+^2(\Ker(c\cdot A)-(c\cdot A)^g(c\cdot b),x_0)$
 \item Next, we change variables to find $\tilde{z}(c)$ explicitly. We use the following change
 $\begin{cases}
 x=S\hat{x}+x^0\\
 y=\hat{y}+y^0
-\end{cases}$ $y=f(x)$, $\hat{y}=\hat{f}(\hat{x})$.
-
-and demand $\begin{cases}
+\end{cases}$ $y=f(x)$, $\hat{y}=\hat{f}(\hat{x})$ and demand $\begin{cases}
 c_+\cdot A=I\\
 c_+\cdot b=0
-\end{cases}$. It leads to
-$$x^0=x_0,\,y^0=y_0,\,S=S_1S_2,\, S_1^T(c_+\cdot A)S_1=\Lambda,\,S_1^TS_1=I,\,S_2=\Lambda^{-1/2}$$,
-
-$$\begin{cases}
+\end{cases}$. It leads \ref{variables} to
+$$x^0=x_0,\,y^0=y_0,\,S=S_1S_2,\, S_1^T(c_+\cdot A)S_1=\Lambda,\,S_1^TS_1=I,\,S_2=\Lambda^{-1/2},\,\begin{cases}
 \hat{A}_i=S^TA_iS\\
 \hat{b}_i=S^T(b_i+A_ix^0)
 \end{cases}$$
@@ -91,9 +90,9 @@ $$\begin{cases}
 In new variables $||\hat{q}||_+^2=\hat{q}^T\hat{q}$, i.e. the new basis is orthonormal w.r.t. $||\cdot||_+$, because $c_+\cdot A=I$.
 
 
-Notice that $\tilde{z}(c)=\rho_+^2(x_0,\Ker (c\cdot A)-(c\cdot A)^g(c\cdot b))=\mathrm{diam}(\Ker(c\cdot \hat{A})-(c\cdot \hat{A})^g(c\cdot \hat{b}))=||(c\cdot A)^g(c\cdot b)||^2$ since $\Ker(c\cdot \hat{A})^T\big((c\cdot A)^g(c\cdot b)\big)=0$
+Notice that $\tilde{z}(c)=\rho_+^2(x_0,\Ker (c\cdot A)-(c\cdot A)^g(c\cdot b))=\mathrm{diam}(\Ker(c\cdot \hat{A})-(c\cdot \hat{A})^g(c\cdot \hat{b}))=||(c\cdot A)^g(c\cdot b)||^2$ since $\Ker(c\cdot \hat{A})^T\big((c\cdot A)^g(c\cdot b)\big)=0$ \ref{minimum}
 
-\item We associate the conditions $\Rg(c\cdot A)<n$, $c\cdot A\geqslant 0$ with nonconvexity of $f(X(c))$. The real sufficient condition for nonconvexity is given by the Theorem 3.4, which requires some additional equalities:
+\item We associate the condition $\Rg(c\cdot A)\leqslant n-1$, $c\cdot A\geqslant 0$ with nonconvexity of $f(X(c))$. The real sufficient condition for nonconvexity is given by the Theorem 3.4, which requires some additional constraints on $c$:
 $$
 \begin{cases}
 Rg(c\cdot A)=n-1\\
@@ -102,47 +101,67 @@ f^1\nparallel f^2
 $$
 But we assume that other cases, in particular, $Rg(c\cdot A)<n-1$ or $f^1\parallel f^2$ are rare.
 
-\item Let us note that if $f(X(c))$ is nonconvex, then $\lambda_{\min}(c\cdot A)=0$. Consider $\tilde{z}(c+\alpha c_+)=||(c\cdot A+\alpha I)^g(c\cdot b)||^2$, since $c_+\cdot\hat{A}=I,\,c_+\cdot\hat{b}=0$. Therefore, adding $\alpha c_+$ to $c$ adjusts the spectrum of $c\cdot A$. If and only of we choose $\alpha=-\lambda_{\min}(c\cdot A)\}$, $\tilde{z}$ will be associated with a $\tilde{c}=c+\alpha c_+$ for which $\lambda_{\min}(\tilde{c}\cdot A=0$. This way, for every given $c\in\mathbb{R}^m$ we can find one and only one $\tilde{c}=c+\alpha c_+$ such that $\lambda_{\min}(\tilde{c}\cdot A)=0$
+\item Let us note that if $f(X(c))$ is nonconvex, then $\lambda_{\min}(c\cdot A)=0$. Consider $\tilde{z}(c+\alpha c_+)=||(c\cdot A+\alpha I)^g(c\cdot b)||^2$, since $c_+\cdot\hat{A}=I,\,c_+\cdot\hat{b}=0$. Therefore, adding $\alpha c_+$ to $c$ adjusts the spectrum of $c\cdot A$. If and only of we choose $\alpha=-\lambda_{\min}(c\cdot A)$, $\tilde{z}$ will be associated with a $\tilde{c}=c+\alpha c_+$ for which $\lambda_{\min}(\tilde{c}\cdot A)=0$. This way, for every given $c\in\mathbb{R}^m$ we can find one and only one $\tilde{c}=c+\alpha c_+$ such that $\lambda_{\min}(\tilde{c}\cdot A)=0$
 
-We define $z(c)=||\big((c\cdot \hat{A})-\lambda_{\min}(c\cdot \hat{A})\big)(c\cdot \hat{b})||^2$, which is the same as $\tilde{z}(c-\lambda_{\min}c_+)$.
+We define $z(c)=||\big((c\cdot \hat{A})-\lambda_{\min}(c\cdot \hat{A})\big)(c\cdot \hat{b})||^2$, which is the same as $\tilde{z}(c-\lambda_{\min}c_+)$. This way, we automatically choose the adjustment to the spectrum to ensure that $\lambda_{\min}(c\cdot A-\lambda_{\min}(c\cdot A))=0$
 
 Notice that $z(c+\mu c_+)=z(c)$.
 
-\item Next, we define $Q(c)=c\cdot \hat{A}-\lambda_{\min}(c\cdot \hat{A})$, $\hat{b}_c=c\cdot \hat{b}$, $\cbad=\{c\big|\Ker Q(c)\bot b_c\}$, $v(c)=Q(c)^{-1}b_c$, $z(c)=||v(c)||^2$.
+\item Next, we define $Q(c)=c\cdot \hat{A}-\lambda_{\min}(c\cdot \hat{A})$, $\hat{b}_c=c\cdot \hat{b}$, $v(c)=Q(c)^gb_c$. Then $$z(c)=||v(c)||^2=v^Tv$$
 
+Note that $z(c)$ has its geometrical meaning \ref{zc} only if $c\in\cbad=\{c\big|\Ker Q(c)\bot b_c\}$.
 \end{enumerate}
 
-\section*{Minimization}
-We want to solve a problem
+At this point, we have a function $z(c)$ defined on $\cbad$ and we want to minimize it. We assume that it is continuous and differentiable, and also that $\cbad$ contains connected parts (manifolds)
+
+\section{Minimization}
+In this section we address the problem of finding minimum of $z(c)$ stated in the previous section. Again, we assume that $\cbad$ contains a manifold and we have a point $c$ in it already. We use well-known techique, Gradient projection method to solve it. We use not the Euclidean projection, but a very special one based on the geometry of $\cbad$. The method's two steps, gradient step and projection, are discussed in details below.
+
+Formally, we want to find
 \begin{equation}
 z_{\max}=\inf\limits_{c\in\cbad}z(c)
 \end{equation}
 
-We use gradient projection method.
-
-Nonconvexity certificate gives a single point $c\in \cbad=\{c\big| \Ker Q\bot b_c\}$, which is used as a start point. We assume $\Rg Q(c)=n-1$, define $k(c)\in\mathbb{R}^n$ s.t. $k(c)\in\Ker Q(c)$, $||k(c)||=1$. We assume that for any $c'$ the dot product $k(c')^Tk(c)>0$.
-Each iteration has two key elements: gradient step and projection.
-
-\subsection*{Gradient step}
-Define $R_i=\hat{A}_i-k^T\hat{A}_ik$. Then
-$$\nabla_iz\equiv \frac{\partial z}{\partial c_i}=2v^TQ^{-1}(\hat{b}_i-R_iv)$$
-
-Define $n_i=\left(\hat{b}_i^T-v^TR_i\right)k$. Then $n$ is a normal vector to $\cbad$ at point $c$. We eliminate normal part of the gradient to decrease distance to $\cbad$ (see picture):
-$$c'=c-\beta\nabla z(\hat{1}-n\frac{(\cdot, n)}{|n|^2})$$
+Let $\pi_{\cbad}$ be an operator which projects a point onto $\cbad$. Then the method is the following:
+$$c^{(k+1)}=\underbrace{\pi_{\cbad}}_{\mathrm{proj.}}(\underbrace{c^{(k)}-\beta^k \nabla z(c^{(k)})}_{\mathrm{gradient \,\,step}})$$
 
 
-\subsection*{Projection}
+Nonconvexity certificate gives a single point $c\in \cbad$, which is used as a start point $c^{(1)}$. We assume $\Rg Q(c)=n-1$
+
+Define $k(c)\in\mathbb{R}^n$ s.t. $k(c)\in\Ker Q(c)$, $||k(c)||=1$. We assume that for any $c'$ the dot product $k(c')^Tk(c)>0$ (change sign if false).
+Each iteration has two key elements: gradient step and projection (see image below)
+
+Assume that we have done $k-1$ steps already and obtained a point $c=c^{(k)}$. The next two sections describe how to obtain the next point $\tilde{c}=c^{(k+1)}$.
+
+\subsection{Gradient step}
+Define $R_i=\hat{A}_i-k^T\hat{A}_ik$, $T_i=(\hat{b}_i-R_iv)$. Then \ref{gradient}
+$$\nabla_iz\equiv \frac{\partial z}{\partial c_i}=2v^TQ^gT_i$$
+
+Define $n_i=k^TT_i$. Then $n$ is a normal vector to $\cbad$ at point $c$ (see picture). We eliminate normal part of the gradient to decrease distance to $\cbad$ (see picture):
+$$c'=c-\beta\left(\hat{1}-n\frac{(\cdot, n)}{|n|^2}\right)\nabla z$$
+
+\subsection{Projection}
 \includegraphics[width=0.8\textwidth]{c_bad_continuum.png}
 
-We next assume that for some $\lambda$ vector $\tilde{c}(\lambda)=c'+\lambda n\in\cbad$. To find $\lambda$, we write the condition $\tilde{c}\in\cbad\Leftrightarrow (\tilde{c}\cdot \tilde{b})^T k(\tilde{c}(\lambda))=0$. We define a function
+We next assume that for some $\lambda\in\mathbb{R}$ vector $\tilde{c}(\lambda)=c'+\lambda n\in\cbad$. To find $\lambda$, we write the condition $\tilde{c}\in\cbad\Leftrightarrow (\tilde{c}\cdot \tilde{b})^T k(\tilde{c}(\lambda))=0$. We define a function
 $$m(\lambda)=(\tilde{c}(\lambda)\cdot \tilde{b})^T k(\tilde{c}(\lambda))$$
 
 This function is continuous if $\Rg Q(\lambda)=n-1$ in the neighbourhood of $\lambda$. Next, we find its root using bisection method on $[-\lambda_0,\lambda_0]$, $\lambda_0=||c-c'||$.
 
-If it does not converge, or other problems occur, we shrink the gradient step $\beta$ and try the projection again.
+For some $\lambda$, $m(\lambda)=0$ means that $\tilde{c}=c'+\lambda n\in\cbad$, and that the projection step was a success.
 
-\section*{Explanations}
-\subsection*{1. $F$ and $\conv F$}
+If the method does not converge on the interval given, or rank problem ($\Rg Q\neq n-1$) occurs, we reduce the gradient step $\beta\to \theta\beta$, $\theta <1$, recalculate $c'$ and try the projection again.
+
+\includegraphics[width=0.7\textwidth]{example03_cbad_91pts_04.png}
+
+This way, we can construct a new point $\tilde{c}$ from the previous one $c$, and $\tilde{c}$ has lower value of $z(\cdot)$. We continue until the Gradient projection method condition holds:
+$$\nabla z|| n$$
+
+If this condition holds, then the resulting $\tilde{c}$ is the same as $c$ on previous iteration, and the iterations stop.
+
+\section{Explanations}
+This section contains explanations and proofs for the main article and draft.pdf.
+\subsection{$F$ and $\conv F$}
 Consider $f\colon \mathbb{R}^n\to\mathbb{R}^m$, s.t. $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i=A_i^T$. Define $F=f(\mathbb{R}^n)$.
 
 Then why $A=\inf \limits_{y\in F} (c,y)=\inf\limits_{y\in\conv F} (c,y)=B$?
@@ -154,7 +173,7 @@ Then why $A=\inf \limits_{y\in F} (c,y)=\inf\limits_{y\in\conv F} (c,y)=B$?
 $g_k(c,y_k)=\sum\limits_{i=1}^{n_k}\alpha^k_i(c,y^k_i)=\sum\limits_{i=1}^{n_k}\alpha^k_i g^k_i$. Define $g^k_0=\min\limits_{i\in \overline{1,n_k}}g^k_i$. Then $B\leqslant g^k_0\leqslant g^k$. Therefore, $g^k_0\to B$ also. This way, we have constructed a sequence $y^k_0\in F$ s.t. $(c,y^k_0)\to B$, therefore, $A\leqslant B$.
 \end{enumerate}
 
-\subsection*{2. Minimum of $f(x)$}
+\subsection{Minimum of $f(x)$} \label{minimum}
 Consider $f\colon \mathbb{R}^n\to\mathbb{R}^m$. $f_i(x)=x^TA_ix+2b_i^Tx$. $A_i^T=A_i$. Let $c\in\mathbb{R}^m$
 
 We want to find
@@ -196,7 +215,7 @@ Therefore, $\boxed{x=-A_c^gb_c+x^\parallel}$, where $x^\parallel\in R_0$.
 
 Consider $(c,f(x))=(c,f(x^\bot))=b_c^TA_c^gA_cA_c^gb_c-2b_c^TA_c^gb_c$. Consider $A_cA_c^gb_c=S\Lambda \cancelto{E}{S^TS}\Lambda^gS^Tb_c$. Because $R_0\subseteq\{b_c\}^\bot$, $\Lambda\Lambda^gS^Tb_c=S^Tb_c$. Therefore, $A_cA_c^gb_c=b_c$. Then $(c,f(x))=b_c^TA_c^gb_c-2b_c^TA_c^gb_c=\boxed{-b_c^TA_c^gb_c}$
 
-\subsection*{3. Finding $c$ provided $d$}
+\subsection{Finding $c$ provided $d$}
 Let $H\colon \mathbb{R}^{n+1, n+1}\to \mathbb{R}^n$ be a map s.t. $H_i(X)=\Tr(H_iX)$, $$H_i=\left|\left|
 \begin{array}{cc}
 A_i & b_i\\
@@ -262,7 +281,8 @@ H\geqslant 0\\
 
 This problem is exactly (5) from main article $\blacksquare$.
 
-\subsection*{4. What is $z_{\max}$?}
+\subsection{What is $z_{\max}$?}
+\label{norm}
 Consider $f\colon\mathbb{R}^n\to\mathbb{R}^m$, $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i=A_i^T$.
 
 Let $c_+\in\mathbb{R}^m$ s.t. $A_+=\sum c_iA_i > 0$. Then the minimum $\inf\limits_x (c,f(x))$ is obtained at a single point $x_0=-A_+^{-1}b_+$, $b_+=\sum c_ib_i$.
@@ -277,7 +297,8 @@ then $P-Q=\underline{x^TA_+x}-x_0^TA_+x_0+2b_+^Tx-2b_+^Tx_0-\underline{x^TA_+x}-
 
 $\boxed{\mbox{{\bf Therefore, the image of $B_\varepsilon^+$ is a {\em convex cut}} $\{y\big| (c_+,y)\in (c_+,f(x_0))+[0,z_{\max}]\}$}}$
 
-\subsection*{5. Variables s.t. $c\cdot A=I,\,c\cdot b=0$}
+\subsection{Variables s.t. $c\cdot A=I,\,c\cdot b=0$}
+\label{variables}
 Given: the map $f\colon\mathbb{R}^n\to\mathbb{R}^m$, $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i=A_i^T$, vector $c\in\mathbb{R}^m\colon c\cdot A>0$
 
 We need to find a new pair of bases s.t. $\begin{cases}
@@ -299,7 +320,7 @@ The algorithm:
 \item Compute $x^0=-(c\cdot A)^{-1}(c\cdot b)$
 \item Compute $\tilde{A}_i=S^TA_iS$, $\tilde{b}_i=S^T(b_i+A_ix^0)$
 \end{enumerate}
-\subsection*{6. $z(c)=?$}
+\subsection{$z(c)=?$}
 Given: the map $f\colon\mathbb{R}^n\to\mathbb{R}^m$, $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i=A_i^T$, two vectors $c,c_+\in\mathbb{R}^m$. $c_+A=I$, $c_+b=0$.
 Find: $z(c)=\inf\limits_{y\in Y} (c_+, y)$ where $Y$ is an intersection of $f(\mathbb{R}^n)$ with a tangent hyperplane defined by its normal vector $c$.
 
@@ -323,7 +344,7 @@ Consider $z(c+\alpha c_+)=|(c\cdot A+\alpha \cancelto{I}{c_+\cdot A})^gb_c|^2=|(
 Define $\hat{z}(c)=|(c\cdot A-\lambda_{\min}(A))^g(c\cdot b)|^2$. Consider $\mathbb{R}^m\ni c=c^{\parallel}+c^{\bot}$, $c^{\parallel}\parallel c_+$, $(c_+,c^{\bot})=0$.
 
 Then $\hat{z}(c)=\hat{z}(c^{\bot})$, i.e. $\hat{z}$ does not depend on $c^{\parallel}$. It depends only on $c^{\bot}$, and $c^{\parallel}$ is chosen in a way that $\lambda_{\min}(c\cdot A)=0$.
-\subsection*{7. Theorem 3.4 (Nonconvexity certificate)}
+\subsection{Theorem 3.4 (Nonconvexity certificate)}
 Given.
 \begin{enumerate}
 \item The map $f\colon\mathbb{R}^n\to\mathbb{R}^m$, $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i=A_i^T$, $m,n\geqslant 3$. The vector $c\in\mathbb{R}^m$.
@@ -339,7 +360,7 @@ Consider $\inf\limits_{y\in F}(c,y)$ (part 2). $x=\underbrace{x^{\parallel}}_{\a
 $$f_i(\alpha e + e^0)=\alpha^2 \underbrace{e^TA_ie}_{f^2_i}+2\alpha(\underbrace{b_i^Te+e^TA_ie^0}_{f^1_i})+\underbrace{2b_i^Te^0+e^{0T}A_ie^0}_{f^0_i}$$
 
 If $f^1\nparallel f^2$, then $\{f(\alpha e+e^0\big| \alpha\in\mathbb{R})\}=F\cap \{y\big| (c,y)=\inf\limits_{y\in F} (c,y)\}$ is nonconvex. Then F is nonconvex.
-\subsection*{8. Equations (0.18)-(0.21)}
+\subsection{Equations (0.18)-(0.21)}
 Consider $A(t)\colon n\times n$, $\exists \dot{A}$, $A^T=A$, $A\geqslant 0$, $A$ has a simple zero eigenvalue: $\forall t\,A(t)x_0(t)=0$, $x_0^Tx_0=0$.
 
 Then $A=S\Lambda S^T$, $S^TS=E$, $A^g=S\Lambda^gS^T$. Define $\lambda_i=\Lambda_{ii}$. $\Lambda^g_{ii}=\begin{cases}
@@ -369,7 +390,8 @@ Consider $x_0^T\dot{A}^gx_0=x_0^T(\dot{S}\Lambda^gS^T+S\dot{\Lambda^g}S^T+S\Lamb
 Then $\frac{d}{dt}A^{-1}=-A^{-1}\dot{A}A^{-1}+x_0x_0^T\dot{A}A^{-2}+A^{-2}\dot{A}x_0x_0^T$ (0.21).
 
 Case $\mbox{Rg}A<n-1$ is not considered since probability of such event is small.
-\subsection*{9. Gradient descent}
+\subsection{Gradient descent}
+\label{gradient}
 \begin{enumerate}
 \item (0.5): $(\underbrace{c\cdot A-\lambda_{\min}(c\cdot A)}_Q)x_0=0$, then $\dot{x}_0=-Q^{-1}\dot{Q}x_0$. $\frac{d}{dt}\lambda_{\min}=\frac{d}{dt}x_0^T(c\cdot A)x_0=2\dot{x}_0\underbrace{(c\cdot A)x_0}_{\lambda_{\min}x_0}+x_0^T(\dot{c}\cdot A)x_0=2\lambda_{\min}\cancelto{0}{\dot{x}_0^Tx_0}+x_0^T(\dot{c}\cdot A)x_0$.
 
@@ -408,7 +430,7 @@ $\dot{z}_{(0.8)}=2\underbrace{(c\cdot b)^TQ^{-2}}_{v^TQ^{-1}}(\dot{c}\cdot b)-v^
 \item (0.16) $P(\lambda)=Q^{-1}Q=S\Lambda^gS^TS\Lambda S^T=S\Lambda\Lambda^g S^T=1-x_0x_0^T$~--- projector on $(\Ker Q)^\bot$ (correct)
 \item (0.15) $P(\lambda)(c(\lambda)\cdot b)=c(\lambda)\cdot b\Leftrightarrow \underbrace{(c(\lambda)\cdot b)\bot \Ker Q}_{\Leftrightarrow c(\lambda)\in c_{\mbox{\tiny bad}}}\Leftrightarrow c(\lambda)\cdot b\in\mbox{Im}Q\Leftrightarrow \exists \hat{x}\colon\, Q\hat{x}=c(\lambda)\cdot b$ (0.17) (correct)
 \end{enumerate}
-\subsection*{10. Gradient descent. Projection}
+\subsection{Gradient descent. Projection}
 We have $c\in\mathbb{R}^m$, $c\in c_{\mbox{\tiny bad}}=\{c\big| ||c||=1,\,\Ker Q(c)\bot (c\cdot b)\}$. $Q=c\cdot A-\lambda_{\min}(c\cdot A)$, $v=Q^{-1}(c\cdot b)$, $x_0\in\Ker Q$, $||x_0||=1$
 \begin{enumerate}
 \item Calculate $\frac{\partial z}{\partial c_i}=2v^TQ^{-1}(b_i-(A_i-x_0^TA_ix_0)v)$. Define $\Delta c=-\nabla z(c)$
@@ -420,7 +442,7 @@ We have $c\in\mathbb{R}^m$, $c\in c_{\mbox{\tiny bad}}=\{c\big| ||c||=1,\,\Ker Q
 \end{enumerate}
 
 $m(\lambda)=0\Leftrightarrow (c(\lambda)\cdot b)\bot\{x_0\}=\Ker Q$ if $\mbox{Rg}Q=n-1$.
-\subsection*{11. Equation 0.19}
+\subsection{Equation 0.19}
 Consider $A=S\Lambda S^T$, $S^TS=E$, $x_0$ is a simple zero eigenvector of $A$: $Ax_0=0$, $||x_0||=1$.
 
 $A^{-1}=S\Lambda_1S^T$, $\Lambda=(\lambda_1,...,\lambda_{n-1},0)$, $\Lambda_1=(\lambda_1^{-1},...,\lambda_{n-1}^{-1},0)$.
@@ -440,7 +462,7 @@ Taking a derivative $||x_0||=1$, we get $x_0^T\dot{x_0}=0$, therefore,
 
 $\boxed{=}-\dot{x}_0$
 
-\subsection*{12. Nonconvexity certificate in $b_i=0$ case}
+\subsection{Nonconvexity certificate in $b_i=0$ case}
 
 Let $f\colon \mathbb{R}^n\to\mathbb{R}^m$ be a quadratic map: $f_i(x)=x^TA_ix$, $A_i=A_i^T$.
 
@@ -470,7 +492,7 @@ If exist $c\in\mathbb{R}^m$:
 \end{enumerate}
 Then $F=\mbox{Im}f$ is nonconvex.
 
-\subsection*{13. $\conv F$}
+\subsection{$\conv F$}
 Пусть $f\colon \mathbb{R}^n\to\mathbb{R}^m$, $f_i(x)=x^TA_ix+2b_i^Tx$, $A_i=A_i^T$.
 
 Обозначим $F=f(\mathbb{R}^n)$, $G=\mbox{conv}F$
@@ -526,7 +548,7 @@ x^T & 1
 	Обозначим $\Lambda =\sum\lambda_k$. Пусть $s_{k,n+1}\neq \frac{1}{\Lambda}$. Тогда переопределим $s_{k,n+1}=\frac{1}{\Lambda}$. Это можно сделать, т.к. $H_i(s_ks_k^T)$ не изменится (прямая проверка, использовать $H_{i,n+1,n+1}=0$). Рассмотрим $X=\sum \underbrace{\frac{\lambda_k}{\Lambda}}_{\alpha_k} \underbrace{\Lambda s_ks_k^T}_{X_k}$. Получили представление $X=\alpha_k X_k$, $X_k$ имеет нужный вид, $\alpha_k$~--- выпуклая комбинация. Получаем $y\in G$
 	
 \end{enumerate}
-\subsection*{14. Small ball}
+\subsection{Small ball}
 Пусть $f\colon \mathbb{R}^n\to\mathbb{R}^m$, $f_i(x)=x^TA_ix-2b_i^Tx$, $A_i=A_i^T$. Пусть $c\in\mathbb{R}^m$.
 
 Обозначим $c\cdot  A=\sum\limits_{i=1}^n c_iA_i$, $c\cdot b=\sum\limits_{i=1}^n c_ib_i$, $F_c(x)=c^Tf(x)$
