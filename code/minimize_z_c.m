@@ -1,4 +1,5 @@
-function [z, c_array, z_array] = minimize_z_c(A_, b_, c)
+function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c)
+    success = 1;
     % dimensions
     n = size(A_, 1);
     m = size(A_, 3);
@@ -32,6 +33,7 @@ function [z, c_array, z_array] = minimize_z_c(A_, b_, c)
 
         % check for rank(Q) == n - 1
         if ~(rank(Q, 1e-5) == n - 1)
+            success = 0;
             display('Rank Q error');
             break;
         end
@@ -75,6 +77,7 @@ function [z, c_array, z_array] = minimize_z_c(A_, b_, c)
         end
         
         if size(c_new, 1) == 0
+            success = 0;
             display('Projection failed');
             return;
         end
