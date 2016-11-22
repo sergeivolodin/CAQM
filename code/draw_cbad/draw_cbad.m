@@ -2,7 +2,7 @@ clear all
 
 % getting an image
 
-load('example03.mat');
+load('example01.mat');
 
 % basis: c_+A=I, c_+b=0
 [A_, b_] = change_basis(A, b, c_plus);
@@ -19,13 +19,16 @@ item_size = [];
 i = 1;
 j = 1;
 k = 1;
-N = 20;
+N = 5;
 while i <= N
     % a point inside F
     x0_ = rand(n, 1) * 2;
     y0_ = quadratic_map(A_, b_, x0_);
     
-    c = get_nonconvex_c(A_, b_, y0_, 1000);
+    c = get_nonconvex_c(A_, b_, y0_, 3);
+    if size(c, 1) == 0
+        continue
+    end
     c = remove_component(c, c_plus);
     c = c / norm(c);
     
@@ -40,8 +43,8 @@ while i <= N
     % minimizing z(c)
     display('=== Minimizing z(c) ===');
 
-    for sign = [-1, 1] 
-        [~, c_item_array, ~, success] = minimize_z_c(A_, b_, c, sign * 0.01);
+    for step = [-0.001, 0.005] 
+        [~, c_item_array, ~, success] = minimize_z_c(A_, b_, c, step);
 
         if success == 0
             display('Minimization failed');
