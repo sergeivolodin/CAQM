@@ -18,7 +18,7 @@ item_size = [];
 
 i = 1;
 j = 1;
-N = 100;
+N = 3;
 while i <= N
     % a point inside F
     x0_ = rand(n, 1) * 2;
@@ -129,4 +129,10 @@ end
 v = R * c_ans;
 v = v / norm(v);
 plot_dest = scatter3(v(1), v(2), v(3), 1000, [1 0 0], 'p');
+
+[Sx, Sy, Sz] = sphere(32);
+s=surf(Sx,Sy,Sz);
+set(s,'FaceColor',[0 0 0],'FaceAlpha',0.05);
+set(s, 'EdgeColor', [0 0 0],'EdgeAlpha',0.1)
+
 legend([plot_path, plot_gd, plot_end, plot_begin, plot_dest], {'Path', 'Gradient Descent point', 'End point', 'Start point (certificate)', 'Global minimum'});
