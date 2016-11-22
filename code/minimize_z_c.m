@@ -1,4 +1,4 @@
-function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c)
+function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c, coefficient)
     success = 1;
     % dimensions
     n = size(A_, 1);
@@ -61,14 +61,21 @@ function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c)
         shrink_base = 0.5;
         shrink_max = 50;
         shrink_i = 0;
+        
+        grad_tangent = dz_dc - normal * dot(dz_dc, normal);
+        grad_tangent = grad_tangent / norm(grad_tangent);
+        
         while shrink_i <= shrink_max
-            step = (shrink_base ^ shrink_i);
-            delta_c = -dz_dc * step;
+            step = (shrink_base ^ shrink_i) * coefficient;
+            delta_c = -grad_tangent * step;
             [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, 1);
         
             if size(c_new, 1) > 0
                 [~, ~, ~, ~, ~, z_new, ~, ~] = get_gradient(A_, b_, c_new);
-                if z_new < z
+                if z_new < z && coefficient > 0
+                    break;
+                end
+                if z_new > z && coefficient < 0
                     break;
                 end
             end
