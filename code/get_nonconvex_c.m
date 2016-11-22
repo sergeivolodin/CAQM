@@ -1,4 +1,4 @@
-function c = get_nonconvex_c(A, b, y0, MAXITER)
+function c = get_nonconvex_c(A, b, y0, c_array, c_plus, MAXITER)
     c = [];
     n = size(A, 1);
     m = size(A, 3);
@@ -15,7 +15,11 @@ function c = get_nonconvex_c(A, b, y0, MAXITER)
         c = get_c_from_d(H, y0, d);
         if size(c, 1) == m
             if is_nonconvex(A, b, c)
-                found = 1;
+                if is_new_cbad(c_array, c_plus, c)
+                    found = 1;
+                else
+                    display('Found but old');
+                end
             else
                 c = [];
             end
