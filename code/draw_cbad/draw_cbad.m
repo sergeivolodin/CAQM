@@ -18,7 +18,8 @@ item_size = [];
 
 i = 1;
 j = 1;
-N = 3;
+k = 1;
+N = 20;
 while i <= N
     % a point inside F
     x0_ = rand(n, 1) * 2;
@@ -29,7 +30,7 @@ while i <= N
     c = c / norm(c);
     
     if ~is_new_cbad(c_start, c_plus, c)
-        fprintf('i = %d j = %d Processed already\n', i, j);
+        fprintf('i = %d j = %d k = %d Processed already\n', i, j, k);
         j = j + 1;
         continue;
     end
@@ -39,17 +40,21 @@ while i <= N
     % minimizing z(c)
     display('=== Minimizing z(c) ===');
 
-    [~, c_item_array, ~, success] = minimize_z_c(A_, b_, c);
+    for sign = [-1, 1] 
+        [~, c_item_array, ~, success] = minimize_z_c(A_, b_, c, sign * 0.01);
 
-    if success == 0
-        display('Minimization failed');
-        return;
+        if success == 0
+            display('Minimization failed');
+            %return;
+        end
+
+        s = size(c_item_array, 2);
+        item_size(k) = s;
+
+        c_array(k, :, 1 : s) = c_item_array;
+        
+        k = k + 1;
     end
-    
-    s = size(c_item_array, 2);
-    item_size(i) = s;
-    
-    c_array(i, :, 1 : s) = c_item_array;
     
     i = i + 1;
     j = j + 1;
