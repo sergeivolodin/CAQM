@@ -1,4 +1,4 @@
-function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c, coefficient)
+function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c, coefficient, max_step)
     success = 1;
     % dimensions
     n = size(A_, 1);
@@ -77,10 +77,15 @@ function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c, coefficient)
         
             if size(c_new, 1) > 0
                 [~, ~, ~, ~, ~, z_new, ~, ~] = get_gradient(A_, b_, c_new);
+                ok = 0;
                 if z_new < z && coefficient > 0
-                    break;
+                    ok = 1;
                 end
                 if z_new > z && coefficient < 0
+                    ok = 1;
+                end
+                
+                if ok && norm(c_new - c) <= max_step
                     break;
                 end
             end
@@ -97,3 +102,4 @@ function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c, coefficient)
         c = c_new;
         iteration = iteration + 1;
     end
+end
