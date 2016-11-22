@@ -3,7 +3,7 @@ function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_
     c_new = c;
 
     % calculating c' (c_1)
-    c_1 = c + delta_c - normal * dot(delta_c, normal);
+    c_1 = c + delta_c;
 
     % biggest lambda
     lambda_0 = norm(c_1 - c) * search_area_size;
@@ -19,6 +19,8 @@ function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_
     
     i = 1;
 
+    value = 1;
+    
     while (r - l) > 1e-8
         center = (r + l) / 2;
         sign_c = sign(get_m(A_, b_, c_1, normal, x_0, center));
