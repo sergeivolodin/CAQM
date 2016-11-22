@@ -16,6 +16,8 @@ function c = get_nonconvex_c(A, b, y0, MAXITER)
         if size(c, 1) == m
             if is_nonconvex(A, b, c)
                 found = 1;
+            else
+                c = [];
             end
         end
         i = i + 1;
