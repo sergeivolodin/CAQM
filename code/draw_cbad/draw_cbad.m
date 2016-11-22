@@ -2,7 +2,7 @@ clear all
 
 % getting an image
 
-load('example01.mat');
+load('example03.mat');
 
 % basis: c_+A=I, c_+b=0
 [A_, b_] = change_basis(A, b, c_plus);
@@ -19,32 +19,35 @@ item_size = [];
 i = 1;
 j = 1;
 k = 1;
-N = 5;
+N = 10;
+
+max_c_attempts = 10;
+x_search_size = 5;
+
 while i <= N
     % a point inside F
-    x0_ = rand(n, 1) * 2;
+    x0_ = rand(n, 1) * x_search_size;
     y0_ = quadratic_map(A_, b_, x0_);
     
-    c = get_nonconvex_c(A_, b_, y0_, 3);
+    all_c = reshape(permute(c_array, [2 1 3]), m, []);
+    all_c(:, find(sum(abs(all_c)) == 0)) = [];
+    
+    c = get_nonconvex_c(A_, b_, y0_, all_c, c_plus, max_c_attempts);
     if size(c, 1) == 0
+        display('i = %d j = %d k = %d C not found', i, j, k);
+        j = j + 1;
         continue
     end
     c = remove_component(c, c_plus);
     c = c / norm(c);
-    
-    if ~is_new_cbad(c_start, c_plus, c)
-        fprintf('i = %d j = %d k = %d Processed already\n', i, j, k);
-        j = j + 1;
-        continue;
-    end
     
     c_start(:, end + 1) = c;
     
     % minimizing z(c)
     display('=== Minimizing z(c) ===');
 
-    for step = [-0.001, 0.005] 
-        [~, c_item_array, ~, success] = minimize_z_c(A_, b_, c, step);
+    for step = [0.4, -0.4] 
+        [~, c_item_array, ~, success] = minimize_z_c(A_, b_, c, step, 0.032);
 
         if success == 0
             display('Minimization failed');
@@ -119,7 +122,12 @@ for i = 1:N
     z_item_value = ((z_value(i, 1:s) - z_min) / (z_max - z_min)).^(1/10);
     c_item_color(:, 1 : s) = repmat([0.5 0.5 1]', 1, s) * diag(z_item_value)...
         + repmat([1 0.5 0.5]', 1, s) * diag(1 - z_item_value);
+    
     c_item_color(:, end) = [1 0 0]';
+    if rem(i, 2) == 0
+        c_item_color(:, end) = [0 1 0]';
+    end
+    
     c_item_color(:, 1) = [0 0 1]';
     
     v = R * c_item_array;
@@ -129,7 +137,14 @@ for i = 1:N
     end
     
     plot_path = line(v(1, :), v(2, :), v(3, :), 'Color', [0.7 0.7 1]');
-    plot_gd = scatter3(v(1, 2:end-1), v(2, 2:end-1), v(3, 2:end-1), 36, c_item_color(:, 2:end-1)', 'd', 'DisplayName', 'Gradient Descent');
+    
+    gd_plot_type = 'd';
+    if rem(i, 2) == 0
+        gd_plot_type = 's';
+    end
+    
+    plot_gd = scatter3(v(1, 2:end-1), v(2, 2:end-1), v(3, 2:end-1), 36, ...
+        c_item_color(:, 2:end-1)', gd_plot_type, 'DisplayName', 'Gradient Descent');
     plot_end = scatter3(v(1, end), v(2, end), v(3, end), 1500, c_item_color(:, end)', '.');
     plot_begin = scatter3(v(1, 1), v(2, 1), v(3, 1), 800, c_item_color(:, 1)', '.');
 end
