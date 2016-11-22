@@ -19,7 +19,7 @@ item_size = [];
 i = 1;
 j = 1;
 k = 1;
-N = 30;
+N = 1;
 
 max_c_attempts = 20;
 x_search_size = 1;
@@ -144,8 +144,14 @@ for i = 1:N
     end
     
     plot_gd = scatter3(v(1, 2:end-1), v(2, 2:end-1), v(3, 2:end-1), 36, ...
-        c_item_color(:, 2:end-1)', gd_plot_type, 'DisplayName', 'Gradient Descent');
+        c_item_color(:, 2:end-1)', gd_plot_type);
+    
     plot_end = scatter3(v(1, end), v(2, end), v(3, end), 1500, c_item_color(:, end)', '.');
+    if rem(i, 2) == 0
+        plot_max_end = plot_end;
+    else
+        plot_min_end = plot_end;
+    end
     plot_begin = scatter3(v(1, 1), v(2, 1), v(3, 1), 800, c_item_color(:, 1)', '.');
 end
 
@@ -158,4 +164,4 @@ s=surf(Sx,Sy,Sz);
 set(s,'FaceColor',[0 0 0],'FaceAlpha',0.05);
 set(s, 'EdgeColor', [0 0 0],'EdgeAlpha',0.1)
 
-legend([plot_path, plot_gd, plot_end, plot_begin, plot_dest], {'Path', 'Gradient Descent point', 'End point', 'Start point (certificate)', 'Global minimum'});
+legend([plot_path, plot_gd, plot_min_end, plot_max_end, plot_begin, plot_dest], {'Path', 'Gradient Descent point', 'End (minimize)', 'End (maximize)', 'Start point (certificate)', 'Global minimum'});
