@@ -31,6 +31,11 @@ function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c, coefficient)
         
         eps0 = 1e-7;
 
+        if abs(z) >= 1e9
+            display('z value too big!');
+            break;
+        end
+        
         % check for rank(Q) == n - 1
         if ~(rank(Q, 1e-5) == n - 1)
             success = 0;
