@@ -19,10 +19,10 @@ item_size = [];
 i = 1;
 j = 1;
 k = 1;
-N = 10;
+N = 30;
 
-max_c_attempts = 10;
-x_search_size = 5;
+max_c_attempts = 20;
+x_search_size = 1;
 
 while i <= N
     % a point inside F
@@ -34,7 +34,7 @@ while i <= N
     
     c = get_nonconvex_c(A_, b_, y0_, all_c, c_plus, max_c_attempts);
     if size(c, 1) == 0
-        display('i = %d j = %d k = %d C not found', i, j, k);
+        fprintf('i = %d j = %d k = %d C not found\n', i, j, k);
         j = j + 1;
         continue
     end
