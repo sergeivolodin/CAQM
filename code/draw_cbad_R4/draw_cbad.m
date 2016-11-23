@@ -18,11 +18,10 @@ item_size = [];
 
 i = 1;
 j = 1;
-k = 1;
-N = 1;
+N = 40;
 
 max_c_attempts = 20;
-x_search_size = 1;
+x_search_size = 1.5;
 
 while i <= N
     % a point inside F
@@ -32,9 +31,9 @@ while i <= N
     all_c = reshape(permute(c_array, [2 1 3]), m, []);
     all_c(:, find(sum(abs(all_c)) == 0)) = [];
     
-    c = get_nonconvex_c(A_, b_, y0_, all_c, c_plus, max_c_attempts);
+    [c_attempts, c] = get_nonconvex_c(A_, b_, y0_, max_c_attempts);
     if size(c, 1) == 0
-        fprintf('i = %d j = %d k = %d C not found\n', i, j, k);
+        fprintf('i = %d j = %d C not found\n', i, j);
         j = j + 1;
         continue
     end
@@ -46,21 +45,18 @@ while i <= N
     % minimizing z(c)
     display('=== Minimizing z(c) ===');
 
-    for step = [0.4, -0.4] 
-        [~, c_item_array, ~, success] = minimize_z_c(A_, b_, c, step, 0.032);
+    [~, c_item_array, ~, success] = minimize_z_c(A_, b_, c, 0.08, 1);
 
-        if success == 0
-            display('Minimization failed');
-            %return;
-        end
-
-        s = size(c_item_array, 2);
-        item_size(k) = s;
-
-        c_array(k, :, 1 : s) = c_item_array;
-        
-        k = k + 1;
+    if success == 0
+        display('Minimization failed');
+        return;
     end
+
+    s = size(c_item_array, 2);
+    item_size(i) = s;
+
+    c_array(i, :, 1 : s) = c_item_array;
+
     
     i = i + 1;
     j = j + 1;
@@ -122,12 +118,7 @@ for i = 1:N
     z_item_value = ((z_value(i, 1:s) - z_min) / (z_max - z_min)).^(1/10);
     c_item_color(:, 1 : s) = repmat([0.5 0.5 1]', 1, s) * diag(z_item_value)...
         + repmat([1 0.5 0.5]', 1, s) * diag(1 - z_item_value);
-    
     c_item_color(:, end) = [1 0 0]';
-    if rem(i, 2) == 0
-        c_item_color(:, end) = [0 1 0]';
-    end
-    
     c_item_color(:, 1) = [0 0 1]';
     
     v = R * c_item_array;
@@ -138,20 +129,9 @@ for i = 1:N
     
     plot_path = line(v(1, :), v(2, :), v(3, :), 'Color', [0.7 0.7 1]');
     
-    gd_plot_type = 'd';
-    if rem(i, 2) == 0
-        gd_plot_type = 's';
-    end
-    
     plot_gd = scatter3(v(1, 2:end-1), v(2, 2:end-1), v(3, 2:end-1), 36, ...
-        c_item_color(:, 2:end-1)', gd_plot_type);
-    
+        c_item_color(:, 2:end-1)', 'd');
     plot_end = scatter3(v(1, end), v(2, end), v(3, end), 1500, c_item_color(:, end)', '.');
-    if rem(i, 2) == 0
-        plot_max_end = plot_end;
-    else
-        plot_min_end = plot_end;
-    end
     plot_begin = scatter3(v(1, 1), v(2, 1), v(3, 1), 800, c_item_color(:, 1)', '.');
 end
 
@@ -164,4 +144,4 @@ s=surf(Sx,Sy,Sz);
 set(s,'FaceColor',[0 0 0],'FaceAlpha',0.05);
 set(s, 'EdgeColor', [0 0 0],'EdgeAlpha',0.1)
 
-legend([plot_path, plot_gd, plot_min_end, plot_max_end, plot_begin, plot_dest], {'Path', 'Gradient Descent point', 'End (minimize)', 'End (maximize)', 'Start point (certificate)', 'Global minimum'});
+legend([plot_path, plot_gd, plot_end, plot_begin, plot_dest], {'Path', 'Gradient Descent point', 'End (minimize)', 'Start point (certificate)', 'Global minimum'});
