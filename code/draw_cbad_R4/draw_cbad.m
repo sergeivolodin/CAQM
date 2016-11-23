@@ -141,7 +141,7 @@ plot_dest = scatter3(v(1), v(2), v(3), 1000, [1 0 0], 'p');
 
 [Sx, Sy, Sz] = sphere(32);
 s=surf(Sx,Sy,Sz);
-set(s,'FaceColor',[0 0 0],'FaceAlpha',0.05);
-set(s, 'EdgeColor', [0 0 0],'EdgeAlpha',0.1)
+set(s, 'FaceColor', [0 0 0], 'FaceAlpha', 0.05);
+set(s, 'EdgeColor', [0 0 0], 'EdgeAlpha', 0.1)
 
 legend([plot_path, plot_gd, plot_end, plot_begin, plot_dest], {'Path', 'Gradient Descent point', 'End (minimize)', 'Start point (certificate)', 'Global minimum'});
