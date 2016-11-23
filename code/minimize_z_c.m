@@ -1,4 +1,4 @@
-function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c, coefficient, max_step)
+function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c, c_plus, coefficient, max_step_sin)
     success = 1;
     % dimensions
     n = size(A_, 1);
@@ -85,7 +85,7 @@ function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c, coefficient, m
                     ok = 1;
                 end
                 
-                if ok && norm(c_new - c) <= max_step
+                if ok && min_sin_cbad(c_new, c_plus, c) <= max_step_sin
                     break;
                 end
             end
