@@ -2,7 +2,7 @@ clear all
 
 % getting an image
 
-load('example03.mat');
+load('example01.mat');
 
 % basis: c_+A=I, c_+b=0
 [A_, b_] = change_basis(A, b, c_plus);
@@ -15,10 +15,10 @@ item_size = [];
 
 i = 1;
 j = 1;
-N = 2;
+N = 1;
 
 max_c_attempts = 20;
-x_search_size = 2;
+x_search_size = 10;
 item_size = [];
 c_array = [];
 
