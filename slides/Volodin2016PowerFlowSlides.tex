@@ -1,0 +1,194 @@
+\documentclass{beamer}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[makeroom]{cancel} % зачеркивание
+\usepackage{multicol,multirow} %Несколько колонок
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\Rg}{Rg}
+\DeclareMathOperator{\Ker}{Ker}
+\newcommand{\matrixl}{\left|\left|}
+\newcommand{\cbad}{c_{\mathrm{bad}}}
+\newcommand{\matrixr}{\right|\right|}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\h}{\mathbf{h}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\aaa}{\mathbf{a}}
+\newcommand{\w}{\mathbf{w}}
+\newcommand{\W}{\mathbf{W}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\Y}{\mathbf{Y}}
+\newcommand{\fx}{\mathbf{f}}
+\newcommand{\fs}{\mbox{f}}
+\usepackage[cp1251]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath,mathrsfs,mathtext}
+\usepackage{graphicx, epsfig}
+\usetheme{Warsaw}%{Singapore}%{Warsaw}%{Warsaw}%{Darmstadt}
+\usecolortheme{sidebartab}
+\definecolor{beamer@blendedblue}{RGB}{55,172,32}
+%----------------------------------------------------------------------------------------------------------
+\title[\hbox to 56mm{Power Flow Feasibility problem  \hfill\insertframenumber\,/\,\inserttotalframenumber}]
+{Power flow feasibility problem}
+\author[S.E. Volodin]{\large \\Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin, Yury Maximov}
+\institute{\large Skolkovo Insitute of Science and Technology}
+
+\date{}
+%-------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------
+\begin{frame}
+%\thispagestyle{empty}
+\titlepage
+\end{frame}
+%-------------------------------------------------------
+\begin{frame}{The problem}
+\begin{enumerate}
+\item Large-scale power grids
+\item Need to know if a regime of the grid is <<normal>>, <<safe>>
+\item Ohm's law $\Rightarrow$ quadratic equations:
+$$y_i=f_i(x)=x^TA_ix+2b_i^Tx$$
+$y$ (regime) known, $x$ is not
+\item Need to determine if $\exists x\colon y=f(x)$ (means <<safe>>)
+\end{enumerate}
+
+This problem is known as Power Flow Feasibility problem.
+
+To solve it, the image $f(\mathbb{R}^n)$ must be examined
+\end{frame}
+
+\begin{frame}{State of the art}
+\begin{enumerate}
+\item A. Dymarsky, Convexity of a Small Ball Under Quadratic Map, arXiv:1410.1553
+\item A. Dymarsky, On the Convexity of Image of a Multidimensional Quadratic Map, arXiv:1410.2254
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{The solution}
+Given: the map $f\colon\mathbb{R}^n\to\mathbb{R}^m$, $f_i(x)=x^TA_ix+2b_i^Tx,\,A_i^T=A_i$
+Proposed algorithm for examining $F=f(\mathbb{R}^n)$:
+\begin{itemize}
+\item Input: $y^0\in F$, direction $c_+\colon c_+\cdot A>0$
+\item Output: value $z_{\max}$ s.t. the cut $Q(c_+,z_{\max}, F)$ is convex
+\end{itemize}
+$Q(c_+,z,F)=\{y\big| (y-y^*,c_+)\in[0,z]\}\cap F$
+\centering \includegraphics[width=250px]{cut}
+\end{frame}
+
+\begin{frame}{The solution}
+\begin{enumerate}
+\item Discovering boundary nonconvexities $\{F_i\}$ close to $y^0$
+\item Projecting to $c_+$: $(F_i,c_+)$
+\item Calculating $z_{\max}=\min\limits_{y\in F_i}(c_+,y)$
+\end{enumerate}
+\centering \includegraphics[width=250px]{cut}
+\end{frame}
+
+\begin{frame}{The solution}
+	Boundary points of F on supporting hyperplane $c$:
+	$\partial F_{c}=\arg\min\limits_{x\in\mathbb{R}^n}(c,f(x))=\Ker (c\cdot A)-(c\cdot A)^g(c\cdot b)$ if
+	
+	$$\begin{cases}
+	c\cdot A\geqslant 0\\
+	(c\cdot b)^T\Ker (c\cdot A)=0
+	\end{cases}$$
+	or $\partial F_c=\emptyset$
+\begin{itemize}
+\item $\partial F_{c}$ is nonconvex $\Rightarrow$ $F$ has nonconvexity
+\item $\partial F_c$ is nonconvex $\leftrightsquigarrow$ $\Rg (c\cdot A)<n$, $c\cdot A\geqslant 0$
+\end{itemize}
+Therefore, $z_{\max}=\inf\limits_c\inf\limits_{y\in \partial F_c} (c_+, \partial F_c)$\\
+{\em We assume $\Rg(c \cdot A)< n-1$ to be a rare case}
+\end{frame}
+
+\begin{frame}{The solution}
+Linear change of basis s.t.
+$\begin{cases}
+c_+\cdot A=I\\
+c_+\cdot b=0
+\end{cases}$ $\Rightarrow$
+\begin{itemize}
+\item $\inf\limits_{y\in \partial F_c} (c_+, \partial F_c)=\|(c\cdot A)^g(c\cdot b)\|^2$ for $c\colon \Rg (c\cdot A)=n-1$
+\item Define $z(c)=\|(c\cdot A-\lambda_{\min}(c\cdot A))^g(c\cdot b)\|^2$
+\item Define $\cbad=\{c\big| \Ker(c\cdot A)\bot (c\cdot b)\}$
+\item Then $\boxed{z_{\max}=\inf\limits_{c\in\cbad}z(c)}$.
+\end{itemize}
+
+In general case $|\cbad|$ is continuum
+\end{frame}
+\begin{frame}{The solution}
+We use gradient projection method to find
+$$z_{\max}=\inf\limits_{c\in\cbad}z(c)$$
+\begin{enumerate}
+	\item Start point: obtained via {\em nonconvexity certificate}
+	\item Gradient $\frac{dz}{dc}$ is calculated explicitly
+	\item Normal vector $n$ for $\cbad$
+	\item Projection onto $\cbad$ is done by adjusting $\lambda$ in $c'+\lambda n$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{The solution}
+Nonconvexity certificate:
+\begin{enumerate}
+\item Input: $y^0$
+\item Generating random directions $d$
+\item Find $t\colon y^0+td\in\partial \conv F$
+\item $y^0+td\in F$?
+\item If not, obtain $c$ via dual problem
+\item Output: <<nonconvex>> c
+\end{enumerate}
+$\Rightarrow$ Obtained start point for gradient descent
+\centering \includegraphics[width=200px]{alg_idea20}
+\end{frame}
+
+\begin{frame}{The solution}
+\centering \includegraphics[width=200px]{c_bad_continuum}
+
+Gradient step + projection
+\begin{enumerate}
+\item Input: current point $c=c^k\in\cbad$
+\item Calculate $n(c)$, $\frac{dz}{dc}$, $c'=c+(\hat{1}-\frac{(\cdot, n)}{(n,n)}n)\frac{dz}{dc}$
+\item Project $c'\notin \cbad$ onto $\cbad$
+\item $c^{k+1}$ $\leftarrow$ result of projection
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{The solution}
+Projection
+
+Given: point $c'\notin \cbad$, normal vector $n$\\
+Find: point $c\in\cbad$ close to $c$
+\begin{enumerate}
+	\item $c(\lambda)=c'+\lambda n$
+	\item For some $\lambda$, $c(\lambda)\in \cbad$
+	\item $c(\lambda)\in \cbad$ $\Leftrightarrow$ $\Ker(c(\lambda)\cdot A)\bot c(\lambda)\cdot b$
+	\item $m(\lambda)=(c(\lambda)\cdot b)^Tx_0(\lambda)$, $x_0(\lambda)\in\Ker (c(\lambda)\cdot A)$
+\end{enumerate}
+Projection is done by finding root of $m(\lambda)$
+\end{frame}
+\begin{frame}{Numerical experiment}
+$f\colon \mathbb{R}^4\to\mathbb{R}^4$
+\centering \includegraphics[width=300px]{example03_cbad_91pts_04.png}
+\end{frame}
+
+\begin{frame}{Results}
+\begin{enumerate}
+\item Algorithm for examining $F$ was proposed
+\item Cases when $|\cbad|=\infty$ and $|\cbad|<\infty$ were considered
+\item Algorithm for $|\cbad|=\infty$ was implemented
+\item Algorithm was tested on a number of maps $f$
+\end{enumerate}
+\end{frame}
+\begin{frame}{Results}
+\centering 
+\Huge Thank you!\\
+Questions?
+\end{frame}
+\end{document} 
