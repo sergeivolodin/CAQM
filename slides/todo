@@ -1,0 +1,16 @@
+a few comments. 
+
+1. Title page: I would write only your name and your official MIPT supervisor: 
+Sergey Volodin, under supervision of Y. Maximov. Otherwise the question is: which results are yours which are not? You don't want to emphasize this question yourself. 
+
+2. slide 6, \partial F is a boundary. Boundary can not be convex. you probably should substitute that by convex hull(\partial F)
+what is Rg? what the hell is this wiggly double-arrow? avoid non-standard notations, you don't have time to explain them
+
+3. slide 7, you define c_bad but do not explain the geometrical meaning of c_bad. that's more important, otherwise people in the audience will be lost
+
+4. slide 10, the hand-drawn pic. is not comprehensible (not because it's hand-drawn but because too much stuff and very cluttered). 
+
+5. slide 12 is OK, but you had visually more impressive pictures. try to use the best-looking one. 
+
+6. slide 13.add details such that people (finally) understand what you were doing and what have been done. what is F? examining F says nothing. 
+what is |c_bad|? why is it infinite twice? this slide is very weak. 
