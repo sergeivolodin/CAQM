@@ -81,13 +81,13 @@ Proposed algorithm for examining $F=f(\mathbb{R}^n)$:
 \end{itemize}
 $$Q(c_+,z,F)=\{y\big| (y-y^*,c_+)\in[0,z]\}\cap F$$\\
 \vspace{30px}
-\centering \includegraphics[width=100px]{cut}
+\centering \includegraphics[width=100px]{cut}\\
+\centering $y^*$~--- touching point of hyperplane $c_+$\\
 \end{frame}
 
 \begin{frame}{The solution}
 The idea of the algorithm:
 \begin{enumerate}
-\item $y^*$~--- touching point of hyperplane $c_+$
 \item Discovering boundary nonconvexities $\{F_i\}$ close to $y^0$
 \item Projecting to $c_+$: $(F_i,c_+)$
 \item Calculating $z_{\max}=\inf\limits_i \inf\limits_{y\in F_i}(c_+,y)$
@@ -207,13 +207,19 @@ $f\colon \mathbb{R}^4\to\mathbb{R}^4$
 \begin{frame}{Results}
 Algorithm for examining the set of <<safe>> regimes was proposed:
 \begin{enumerate}
-\item Can determine if the whole region is <<safe>> at one run
+\item Can determine if the whole subset is <<safe>> at one run
 \item Cuts convex parts of the image $F$
 \item General case when the set of nonconvexities is a continuum was considered
 \item Algorithm was tested on a number of maps $f$
 \end{enumerate}
-
-\vspace{40px}
+Plan:
+\begin{enumerate}
+	\item What happens to $\cbad$ if $\Rg(c\cdot A)=n-2$?
+	\item $\mathbb{C}$ case
+	\item Testing for $n,m>4$
+	\item Testing for $n,m\gg1$
+\end{enumerate}
+%\vspace{40px}
 \begin{tabular}{cccc}
 \begin{minipage}{0.23\textwidth} 
 \hspace*{-30px}\includegraphics[height=60px]{cut}
