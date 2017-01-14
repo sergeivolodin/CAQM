@@ -97,6 +97,8 @@ R = complete_basis(c_plus)';
 hold on;
 grid on;
 
+axis equal;
+
 for i = 1:N
     s = item_size(i);
     c_item_array = [];
@@ -133,16 +135,16 @@ for i = 1:N
         plot_type = 'd';
     end
     
-    plot_gd = scatter3(v(1, 2:end-1), v(2, 2:end-1), v(3, 2:end-1), 36, ...
+    plot_cdot = scatter3(v(1, 2:end-1), v(2, 2:end-1), v(3, 2:end-1), 36, ...
         c_item_color(:, 2:end-1)', plot_type);
     
     plot_end = scatter3(v(1, end), v(2, end), v(3, end), 1500, c_item_color(:, end)', '.');
     
     if(rem(i, 2) == 0)
-        plot_gd_inv = plot_gd;
+        plot_cdot_inv = plot_cdot;
         plot_end_inv = plot_end;
     else
-        plot_gd_forw = plot_gd;
+        plot_cdot_forw = plot_cdot;
         plot_end_forw = plot_end;
     end
     
@@ -155,7 +157,7 @@ plot_dest = scatter3(v(1), v(2), v(3), 1000, [1 0 0], 'p');
 
 [Sx, Sy, Sz] = sphere(32);
 s=surf(Sx,Sy,Sz);
-set(s, 'FaceColor', [0 0 0], 'FaceAlpha', 0.05);
-set(s, 'EdgeColor', [0 0 0], 'EdgeAlpha', 0.1)
+set(s, 'FaceColor', [0 0 0], 'FaceAlpha', 0.1);
+set(s, 'EdgeColor', [0 0 0], 'EdgeAlpha', 0.3)
 
-legend([plot_path, plot_gd_inv, plot_gd_forw, plot_end_inv, plot_end_forw, plot_begin, plot_dest], {'Path', 'Backwards', 'Forwards', 'End backwards', 'End forwards', 'Start point (certificate)', 'Global minimum'});
+legend([plot_path, plot_cdot_inv, plot_cdot_forw, plot_end_inv, plot_end_forw, plot_begin, plot_dest], {'Path', 'Backwards', 'Forwards', 'End backwards', 'End forwards', 'Start point (certificate)', 'Global minimum'});
