@@ -36,9 +36,9 @@
 \usecolortheme{sidebartab}
 \definecolor{beamer@blendedblue}{RGB}{55,172,32}
 %----------------------------------------------------------------------------------------------------------
-\title[\hbox to 56mm{Power Flow Feasibility problem  \hfill\insertframenumber\,/\,\inserttotalframenumber}]
-{Power flow feasibility problem}
-\author[S.E. Volodin]{\large \\Sergei Volodin\\under supervision of Y. Maximov}
+\title[\hbox to 56mm{On the feasibility for the system of quadratic equations  \hfill\insertframenumber\,/\,\inserttotalframenumber}]
+{On the feasibility for the system of quadratic equations}
+\author[S.E. Volodin]{\large \\Anatoly Dymarsky, Elena Gryazina, Boris Polyak,\\ Yury Maximov, Sergei Volodin}
 \institute{\large Skolkovo Insitute of Science and Technology}
 
 \date{}
@@ -49,20 +49,29 @@
 %\thispagestyle{empty}
 \titlepage
 \end{frame}
+\begin{frame}{Outline}
+%\vspace{-100px}
+\centering
+\begin{enumerate}
+\item The Power Flow feasibility problem
+\item The algorithm
+\item An example
+\item Further plans
+\end{enumerate}
+\end{frame}
 %-------------------------------------------------------
 \begin{frame}{The problem}
+Power Flow Feasibility problem:
 \begin{enumerate}
 \item Large-scale power grids
-\item Need to know if a regime of the grid is <<normal>>, <<safe>>
+\item Need to know if a regime is <<normal>>, <<safe>>
 \item Ohm's law $\Rightarrow$ quadratic equations:
 $$y_i=f_i(x)=x^TA_ix+2b_i^Tx$$
 $y$ (regime) known, $x$ is not
-\item Need to determine if $\exists x\colon y=f(x)$ (means <<safe>>)
+\item Determine if $\exists x\colon y=f(x)$ (means <<safe>>)
 \end{enumerate}
 
-This problem is known as Power Flow Feasibility problem.
-
-To solve it, the image $f(\mathbb{R}^n)$ must be examined
+The image $f(\mathbb{R}^n)$ must be examined
 \end{frame}
 
 \begin{frame}{The solution}
@@ -84,17 +93,17 @@ $Q(c_+,z,F)=\{y\big| (y-y^*,c_+)\in[0,z]\}\cap F$, $y^*$~--- touching point of h
 \end{frame}
 
 \begin{frame}{The solution}
-Solution in details:
+Infinite number of nonconvexities $\Rightarrow$
 \begin{enumerate}
-\item Rewrite $z_{\max}=\inf\limits_{c_{\cbad}}z(c)$~--- constrained optimization task
-\item Using the Gradient projection method
-\item Special technique for projection using geometry of $\cbad$
+\item $z_{\max}=\inf\limits_{c\in\cbad}z(c)$~--- constrained optimization
+\item Gradient projection method
+\item Projection using $\vec{n}\bot\cbad$
 \end{enumerate}
 \centering \includegraphics[width=150px]{c_bad_continuum}
 \end{frame}
 
 \begin{frame}{Numerical experiment}
-An example: $f\colon \mathbb{R}^4\to\mathbb{R}^4$
+An example: $f\colon \mathbb{R}^4\to\mathbb{R}^4$. Looking for $z_{\max}=\inf\limits_{c\in\cbad}z(c)$
 \begin{itemize}
 \item 4 local minima
 \item Global minimum found
@@ -103,14 +112,14 @@ An example: $f\colon \mathbb{R}^4\to\mathbb{R}^4$
 \end{frame}
 
 \begin{frame}{Results}
-Algorithm for examining the set of <<safe>> regimes was proposed:
+Summary
 \begin{enumerate}
-\item Can determine if the whole subset is <<safe>> at one run
-\item Cuts convex parts of the image $F$
-\item General case when the set of nonconvexities is a continuum was considered
+\item Power Flow feasibility
+\item Algorithm cuts convex parts
+\item Gradient projection method
 \item Algorithm was tested on a number of maps $f$
 \end{enumerate}
-Plan:
+Plan: practical application
 \begin{enumerate}
 	\item $\mathbb{C}$ case
 	\item Testing for higher dimensions
@@ -130,5 +139,10 @@ Plan:
 \hspace*{-35px}\includegraphics[height=60px]{example03_cbad_91pts_03.png}
 \end{minipage}
 \end{tabular}
+\end{frame}
+\begin{frame}{Results}
+	\centering 
+	\Huge Thank you!\\
+	Questions?
 \end{frame}
 \end{document} 
