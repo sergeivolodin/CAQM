@@ -5,7 +5,8 @@ load('example03.mat');
 % basis: c_+A=I, c_+b=0
 [A_, b_] = change_basis(A, b, c_plus);
 
-R = complete_basis(c_plus);
+% complete basis
+R = null(c_plus');
 
 Phi = [];
 Theta = [];

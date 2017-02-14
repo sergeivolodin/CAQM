@@ -92,7 +92,7 @@ end
 % projecting 4D to 3D
 
 % three vectors ortohonal to c_plus
-R = complete_basis(c_plus)';
+R = null(c_plus')';
 
 hold on;
 grid on;

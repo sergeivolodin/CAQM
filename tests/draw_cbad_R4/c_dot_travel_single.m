@@ -32,7 +32,7 @@ function [c_array] = c_dot_travel_single(A_, b_, c, c_plus, coefficient, min_sin
         cbad_distance = x_0' * (b_ * c);
         cos_theta = dot(normal, dz_dc) / norm(dz_dc) / norm(normal);
 
-        c_dot = complete_basis([normal c_plus c]);
+        c_dot = null([normal c_plus c]');
         
         fprintf('C_bad step cos=%f Q_norm=%f Rank_Q=%d z(c)=%f c=[%f %f %f] lambda=%f distance=%f step=%f\n', cos_theta, ...
             norm(Q_inv), rank(Q, 1e-5), z, c(1), c(2), c(3), lambda, cbad_distance, step);
