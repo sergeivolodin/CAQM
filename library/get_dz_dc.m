@@ -1,4 +1,10 @@
-function [Q, Q_inv, x_0, v, lambda_min, z, dz_dc, normal] = get_gradient(A_, b_, c)
+function [Q, Q_inv, x_0, v, lambda_min, z, dz_dc, normal] = get_dz_dc(A_, b_, c)
+%% [Q, Q_inv, x_0, v, lambda_min, z, dz_dc, normal] = get_gradient(A_, b_, c)
+% calculate gradient dz_dc
+% also outputs values used in calculation
+
+%%
+    % dimensions
     n = size(A_, 1);
     m = size(A_, 3);
     
@@ -31,7 +37,8 @@ function [Q, Q_inv, x_0, v, lambda_min, z, dz_dc, normal] = get_gradient(A_, b_,
         dz_dc(i) = 2 * v' * Q_inv * (b_(:, i) - R * v);
         normal(i) = (b_(:, i)' - v' * R) * x_0;
     end
-    
+
+    % normalizing normal
     normal = normal / norm(normal);
 end
 

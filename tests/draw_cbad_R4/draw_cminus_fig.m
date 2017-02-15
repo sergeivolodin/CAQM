@@ -1,4 +1,4 @@
-function draw_cbad_fig(c_item_array, c_plus)
+function draw_cminus_fig(c_item_array, c_plus)
     % drawing C_bad
     % projecting 4D to 3D
 

@@ -8,7 +8,7 @@ load('example03.mat');
 [A_, b_] = change_basis(A, b, c_plus);
 
 % c, s.t. Theorem 3.4 holds
-display('=== Looking for c_bad ===');
+display('=== Looking for c_minus ===');
 
 c_start = [];
 c_array = [];

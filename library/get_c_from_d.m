@@ -1,14 +1,17 @@
+function c = get_c_from_d(H_, y0, d)
+%% c = get_c_from_d(H_, y0, d)
+% solve dual problem for direction d
+%
 % get normal vector for a hyperplanetouching at y \in F
 % where y = y^0 + td, t --> max
 % see equations (4) and (5)
-
+%
 % H_ -- matrices [A_i, b_i; b_i', 0]
 % y0 -- starting point y^0
 % d -- direction
 
-function c = get_c_from_d(H_, y0, d)
-    % size of spaces (n --> m)
-    m = size(H_, 3);
+%% 
+    % dimensions
     n = size(H_, 1) - 1;
     
     cvx_clear;
@@ -16,7 +19,7 @@ function c = get_c_from_d(H_, y0, d)
     
     % minimization task (5)
     cvx_begin
-        % variables: gamma -- scalar, c -- vector
+        % gamma -- scalar
         variable gam
         % c vector
         variable c(m)

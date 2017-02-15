@@ -29,15 +29,15 @@ function [c_array] = c_dot_travel_single(A_, b_, c, c_plus, coefficient, min_sin
         z_array(iteration) = z;
         
         % (b_c, x_0)
-        cbad_distance = x_0' * (b_ * c);
+        cminus_distance = x_0' * (b_ * c);
         cos_theta = dot(normal, dz_dc) / norm(dz_dc) / norm(normal);
 
         c_dot = null([normal c_plus c]');
         
         fprintf('C_bad step cos=%f Q_norm=%f Rank_Q=%d z(c)=%f c=[%f %f %f] lambda=%f distance=%f step=%f\n', cos_theta, ...
-            norm(Q_inv), rank(Q, 1e-5), z, c(1), c(2), c(3), lambda, cbad_distance, step);
+            norm(Q_inv), rank(Q, 1e-5), z, c(1), c(2), c(3), lambda, cminus_distance, step);
         
-        if iteration > 10 && min_sin_cbad(c_start, c_plus, c) < min_sin
+        if iteration > 10 && min_sin_cminus(c_start, c_plus, c) < min_sin
             fprintf('circle min_sin %f\n', min_sin);
             break;
         end
@@ -65,7 +65,7 @@ function [c_array] = c_dot_travel_single(A_, b_, c, c_plus, coefficient, min_sin
             break
         end
         
-        % projecting c + delta_c to c_bad
+        % projecting c + delta_c to c_minus
         shrink_base = 0.5;
         shrink_max = 50;
         shrink_i = 0;
@@ -82,7 +82,7 @@ function [c_array] = c_dot_travel_single(A_, b_, c, c_plus, coefficient, min_sin
             [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, 1);
         
             if size(c_new, 1) > 0
-                if min_sin_cbad(c_new, c_plus, c) <= min_sin
+                if min_sin_cminus(c_new, c_plus, c) <= min_sin
                     break;
                 end
             end

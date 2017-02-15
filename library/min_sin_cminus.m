@@ -1,4 +1,4 @@
-function r = min_sin_cbad(c_array, c_plus, c)
+function r = min_sin_cminus(c_array, c_plus, c)
     r = 1;
     if size(c_array, 2) == 0
         return;

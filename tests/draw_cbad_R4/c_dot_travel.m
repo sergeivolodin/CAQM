@@ -33,7 +33,7 @@ while i <= 2 * N
     all_c(:, find(sum(abs(all_c)) == 0)) = [];
     
     [c_attempts, c] = get_nonconvex_c(A_, b_, y0_, max_c_attempts);
-    if size(c, 1) == 0 || ~is_new_cbad(all_c, c_plus, c, min_sin)
+    if size(c, 1) == 0 || ~is_new_cminus(all_c, c_plus, c, min_sin)
         fprintf('i = %d j = %d C not found\n', i, j);
         j = j + 1;
         continue
