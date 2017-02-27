@@ -1,5 +1,5 @@
-function [i, c] = get_c_minus(A, b, y0, MAXITER)
-%% [iterations_count, c] = get_c_minus(A, b, y0, max_iterations)
+function [c, i] = get_c_minus(A, b, y0, MAXITER, DEBUG)
+%% [c, iterations_count] = get_c_minus(A, b, y0, max_iterations)
 % obtain c from C_-
 % using nonconvexity certificate
 %
@@ -12,6 +12,10 @@ function [i, c] = get_c_minus(A, b, y0, MAXITER)
 % [~, c] = get_c_minus(A, b, y0_, 1000);
 
 %% initializing
+
+    if nargin == 4
+        DEBUG = 0;
+    end
 
     % resulting c
     c = [];
@@ -32,7 +36,9 @@ function [i, c] = get_c_minus(A, b, y0, MAXITER)
     
     % making MAXITER attemts or less
     while (~found) && (i < MAXITER)
-        fprintf('get_nonconvex_c attempt %d\n', i);
+        if DEBUG
+            fprintf('get_nonconvex_c attempt %d\n', i);
+        end
         
         % random direction
         d = rand(m, 1);
@@ -50,6 +56,10 @@ function [i, c] = get_c_minus(A, b, y0, MAXITER)
             end
         end
         i = i + 1;
+    end
+    
+    if size(c, 1) == 0
+        error('No c_minus found');
     end
     
     % normalizing

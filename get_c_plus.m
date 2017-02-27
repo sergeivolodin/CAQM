@@ -1,4 +1,4 @@
-function c = get_c_plus(A)
+function c = get_c_plus(A, DEBUG)
 %% get_c_plus(A)
 % obtain vector c s.t. c * A > 0
 %
@@ -13,6 +13,10 @@ function c = get_c_plus(A)
 %    -0.1560
 
 %% initializing
+    if nargin == 1
+        DEBUG = 0;
+    end
+
     % resulting c
     c = [];
     
@@ -31,7 +35,9 @@ function c = get_c_plus(A)
     
  %% looking for c_plus
     while ~found
-        fprintf('get_c_plus attempt %d\n', i);
+        if DEBUG
+            fprintf('get_c_plus attempt %d\n', i);
+        end
         
         % random variable for diversity
         p = randn(m, 1);
@@ -53,6 +59,10 @@ function c = get_c_plus(A)
          if cvx_optval < Inf
              found = 1;
          end
+    end
+    
+    if found == 0
+        error('No c_plus found');
     end
     
     % normalizing

@@ -1,7 +1,15 @@
-function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_size)
+function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_size, DEBUG)
+%% [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_size)
+% do the projection of point c to c_minus using bisection method
+
+%%
+    if nargin == 7
+        DEBUG = 0;
+    end
+    
     lambda = 0;
     c_new = c;
-
+    
     % calculating c' (c_1)
     c_1 = c + delta_c;
 
@@ -30,7 +38,10 @@ function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_
         sign_m = sign(value_m);
         
         value = get_m(A_, b_, c_1, normal, x_0, center);
-        %fprintf('   projection l = %f (%f %d) r = %f (%f %d) val = %f\n', l, value_m, sign_m, r, value_p, sign_p, value);
+        
+        if DEBUG
+            fprintf('   projection l = %f (%f %d) r = %f (%f %d) val = %f\n', l, value_m, sign_m, r, value_p, sign_p, value);
+        end
     
         if abs(value) < 1e-9
             break;
@@ -48,12 +59,13 @@ function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_
             end
             r = r * coefficient;
             l = l * coefficient;
-            %fprintf('Enlarge l = %f %d r = %f %d c = %f i = %d\n', l, sign_m, r, sign_p, coefficient, i);
+            
+            if DEBUG
+                fprintf('Enlarge l = %f %d r = %f %d c = %f i = %d\n', l, sign_m, r, sign_p, coefficient, i);
+            end
             enlarge_count = enlarge_count + 1;
-            if enlarge_count >= enlarge_count_max 
-                %display('Error: all signs equal');
-                c_new = [];
-                return;
+            if enlarge_count >= enlarge_count_max
+                error('All signs equal. Projection failed.');
             end
         end
     
@@ -61,8 +73,7 @@ function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_
     end
 
     if abs(value) > 1e-3
-        c_new = [];
-        return;
+        error('Too big value. Projection failed');
     end
     
     % updating c

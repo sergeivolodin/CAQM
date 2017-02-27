@@ -40,6 +40,8 @@ function [t, is_in_F] = boundary_oracle(A, b, y, d)
  %% no result (infeasible)
     if cvx_optval ~= Inf
         is_in_F = (rank(X, 1e-3) == 1);
+    else
+        error('Boundary oracle failed');
     end
 end
 

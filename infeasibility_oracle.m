@@ -21,13 +21,13 @@ function is_infeasible = infeasibility_oracle(A, b, y)
         % objective
         minimize(1)
         
+        % todo
         H_c - 0.0001 * eye(n + 1) == semidefinite(n + 1);
     cvx_end
     
     % no result (infeasible)
     if cvx_optval ~= Inf
         is_infeasible = 1;
-        %disp(cvx_optval)
     end
 end
 
