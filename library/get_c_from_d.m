@@ -13,6 +13,7 @@ function c = get_c_from_d(H_, y0, d)
 %% 
     % dimensions
     n = size(H_, 1) - 1;
+    m = size(H_, 3);
     
     cvx_clear;
     cvx_quiet true;
