@@ -34,7 +34,7 @@ function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c, c_plus, coeffi
     
     while 1
         % calculating gradient
-        [Q, Q_inv, x_0, ~, ~, z, dz_dc, normal] = get_gradient(A_, b_, c);
+        [Q, Q_inv, x_0, ~, ~, z, dz_dc, normal] = get_dz_dc(A_, b_, c);
         
         % storing data
         c_array(:, iteration) = c;
@@ -94,7 +94,7 @@ function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c, c_plus, coeffi
             [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, 1);
         
             if size(c_new, 1) > 0
-                [~, ~, ~, ~, ~, z_new, ~, ~] = get_gradient(A_, b_, c_new);
+                [~, ~, ~, ~, ~, z_new, ~, ~] = get_dz_dc(A_, b_, c_new);
                 ok = 0;
                 if z_new < z && coefficient > 0
                     ok = 1;
@@ -103,7 +103,7 @@ function [z, c_array, z_array, success] = minimize_z_c(A_, b_, c, c_plus, coeffi
                     ok = 1;
                 end
                 
-                if ok && min_sin_c_minus(c_new, c_plus, c) <= max_step_sin
+                if ok && min_sin_cminus(c_new, c_plus, c) <= max_step_sin
                     break;
                 end
             end
