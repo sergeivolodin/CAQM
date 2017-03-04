@@ -7,7 +7,7 @@ m = 4;
 % obtain print output
 DEBUG = 1;
 
-[A, b] = get_random_f(4, 4);
+[A, b] = get_random_f(n, m);
 
 %% obtaining c_plus
 c_plus = get_c_plus(A, DEBUG);
@@ -25,7 +25,7 @@ c = get_c_minus(A_, b_, y0_, 1000, DEBUG);
 %% minimizing z(c)
 
 try
-    [z, c_array] = minimize_z_c(A_, b_, c, c_plus, 0.08, 1, DEBUG);
+    [z, c_array] = minimize_z_c(A_, b_, c, c_plus, 0.01, 2, DEBUG);
     disp(z);
 catch ME
     disp('Minimization failed');

@@ -1,17 +1,34 @@
-function [z, c_array, z_array] = minimize_z_c(A_, b_, c, c_plus, coefficient, max_step_sin, DEBUG)
+function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max_step, DEBUG)
 %% [z_result, c_path_array, z_array] = minimize_z_c(A, b,
-% c_minus_start, c_plus, step_coefficient, max_step_sin)
+% c_minus_start, c_plus, step_coefficient, max_step)
 % minimize z(c) over C_minus using gradient descent with projection
 
-%% initialization
+%% parameters
 
     if nargin == 6
         DEBUG = 0;
     end
 
+    % tolerance for ||dz_dc|| =0
+    eps_norm = 1e-7;
+    
+    % maximal value for abs(z)
+    eps_z = 1e9;
+    
+    % tolerance for rank(Q) == n - 1
+    eps_rank = 1e-5;
+    
+    % minimal value for beta
+    % after which iterations stop
+    beta_min = 1e-15;
+    
+    % theta multiplier for beta
+    theta = 0.5;
+    
+    %% initializing
     % dimensions
-    n = size(A_, 1);
-    m = size(A_, 3);
+    n = size(A, 1);
+    m = size(A, 3);
     
     % lambda for c'
     lambda = 0;
@@ -23,7 +40,7 @@ function [z, c_array, z_array] = minimize_z_c(A_, b_, c, c_plus, coefficient, ma
     z = inf;
     
     % iteration counter
-    iteration = 1;
+    i = 1;
     
     % array for resulting c_s
     c_array = zeros(m, 1);
@@ -32,41 +49,37 @@ function [z, c_array, z_array] = minimize_z_c(A_, b_, c, c_plus, coefficient, ma
     z_array = zeros(1);
     
     % step (beta parameter)
-    step = 1;
+    beta = 0;
     
     while 1
         % calculating gradient
-        [Q, Q_inv, x_0, ~, ~, z, dz_dc, normal] = get_dz_dc(A_, b_, c);
+        [Q, Q_inv, x_0, ~, ~, z, dz_dc, normal] = get_dz_dc(A, b, c);
         
         % storing data
-        c_array(:, iteration) = c;
-        z_array(iteration) = z;
-        
-        % tolerance for ||dz_dc|| =0
-        eps0 = 1e-7;
+        c_array(:, i) = c;
+        z_array(i) = z;
 
         % checking if z is too big
-        if abs(z) >= 1e9
+        if abs(z) >= eps_z
             error('z value too big!');
-            break;
         end
         
         % check for rank(Q) == n - 1
-        if ~(rank(Q, 1e-5) == n - 1)
+        if ~(rank(Q, eps_rank) == n - 1)
             error('Rank Q error');
         end
 
         % distance to c_minus (b_c, x_0)
-        c_minus_distance = x_0' * (b_ * c);
+        c_minus_distance = x_0' * (b * c);
         
         % intermediate result
         if DEBUG
-            fprintf('Gradient step cos=%f Q_norm=%f Rank_Q=%d z(c)=%f c=[%f %f %f] lambda=%f distance=%f step=%f\n', cos_theta, ...
-                norm(Q_inv), rank(Q, 1e-5), z, c(1), c(2), c(3), lambda, c_minus_distance, step);
+            fprintf('Gradient step cos=%.2f Q_norm=%.2f Rank_Q=%d z(c)=%.4f lambda=%.2f distance=%.2f beta=%.2f\n', abs(cos_theta), ...
+                norm(Q_inv), rank(Q, eps_rank), z, lambda, abs(c_minus_distance), beta);
         end
 
         % too small gradient check
-        if (norm(dz_dc) < eps0) || (norm(normal) < eps0)
+        if (norm(dz_dc) < eps_norm) || (norm(normal) < eps_norm)
             if DEBUG
                 disp('norm too small (end)')
             end
@@ -85,39 +98,37 @@ function [z, c_array, z_array] = minimize_z_c(A_, b_, c, c_plus, coefficient, ma
         end
         
         % projecting c + delta_c to c_minus
-        shrink_base = 0.5;
-        shrink_max = 50;
-        shrink_i = 0;
+        beta = beta_initial;
         
         % removing normal projection of dz_dc
-        grad_tangent = dz_dc - normal * dot(dz_dc, normal);
-        grad_tangent = grad_tangent / norm(grad_tangent);
+        dz_dc_tangent = remove_component(dz_dc, normal);
+        dz_dc_tangent = dz_dc_tangent / norm(dz_dc_tangent);
         
         % cycle over beta
-        while shrink_i <= shrink_max
-            step = (shrink_base ^ shrink_i) * coefficient;
-            delta_c = -grad_tangent * step;
+        while abs(beta) >= beta_min
+            % initial non-projected delta c
+            delta_c = -dz_dc_tangent * beta;
             
             try
-                [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, 1);
+                % trying projection for given delta_c
+                [c_new, ~] = project(A, b, c, x_0, delta_c, normal, 1);
         
-                [~, ~, ~, ~, ~, z_new, ~, ~] = get_dz_dc(A_, b_, c_new);
-                ok = 0;
-                if z_new < z && coefficient > 0
-                    ok = 1;
-                end
-                if z_new > z && coefficient < 0
-                    ok = 1;
-                end
+                % checking new value z_new(c_new)
+                [~, ~, ~, ~, ~, z_new, ~, ~] = get_dz_dc(A, b, c_new);
                 
-                if ok && min_sin_cminus(c_new, c_plus, c) <= max_step_sin
+                % checking if value is smaller (bigger)
+                % and if c_new is not too far from c
+                if ((z_new - z) * beta < 0) && ...
+                    cminus_distance(c_new, c_plus, c) <= max_step
                     break;
                 end
             catch
                 
             end
             
-            shrink_i = shrink_i + 1;
+            % decreasing beta
+            % in case projection failed
+            beta = beta * theta;
         end
         
         % projection failed for all beta
@@ -126,6 +137,6 @@ function [z, c_array, z_array] = minimize_z_c(A_, b_, c, c_plus, coefficient, ma
         end
         
         c = c_new;
-        iteration = iteration + 1;
+        i = i + 1;
     end
 end

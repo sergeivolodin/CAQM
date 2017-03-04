@@ -1,15 +1,29 @@
-function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_size, DEBUG)
-%% [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_size)
+function [c_new, lambda] = project(A, b, c, x_0, delta_c, normal, search_area_size, DEBUG)
+%% [c_new, lambda] = project(A, b, c, x_0, delta_c, normal, search_area_size)
 % do the projection of point c to c_minus using bisection method
 
-%%
+%% parameters
+
     if nargin == 7
         DEBUG = 0;
     end
     
-    lambda = 0;
-    c_new = c;
+    % minimal value
+    % for r - l
+    min_rl = 1e-8;
     
+    % if r - l > min_rl
+    % but value < min_value
+    % stop
+    min_value = 1e-9;
+    
+    % if bisection stopped
+    % but value > max_value
+    % throw error
+    max_value = 1e-3;
+    
+%% initialization
+
     % calculating c' (c_1)
     c_1 = c + delta_c;
 
@@ -21,29 +35,23 @@ function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_
     l = -lambda_0;
     r = lambda_0;
     
-    enlarge_count = 0;
-    enlarge_count_max = 10;
-    enlarge_base = 2;
-    
     i = 1;
-
-    value = 1;
     
-    while (r - l) > 1e-8
+    while (r - l) > min_rl
         center = (r + l) / 2;
-        sign_c = sign(get_m(A_, b_, c_1, normal, x_0, center));
-        value_p = get_m(A_, b_, c_1, normal, x_0, r);
+        sign_c = sign(get_m(A, b, c_1, normal, x_0, center));
+        value_p = get_m(A, b, c_1, normal, x_0, r);
         sign_p = sign(value_p);
-        value_m = get_m(A_, b_, c_1, normal, x_0, l);
+        value_m = get_m(A, b, c_1, normal, x_0, l);
         sign_m = sign(value_m);
         
-        value = get_m(A_, b_, c_1, normal, x_0, center);
+        value = get_m(A, b, c_1, normal, x_0, center);
         
         if DEBUG
             fprintf('   projection l = %f (%f %d) r = %f (%f %d) val = %f\n', l, value_m, sign_m, r, value_p, sign_p, value);
         end
     
-        if abs(value) < 1e-9
+        if abs(value) < min_value
             break;
         end
 
@@ -52,27 +60,13 @@ function [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, search_area_
         elseif ~(sign_c == sign_m)
             r = center;
         else
-            parity = sign(rem(enlarge_count, 2) - 0.5);
-            coefficient = enlarge_base ^ enlarge_count;
-            if parity > 0
-                coefficient = 1 / coefficient;
-            end
-            r = r * coefficient;
-            l = l * coefficient;
-            
-            if DEBUG
-                fprintf('Enlarge l = %f %d r = %f %d c = %f i = %d\n', l, sign_m, r, sign_p, coefficient, i);
-            end
-            enlarge_count = enlarge_count + 1;
-            if enlarge_count >= enlarge_count_max
-                error('All signs equal. Projection failed.');
-            end
+            error('All signs equal. Projection failed.');
         end
     
         i = i + 1;
     end
 
-    if abs(value) > 1e-3
+    if abs(value) > max_value
         error('Too big value. Projection failed');
     end
     
