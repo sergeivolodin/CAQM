@@ -25,7 +25,6 @@ function c = get_c_plus(A, DEBUG)
     
     % dimensions
     m = size(A, 3);
-    n = size(A, 1);
     
     % iterator
     i = 0;
@@ -39,28 +38,17 @@ function c = get_c_plus(A, DEBUG)
             fprintf('get_c_plus attempt %d\n', i);
         end
         
-        % random variable for diversity
-        p = rand(m, 1);
-
-        % solving LMI
-        % c * A - 0.01E >=0
-        % (c, p) = 1
-        cvx_clear;
-        cvx_begin
-            variable c(m)
-            minimize(1)
-            Ac = get_Ac(A, c);
-            Ac = Ac - 0.01 * eye(n);
-            Ac  == semidefinite(n);
-            c' * p == 1;
-         cvx_end
+        % choosing p for diversity
+        p = randn(m, 1);
+        
+        try
+            c = get_near_c_plus(A, p);
+            found = 1;
+        catch
+            
+        end
          
-         % checking feasibility
-         if cvx_optval < Inf
-             found = 1;
-         end
-         
-         i = i + 1;
+        i = i + 1;
     end
     
     if found == 0
