@@ -9,12 +9,13 @@ if nargin == 6
 end
 
 %% basis: c_+A=I, c_+b=0
-[A_, b_] = change_basis(A, b, c_plus);
+[A_, b_, ~, y0] = change_basis(A, b, c_plus);
 
-%% todo:
-% y = new_basis(y)
+% new y0 for A_, b_
+y = y - y0;
 
-z_array = Inf;
+% resulting z
+z_array = Inf(k + 1, 1);
 
 for i = 1:k
     try

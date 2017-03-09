@@ -49,7 +49,7 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
     z_array = zeros(1);
     
     % step (beta parameter)
-    beta = 0;
+    beta = beta_initial * theta;
     
     while 1
         % calculating gradient
@@ -98,7 +98,7 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
         end
         
         % projecting c + delta_c to c_minus
-        beta = beta_initial;
+        beta = beta / theta;
         
         % removing normal projection of dz_dc
         dz_dc_tangent = remove_component(dz_dc, normal);

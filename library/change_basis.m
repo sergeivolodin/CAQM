@@ -1,5 +1,5 @@
-function [A_, b_] = change_basis(A, b, c_plus)
-%% [A_, b_] = change_basis(A, b, c_plus)
+function [A_, b_, x0, y0] = change_basis(A, b, c_plus)
+%% [A_, b_, x0, y0] = change_basis(A, b, c_plus)
 % change basis s.t. 
 % c_plus * A_ = I
 % c_plus * b_ = 0
@@ -23,6 +23,9 @@ function [A_, b_] = change_basis(A, b, c_plus)
     
     % new x0
     x0 = -S'*(b * c_plus);
+    
+    % y0
+    y0 = quadratic_map(A, b, x0);
 
     % new A_, b_
     A_ = zeros(size(A));
