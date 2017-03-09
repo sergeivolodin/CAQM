@@ -36,7 +36,7 @@ function c = get_c_from_d(H_, y0, d)
         c' * d == -1;
         
         % H >= 0 constraint
-        H == semidefinite(n + 1);
+        H == hermitian_semidefinite(n + 1);
     cvx_end
     
     % no result (infeasible)

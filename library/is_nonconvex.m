@@ -44,7 +44,7 @@ function r = is_nonconvex(A, b, c, check_f1_f2)
         e = q1(:, inde);
         
         % check if b_c \bot e
-        if abs(q1(:, 1)' * bc) < eps0
+        if abs(e' * bc + bc' * e) < eps0
             
             if check_f1_f2
                 % e_0 from the article

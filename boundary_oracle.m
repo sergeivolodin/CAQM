@@ -36,7 +36,7 @@ function [t, is_in_F] = boundary_oracle(A, b, y, d)
             trace(H(:, :, i) * X) == y(i) + t * d(i);
         end
         
-        X == semidefinite(n + 1);
+        X == hermitian_semidefinite(n + 1);
         X(n + 1, n + 1) == 1
     cvx_end
     

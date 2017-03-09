@@ -1,13 +1,16 @@
 clear all;
 
 %% generating a map
-n = 4;
-m = 4;
+n = 5;
+m = 5;
 
 % obtain print output
 DEBUG = 1;
 
-[A, b] = get_random_f(n, m);
+% use complex map?
+is_complex = 1;
+
+[A, b] = get_random_f(n, m, is_complex);
 
 %% obtaining c_plus
 c_plus = get_c_plus(A, DEBUG);
@@ -15,12 +18,27 @@ c_plus = get_c_plus(A, DEBUG);
 %% basis: c_+A=I, c_+b=0
 [A_, b_] = change_basis(A, b, c_plus);
 
-%% generating a point inside F
-x0_ = rand(n, 1);
-y0_ = quadratic_map(A_, b_, x0_);
 
-%% c, s.t. Theorem 3.4 holds
-c = get_c_minus(A_, b_, y0_, 1000, DEBUG);
+%% looking for c_-
+
+while 1
+    % generating a point inside F
+    if is_complex
+        x0_ = (randn(n, 1) + 1i * randn(n, 1));
+    else
+        x0_ = randn(n, 1) * 3;
+    end
+    y0_ = quadratic_map(A_, b_, x0_);
+
+    try
+        % c, s.t. Theorem 3.4 holds
+        c = get_c_minus(A_, b_, y0_, 6, DEBUG);
+        break
+    catch
+        continue
+    end
+        
+end
 
 %% minimizing z(c)
 

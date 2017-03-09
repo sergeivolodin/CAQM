@@ -41,7 +41,7 @@ function [c, i] = get_c_minus(A, b, y0, MAXITER, DEBUG)
         end
         
         % random direction
-        d = rand(m, 1);
+        d = randn(m, 1);
         
         % obtaining c via dual problem
         c = get_c_from_d(H, y0, d);
