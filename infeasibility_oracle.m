@@ -19,10 +19,10 @@ function is_infeasible = infeasibility_oracle(A, b, y)
         H_c = get_H_c(A, b, c, y);
         
         % objective
-        minimize(1)
+        minimize(c' * c)
         
         % todo
-        H_c - 0.0001 * eye(n + 1) == semidefinite(n + 1);
+        H_c - eye(n + 1) == semidefinite(n + 1);
     cvx_end
     
     % no result (infeasible)
