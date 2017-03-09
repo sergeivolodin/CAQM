@@ -4,6 +4,9 @@ function [t, is_in_F] = boundary_oracle(A, b, y, d)
 % s.t. y+td in G = convF
 % returns is_in_F if y+td is also in F
 
+%% configuration
+    rank_eps = 1e-3;
+
 %% dimensions & init
     n = size(A, 1);
     m = size(A, 3);
@@ -39,7 +42,7 @@ function [t, is_in_F] = boundary_oracle(A, b, y, d)
     
  %% no result (infeasible)
     if cvx_optval ~= Inf
-        is_in_F = (rank(X, 1e-3) == 1);
+        is_in_F = (rank(X, rank_eps) == 1);
     else
         error('Boundary oracle failed');
     end
