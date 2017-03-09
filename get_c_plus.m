@@ -40,7 +40,7 @@ function c = get_c_plus(A, DEBUG)
         end
         
         % random variable for diversity
-        p = randn(m, 1);
+        p = rand(m, 1);
 
         % solving LMI
         % c * A - 0.01E >=0
@@ -59,6 +59,8 @@ function c = get_c_plus(A, DEBUG)
          if cvx_optval < Inf
              found = 1;
          end
+         
+         i = i + 1;
     end
     
     if found == 0
