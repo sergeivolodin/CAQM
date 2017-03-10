@@ -8,7 +8,7 @@ m = 5;
 DEBUG = 1;
 
 % use complex map?
-is_complex = 1;
+is_complex = 0;
 
 [A, b] = get_random_f(n, m, is_complex);
 
