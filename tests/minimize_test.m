@@ -1,8 +1,8 @@
 clear all;
 
 %% generating a map
-n = 5;
-m = 5;
+n = 4;
+m = 4;
 
 % obtain print output
 DEBUG = 1;
@@ -26,7 +26,7 @@ while 1
     if is_complex
         x0_ = (randn(n, 1) + 1i * randn(n, 1));
     else
-        x0_ = randn(n, 1) * 3;
+        x0_ = randn(n, 1);
     end
     y0_ = quadratic_map(A_, b_, x0_);
 
