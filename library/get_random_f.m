@@ -22,6 +22,6 @@ function [A, b] = get_random_f(n, m, complex)
         end
     end
 
-    A(:, :, 1) = A(:, :, 1) + n * eye(n, n);
+    A(:, :, 1) = A(:, :, 1) + 2 * n * eye(n, n);
 end
 

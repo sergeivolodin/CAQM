@@ -107,13 +107,19 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
             end
             break;
         end
-        
+
         % projecting c + delta_c to c_minus
         beta = beta / theta;
         
-        % removing normal projection of dz_dc
-        dz_dc_tangent = remove_component(dz_dc, normal);
-        dz_dc_tangent = dz_dc_tangent / norm(dz_dc_tangent);
+        if is_real
+            % removing normal projection of dz_dc
+            dz_dc_tangent = remove_component(dz_dc, normal);
+            dz_dc_tangent = dz_dc_tangent / norm(dz_dc_tangent);
+        else
+            dz_dc_tangent = dz_dc / norm(dz_dc);
+        end
+        
+        c_new = [];
         
         % cycle over beta
         while abs(beta) >= beta_min
@@ -122,8 +128,12 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
             
             try
                 % trying projection for given delta_c
-                [c_new, ~] = project(A, b, c, x_0, delta_c, normal, 1);
-        
+                if is_real
+                    [c_new, ~] = project(A, b, c, x_0, delta_c, normal, 1);
+                else
+                    c_new = project_descent(A, b, c + delta_c);
+                end
+                
                 % checking new value z_new(c_new)
                 [~, ~, ~, ~, ~, z_new, ~, ~] = get_dz_dc(A, b, c_new);
                 
@@ -141,6 +151,7 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
             % in case projection failed
             beta = beta * theta;
         end
+        
         
         % projection failed for all beta
         if size(c_new, 1) == 0

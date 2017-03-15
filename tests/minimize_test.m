@@ -8,7 +8,7 @@ m = 5;
 DEBUG = 1;
 
 % use complex map?
-is_complex = 0;
+is_complex = 1;
 
 [A, b] = get_random_f(n, m, is_complex);
 
@@ -24,7 +24,7 @@ c_plus = get_c_plus(A, DEBUG);
 while 1
     % generating a point inside F
     if is_complex
-        x0_ = (randn(n, 1) + 1i * randn(n, 1));
+        x0_ = ((randn(n, 1) + 1i * randn(n, 1))) / 2;
     else
         x0_ = randn(n, 1) * 3;
     end
