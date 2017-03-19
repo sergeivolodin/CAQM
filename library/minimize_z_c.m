@@ -39,7 +39,7 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
     cos_theta_1 = 0;
     
     % thresold value for dz_dc || n
-    cos_theta_max = 1-0.2e-2;
+    cos_theta_max = 1-1e-4;
 
     % resulting z
     z = inf;
@@ -80,11 +80,14 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
         % distance to c_minus (b_c, x_0)
         c_minus_distance = x_0' * (b * c);
         
-        if ~is_real
-            bad_dz_dc = [normal normal_1];
-            good_dz_dc = null(bad_dz_dc');
-            dz_dc_tangent = good_dz_dc * good_dz_dc' * dz_dc;
+        if is_real
+            bad_dz_dc = [normal c_plus];
+        else
+            bad_dz_dc = [normal normal_1 c_plus];
         end
+        
+        good_dz_dc = null(bad_dz_dc');
+        dz_dc_tangent = good_dz_dc * good_dz_dc' * dz_dc;
         
         % intermediate result
         if DEBUG
@@ -117,13 +120,7 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
         % projecting c + delta_c to c_minus
         beta = beta / theta;
         
-        if is_real
-            % removing normal projection of dz_dc
-            dz_dc_tangent = remove_component(dz_dc, normal);
-            dz_dc_tangent = dz_dc_tangent / norm(dz_dc_tangent);
-        else
-            dz_dc_tangent = dz_dc_tangent / norm(dz_dc_tangent);
-        end
+        dz_dc_tangent = dz_dc_tangent / norm(dz_dc_tangent);
         
         c_new = [];
         
