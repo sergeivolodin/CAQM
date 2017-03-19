@@ -24,7 +24,7 @@ c_plus = get_c_plus(A, DEBUG);
 while 1
     % generating a point inside F
     if is_complex
-        x0_ = (randn(n, 1) + 1i * randn(n, 1));
+        x0_ = ((randn(n, 1) + 1i * randn(n, 1)));
     else
         x0_ = randn(n, 1);
     end
