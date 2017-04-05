@@ -44,12 +44,12 @@ function c = get_near_c_plus(A, p, norm_penalty)
         Ac = get_Ac(A, c);
         Ac - eye(n) == hermitian_semidefinite(n);
         c' * p >= 0;
-     cvx_end
+    cvx_end
          
-     % checking feasibility
-     if cvx_optval >= Inf
-         error('Not found');
-     end
+    % checking feasibility
+    if cvx_optval >= Inf
+        error('Not found');
+    end
      
-     c = c / norm(c);
+    c = c / norm(c);
 end
