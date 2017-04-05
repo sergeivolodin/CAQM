@@ -42,7 +42,7 @@ function c = get_near_c_plus(A, p, norm_penalty)
         variable c(m)
         minimize(c' * P * c)
         Ac = get_Ac(A, c);
-        Ac - eye(n)  == hermitian_semidefinite(n);
+        Ac - eye(n) == hermitian_semidefinite(n);
         c' * p >= 0;
      cvx_end
          
