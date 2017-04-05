@@ -13,7 +13,11 @@ is_complex = 1;
 [A, b] = get_random_f(n, m, is_complex);
 
 %% obtaining c_plus
-c_plus = get_c_plus(A, DEBUG);
+% random c_plus
+%c_plus = get_c_plus(A, DEBUG);
+
+% best c_plus
+c_plus = get_best_c_plus(A);
 
 %% basis: c_+A=I, c_+b=0
 [A_, b_] = change_basis(A, b, c_plus);
