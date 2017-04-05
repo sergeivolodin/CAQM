@@ -2,7 +2,7 @@
 
 Code for cutting convex parts from a quadratic image
 
-## Prerequisites:
+## Prerequisites
 * MATLAB
 * CVX
 
