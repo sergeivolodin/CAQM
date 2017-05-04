@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english,russian]{babel}
 \usepackage{indentfirst}
+\usepackage[framed,numbered,autolinebreaks]{mcode}
 \usepackage{tikz}
 \usepackage{cancel}
 \usetikzlibrary{automata,positioning,arrows}
@@ -53,16 +54,224 @@ The goal of the project is to solve a number of tasks for quadratic maps, which 
 \item (Complex case) The map $f\colon \mathbb{C}^n\to\mathbb{R}^m$ s.t. $$f_i(x)=x^*A_ix+b_i^*x+x^*b_i,\, A_i=A_i^*$$
 Where $\cdot^*$ is Hermitian transpose.
 \end{enumerate}
+
+From this point on, $X$ denotes $\mathbb{R}^n$ for real case or $\mathbb{C}^n$ for complex case.
+
 We use the following notations:
 \theoremstyle{definition}
 \begin{definition} For a vector $c\in\mathbb{R}^n$ and tuple of matrices $(A_1,...,A_n)$ (or vectors) the dot product is defined as following: $$c\cdot A=\sum\limits_{i=1}^nc_iA_i$$
 \end{definition}
 \begin{definition} The image of $f$ is denoted as $F$:
-	$$F=f(\mathbb{R}^n)$$
+	$$F=f(X)$$
 \end{definition}
 \begin{definition} The convex hull of $F$ is denoted as $G$:
 	$$G=\conv F$$
 \end{definition}
+\begin{definition} The boundary points of $F$ touched by a tangent hyperplane with normal vector $c\in\mathbb{R}^m$:
+	$$\partial F_c=\argmin\limits_{y\in F}(c,y)$$
+\end{definition}
+\begin{definition} The boundary points of $G$ touched by a tangent hyperplane with normal vector $c\in\mathbb{R}^m$:
+	$$\partial G_c=\argmin\limits_{y\in G}(c,y)$$
+\end{definition}
 \section{Functions}
-\section{Example}
+The library consists of a number of functions defined in separate .m files. Input format for the map is the following: 
+
+\begin{itemize}
+\item The number $A(i, j, k)$ denotes $i$'th row and $j$'th column of the matrix $A_k$
+\item The number $b(i, j)$ denotes $i$'th element of the vector $b_j\in\mathbb{R}^m$
+\end{itemize}
+
+\begin{enumerate}
+\item {\bf Feasibility membership oracle}\\
+{\bf Given:}
+\begin{itemize}
+\item The map $f$ as matrices $A$ and vectors $b$
+\item A point $y\in\mathbb{R}^m$.
+\end{itemize}
+{\bf Determine:} if $y\in F$
+\begin{verbatim}
+is_infeasible = infeasibility_oracle(A, b, y)
+\end{verbatim}
+This function tries to separate the point $y$ from the convex hull $G$ with a hyperplane. See Theorem 3.2 from the article.
+{\bf Return value:}
+\begin{itemize}
+\item $1$ means that the separation was successful and the point $y\notin G$. This implies $y\notin F$.
+\item $0$ means that the feasibility is uncertain.
+\end{itemize}
+
+\item {\bf Boundary oracle}\\
+{\bf Given:}
+\begin{itemize}
+	\item The map $f$ as matrices $A$ and vectors $b$
+	\item A point $y\in F$
+	\item A direction $d\in\R^m$
+\end{itemize}
+The following two tasks are considered:
+\begin{enumerate}
+\item \begin{verbatim}
+[t, is_in_F] = boundary_oracle(A, b, y, d)
+\end{verbatim}
+This function finds the point $y+td$ on the boundary $\partial G$ with the largest $t$:
+$$t = \sup\{\tau\big| y+\tau d\in G\}$$
+{\bf Return value:}
+\begin{itemize}
+	\item $t$ is the largest step in direction $d$
+	\item is\_in\_F is a binary variable indicating if the resulting point $y+td$ belongs to $F$
+\end{itemize}
+
+{\bf Exception:} if optimization task failed
+
+\item \begin{verbatim}
+c = get_c_from_d(A, b, y, d)
+\end{verbatim}
+
+This function obtains the normal vector $c$ at the boundary point $y+td$ using dual problem (5) from the article.
+
+{\bf Return value:} the normal vector $c$ s.t. $y+td\in\partial G_c$
+
+{\bf Exception:} if optimization task failed
+\end{enumerate}
+
+\item {\bf Nonconvexity certificate}\\
+{\bf Given:}
+\begin{itemize}
+	\item The map $f$ as matrices $A$ and vectors $b$
+	\item A point $y\in F$
+	\item Number of iterations $k$
+\end{itemize}
+The following two tasks are considered:
+\begin{enumerate}
+	\item \begin{verbatim}
+	c = get_c_minus(A, b, y, k)
+	\end{verbatim}
+	This function runs $k$ iterations of the following procedure:
+	\begin{enumerate}
+		\item Generate random direction $d$
+		\item Obtain a normal vector $c$ using \mcode{get_c_from_d()}
+		\item Check if $\partial F_c$ is nonconvex using Theorem 3.4 from the article
+		\item Return $c$ if so, continue otherwise
+	\end{enumerate}
+
+	{\bf Return value:}  $c$ s.t. $\partial F_c$ is nonconvex
+	
+	{\bf Exception:} if $c$ was not found in $k$ iterations
+	
+	\item \begin{verbatim}
+	is_nonconvex = nonconvexity_certificate(A, b, y, k)
+	\end{verbatim}
+	
+	This function runs \mcode{get_c_minus()} and outputs $1$ if the normal vector $c$ was found. In this case the image $F$ is guaranteed to be nonconvex.
+	
+	{\bf Return value:} $1$ if $F$ is nonconvex
+	
+	{\bf Exception:} on uncertain case if $c$ was not found or optimization failed
+\end{enumerate}
+
+\item {\bf Positive-definite $c\cdot A$}\\
+{\bf Given:}
+\begin{itemize}
+	\item The map $f$ as matrices $A$ and vectors $b$
+	\item The initial normal vector $p$
+\end{itemize}
+The following three tasks are considered:
+\begin{enumerate}
+	\item \begin{verbatim}
+	c_plus = get_near_c_plus(A, p, gamma);
+	\end{verbatim}
+
+	This function finds the nearest to $p$ vector $c_+$ such that
+	$$c_+\cdot A\succeq 0$$
+	
+	via solving the following optimization task ($c_{+\bot}$ is the part of $c_+$ orthogonal to $p$):
+
+\begin{align}
+\min & ~\gamma \|c_+\|^2+c^2_{+\bot} \nonumber\\
+c_+\cdot A-I&  \succeq 0 \nonumber\\
+(c_+, p) & \geqslant 0 \nonumber
+\end{align}
+
+	{\bf Return value:}  $c_+$ s.t. $c_+\cdot A\succeq 0$
+	
+	{\bf Exception:} if $c_+$ was not found
+	
+	\item \begin{verbatim}
+	c_plus = get_c_plus(A)
+	\end{verbatim}
+	
+	This function generates a random vector $p$ and then finds $c_+$ nearest to it.
+	
+	{\bf Return value:} $c_+$ s.t. $c_+\cdot A\succeq 0$
+	
+	{\bf Exception:} if $c_+$ was not found
+	
+	\item \begin{verbatim}
+	c_plus = get_best_plus(A)
+	\end{verbatim}
+	
+	This function returns the ''best'' vector $c_+$ s.t. $c_+\cdot A\succeq 0$ via the following problem:
+\begin{align}
+\max & ~\lambda_{\min}(c_+\cdot A) \nonumber\\
+\|c\|^2&  \leqslant 1 \nonumber
+\end{align}
+	
+The spectrum of the resulting matrix $c_+\cdot A$ is separated from $0$ the most.
+	
+	{\bf Return value:} $c_+$ s.t. $c_+\cdot A\succeq 0$
+	
+	{\bf Exception:} if $c_+$ was not found
+\end{enumerate}
+
+\item {\bf Convex subpart}
+
+{\bf Given:}
+\begin{itemize}
+	\item The map $f$ as matrices $A$ and vectors $b$
+	\item The point $y\in F$
+	\item Number of iterations $k$
+	\item Vector $c_+$ s.t. $c_+\cdot A\succeq 0$
+	\item Number of iterations \mcode{k_c_minus} for the nonconvexity certificate
+\end{itemize}
+\begin{verbatim}
+z_max = get_z_max(A, b, y, k, c_plus, k_c_minus)
+\end{verbatim}
+This function performs the following procedure $k$ times:
+\begin{enumerate}
+\item Changing basis with \mcode{change_basis}
+\item Obtaining $c\in C_-$ using \mcode{get_c_minus}
+\item Minimizing $z(c)$ using $c$ as a starting point
+\end{enumerate}
+
+The resulting $z_{\max}$ is a minimum over all obtained $z$'s
+
+{\bf Return value:} Minimal value $z_{\max}$ or \mcode{Inf} if no nonconvexities were found
+
+{\bf Exception:} None
+
+\item {\bf Other functions}
+
+{\small
+\begin{tabular}{|p{28mm}|c|p{35mm}|p{35mm}|p{30mm}|c|}
+	\hline
+	\bf Name & \bf Input & \bf Call & \bf Description & \bf Return value & \bf Exception\\\hline
+	\bf Random map & {Dimensions n, m} & \mcode{get_random_f(n, m, is_complex)} & Generates random map $f$ & \mcode{[A, b]} & None\\\hline
+	\bf Value at x & The point $x\in X$ & \mcode{quadratic_map(A, b, x)} & Calculates $f(x)$ & $y=f(x)$ & None\\\hline
+	\bf Product $c\cdot A$ & Normal vector $c$ & \mcode{get_Ac(A, c)} & Calculates $c\cdot A$ & $A_c=c\cdot A$ & None\\\hline
+	\bf Get $H_c$ & $c,y\in\R^m$ & \mcode{get_H_c(A, b, c, y)} & $H_c=\left(\begin{array}{cc}A_c & b_c\\b_c' &-(c,y) \end{array}\right)$ & $H_c$ & None\\\hline
+	\bf Minimize $z(c)$ & $c,c_+$, step $\beta$ & \mcode{minimize_z_c(A, b, c, c_plus, beta_initial, max_step)} & Calculates $\inf\limits_{c\in C_-}z(c)$ & \mcode{[z, c_array, z_array]} & If failed\\\hline
+	\bf  $\R^n$ projection & & \mcode{project(A, b, c, x_0, delta_c, normal, search_area_size} & Projects $c+\Delta c$ to $C_-$ & \mcode{[c_new, lambda]} & If failed\\\hline
+	\bf $\mathbb{C}^n$ projection & & \mcode{project_descent(A, b, c, normal_1, normal_2)} & Projects $c$ to $C_-$ & \mcode{[c_new, distance]} & If failed\\\hline
+	\bf Gradient $\frac{\partial z}{\partial c}$ & Normal $c$ & \mcode{get_dz_dc(A, b, c)} & Calculates $Q$, $\nabla z(c)$, normal vectors $n_1$, $n_2$ & \mcode{[Q, Q_inv, k, v, lambda_min, z, dz_dc, normal_re, normal_im, drho_dc]} & None\\\hline
+	\bf Change of basis & $c_+$ & \mcode{change_basis(A, b, c_plus)} & $\begin{cases}
+	x = S(x'+x_0)\\
+	y = y' + y_0
+	\end{cases}
+	$ s.t.
+	$\begin{cases}
+	c_+\cdot A_0=I\\
+	c_+\cdot b_0=0
+	\end{cases}$ & \mcode{[A_new, b_new, x0, y0]} & None\\\hline
+\end{tabular}
+}
+
+\end{enumerate}
 \end{document}
