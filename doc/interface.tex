@@ -1,0 +1,68 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, left=5mm, right=5mm, top=5mm, bottom=5mm]{geometry}
+%\geometry{paperwidth=210mm, paperheight=2000pt, left=5pt, top=5pt}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst}
+\usepackage{tikz}
+\usepackage{cancel}
+\usetikzlibrary{automata,positioning,arrows}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\usepackage{wasysym}
+\title{On the feasibility for the system of quadratic equations\\MATLAB Library}
+\date{}
+\author{Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin}
+\newcommand{\matrixl}{\left|\left|}
+\newcommand{\matrixr}{\right|\right|}
+
+\newcommand{\peq}{\mathrel{+}=}
+\newcommand{\meq}{\mathrel{-}=}
+\newcommand{\deq}{\mathrel{:}=}
+\newcommand{\VC}{\mbox{VC}}
+\newcommand{\plpl}{\mathrel{+}+}
+\newcommand{\sign}{\mbox{sign}\,}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\conv}{\mbox{conv}\,}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\D}{\mathbb{D}}
+
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+% пустое слово
+\def\eps{\varepsilon}
+
+% регулярные языки
+\def\eqdef{\overset{\mbox{\tiny def}}{=}}
+\newcommand{\niton}{\not\owns}
+
+\begin{document}
+\maketitle
+\section{Notations}
+The goal of the project is to solve a number of tasks for quadratic maps, which are
+\begin{enumerate}
+\item (Real case) The map $f\colon \mathbb{R}^n\to\mathbb{R}^m$ s.t. $$f_i(x)=x^TA_ix+2b_i^Tx,\, A_i=A_i^T$$
+\item (Complex case) The map $f\colon \mathbb{C}^n\to\mathbb{R}^m$ s.t. $$f_i(x)=x^*A_ix+b_i^*x+x^*b_i,\, A_i=A_i^*$$
+Where $\cdot^*$ is Hermitian transpose.
+\end{enumerate}
+We use the following notations:
+\theoremstyle{definition}
+\begin{definition} For a vector $c\in\mathbb{R}^n$ and tuple of matrices $(A_1,...,A_n)$ (or vectors) the dot product is defined as following: $$c\cdot A=\sum\limits_{i=1}^nc_iA_i$$
+\end{definition}
+\begin{definition} The image of $f$ is denoted as $F$:
+	$$F=f(\mathbb{R}^n)$$
+\end{definition}
+\begin{definition} The convex hull of $F$ is denoted as $G$:
+	$$G=\conv F$$
+\end{definition}
+\section{Functions}
+\section{Example}
+\end{document}
