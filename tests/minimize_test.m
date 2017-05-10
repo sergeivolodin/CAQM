@@ -1,18 +1,22 @@
 clear all;
 
 %% generating a map
-n = 4;
-m = 4;
+% disp('Generating map');
+%n = 4;
+%m = 4;
+% use complex map?
+%is_complex = 1;
+%[A, b] = get_random_f(n, m, is_complex);
 
-% obtain print output
+%% using saved map
+disp('Loading map');
+load('maps/real_R4_R4.mat')
+
+%% obtain print output
 DEBUG = 1;
 
-% use complex map?
-is_complex = 1;
-
-[A, b] = get_random_f(n, m, is_complex);
-
 %% obtaining c_plus
+disp('Generating c_plus');
 % random c_plus
 %c_plus = get_c_plus(A, 10, DEBUG);
 
@@ -20,10 +24,12 @@ is_complex = 1;
 c_plus = get_best_c_plus(A);
 
 %% basis: c_+A=I, c_+b=0
+disp('Changing basis');
 [A_, b_] = change_basis(A, b, c_plus);
 
 
 %% looking for c_-
+disp('Looking for c_-');
 
 while 1
     % generating a point inside F
@@ -45,6 +51,7 @@ while 1
 end
 
 %% minimizing z(c)
+disp('Minimizing z(c)');
 
 try
     [z, c_array] = minimize_z_c(A_, b_, c, c_plus, 0.01, 2, DEBUG);
