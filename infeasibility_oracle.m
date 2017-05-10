@@ -21,7 +21,6 @@ function is_infeasible = infeasibility_oracle(A, b, y)
         % objective
         minimize(c' * c)
         
-        % todo
         H_c - eye(n + 1) == hermitian_semidefinite(n + 1);
     cvx_end
     

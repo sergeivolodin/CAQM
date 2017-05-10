@@ -171,10 +171,10 @@ c_+\cdot A-I&  \succeq 0 \nonumber\\
 	{\bf Exception:} if $c_+$ was not found
 	
 	\item \begin{verbatim}
-	c_plus = get_c_plus(A)
+	c_plus = get_c_plus(A, k)
 	\end{verbatim}
 	
-	This function generates a random vector $p$ and then finds $c_+$ nearest to it.
+	This function generates a random vector $p$ and then finds $c_+$ nearest to it. Function generates at most $k$ vectors $p$.
 	
 	{\bf Return value:} $c_+$ s.t. $c_+\cdot A\succeq 0$
 	

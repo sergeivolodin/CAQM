@@ -1,19 +1,14 @@
-function c = get_c_plus(A, DEBUG)
+function c = get_c_plus(A, k, DEBUG)
 %% get_c_plus(A)
 % obtain vector c s.t. c * A > 0
+% use at most k iterations
 %
 % example:
 % [A, b] = get_random_f(4, 4);
-% c_plus = get_c_plus(A);
-% c_plus =
-%
-%     0.5430
-%     0.3073
-%    -0.7657
-%    -0.1560
+% c_plus = get_c_plus(A, 10);
 
 %% initializing
-    if nargin == 1
+    if nargin == 2
         DEBUG = 0;
     end
 
@@ -32,8 +27,8 @@ function c = get_c_plus(A, DEBUG)
     cvx_clear;
     cvx_quiet true;
     
- %% looking for c_plus
-    while ~found
+%% looking for c_plus
+    while ~found && i < k
         if DEBUG
             fprintf('get_c_plus attempt %d\n', i);
         end

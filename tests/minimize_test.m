@@ -14,7 +14,7 @@ is_complex = 1;
 
 %% obtaining c_plus
 % random c_plus
-%c_plus = get_c_plus(A, DEBUG);
+%c_plus = get_c_plus(A, 10, DEBUG);
 
 % best c_plus
 c_plus = get_best_c_plus(A);
