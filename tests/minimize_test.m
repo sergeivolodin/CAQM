@@ -1,5 +1,12 @@
 clear all;
 
+%% This file
+% 1) generates a map or loads a map
+% 2) generates a vector c_+
+% 3) changes basis s.t. c_+A=I, c_+b=0
+% 4) looks for c_minus
+% 5) cuts convex subpart via z(c) minimization
+
 %% generating a map
 % disp('Generating map');
 %n = 4;
