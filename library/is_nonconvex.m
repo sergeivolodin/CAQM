@@ -18,8 +18,14 @@ function r = is_nonconvex(A, b, c, check_f1_f2)
     n = size(A, 1);
     m = size(A, 3);
 
-    assert(n >= 3);
-    assert(m >= 3);
+    is_real = isreal(A) && isreal(b);
+    if is_real
+        assert(n >= 3);
+        assert(m >= 3);
+    else
+        assert(n >= 2);
+        assert(m >= 3);
+    end
     
     % result
     r = 0;
