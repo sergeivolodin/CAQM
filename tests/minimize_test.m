@@ -17,29 +17,37 @@ clear all;
 
 %% using saved map
 disp('Loading map');
-load('maps/real_R4_R4.mat')
+
+% Real case R4->R4
+%load('maps/real_R4_R4.mat')
+
+% Complex case C2->R4, pre-defined c_plus
+load('maps/complex_C2_R4_poster.mat')
 
 %% obtain print output
 DEBUG = 1;
 
 %% obtaining c_plus
-disp('Generating c_plus');
-% random c_plus
-%c_plus = get_c_plus(A, 10, DEBUG);
+if ~exist('c_plus')
+    disp('Generating c_plus');
+    % random c_plus
+    %c_plus = get_c_plus(A, 10, DEBUG);
 
-% best c_plus
-c_plus = get_best_c_plus(A);
+    % best c_plus
+    c_plus = get_best_c_plus(A);
+end
 
 %% basis: c_+A=I, c_+b=0
 disp('Changing basis');
 [A_, b_] = change_basis(A, b, c_plus);
-
 
 %% looking for c_-
 disp('Looking for c_-');
 
 while 1
     % generating a point inside F
+    disp('Generating point inside F');
+    
     if is_complex
         x0_ = ((randn(n, 1) + 1i * randn(n, 1)));
     else
