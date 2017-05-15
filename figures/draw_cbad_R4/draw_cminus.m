@@ -36,7 +36,7 @@ x_search_size = 1.5;
 
 % step size for minimize_z_c
 % 4*32 number of pieces a circle is divided into
-step_size = (2 * pi / (4 * 32))
+step_size = (2 * pi / (4 * 32));
 
 % loop filling c_array
 while i <= N
@@ -71,7 +71,7 @@ while i <= N
     display('=== Minimizing z(c) ===');
 
     try
-        [~, c_item_array, ~] = minimize_z_c(A_, b_, c, c_plus, 0.08, 0.05, 1);
+        [~, c_item_array, ~] = minimize_z_c(A_, b_, c, c_plus, 0.08, step_size, 1);
     catch
         display('Minimization failed');
         return;
