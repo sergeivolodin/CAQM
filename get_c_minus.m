@@ -3,13 +3,23 @@ function [c, i] = get_c_minus(A, b, y0, MAXITER, DEBUG)
 % obtain c from C_-
 % using nonconvexity certificate
 %
-% example
-% n = 4;
-% m = 4;
-% [A, b] = get_random_f(n, m);
-% x0_ = rand(n, 1);
-% y0_ = quadratic_map(A, b, x0_);
-% [~, c] = get_c_minus(A, b, y0_, 1000);
+% Format for the map f:
+% matrices (A_1, ..., A_m) -> tensor A(i, j, k) -- i'th row, j'th column of matrix A_k
+% vectors  (b_1, ..., b_m) -> tensor b(i, j)    -- i'th element          of vector b_j
+%
+%% example
+% 1) loading map from file
+% 2) obtaining c_- using y as a point inside image F
+%
+% clear all;
+% load('maps/real_R4_R4.mat');
+% x = [1 1 0 0]';
+% y = quadratic_map(A, b, x);
+% try
+%     get_c_minus(A, b, y, 10, 1)
+% catch
+%     disp('no c_minus obtained');
+% end
 
 %% initializing
 
