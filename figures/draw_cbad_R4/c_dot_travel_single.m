@@ -22,22 +22,22 @@ function [c_array] = c_dot_travel_single(A_, b_, c, c_plus, coefficient, min_sin
     
     while 1
         % calculating gradient
-        [Q, Q_inv, x_0, ~, ~, z, dz_dc, normal] = get_gradient(A_, b_, c);
+        [Q, Q_inv, x_0, ~, ~, z, dz_dc, normal] = get_dz_dc(A_, b_, c);
         
         % storing data
         c_array(:, iteration) = c;
         z_array(iteration) = z;
         
         % (b_c, x_0)
-        cminus_distance = x_0' * (b_ * c);
+        cminus_distance_c = x_0' * (b_ * c);
         cos_theta = dot(normal, dz_dc) / norm(dz_dc) / norm(normal);
 
         c_dot = null([normal c_plus c]');
         
         fprintf('C_bad step cos=%f Q_norm=%f Rank_Q=%d z(c)=%f c=[%f %f %f] lambda=%f distance=%f step=%f\n', cos_theta, ...
-            norm(Q_inv), rank(Q, 1e-5), z, c(1), c(2), c(3), lambda, cminus_distance, step);
+            norm(Q_inv), rank(Q, 1e-5), z, c(1), c(2), c(3), lambda, cminus_distance_c, step);
         
-        if iteration > 10 && min_sin_cminus(c_start, c_plus, c) < min_sin
+        if iteration > 10 && cminus_distance(c_start, c_plus, c) < min_sin
             fprintf('circle min_sin %f\n', min_sin);
             break;
         end
@@ -79,12 +79,16 @@ function [c_array] = c_dot_travel_single(A_, b_, c, c_plus, coefficient, min_sin
         while shrink_i <= shrink_max
             step = (shrink_base ^ shrink_i) * coefficient;
             delta_c = c_dot * step;
-            [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, 1);
-        
-            if size(c_new, 1) > 0
-                if min_sin_cminus(c_new, c_plus, c) <= min_sin
-                    break;
+            
+            try
+                [c_new, lambda] = project(A_, b_, c, x_0, delta_c, normal, 1);
+
+                if size(c_new, 1) > 0
+                    if cminus_distance(c_new, c_plus, c) <= min_sin
+                        break;
+                    end
                 end
+            catch
             end
             
             shrink_i = shrink_i + 1;
