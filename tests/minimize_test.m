@@ -19,10 +19,10 @@ clear all;
 disp('Loading map');
 
 % Real case R4->R4
-%load('maps/real_R4_R4.mat')
+%load('examples/maps/real_R4_R4.mat')
 
 % Complex case C2->R4, pre-defined c_plus
-load('maps/complex_C2_R4_poster.mat')
+load('examples/maps/complex_C2_R4_poster.mat')
 
 %% obtain print output
 DEBUG = 1;
