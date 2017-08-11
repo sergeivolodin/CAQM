@@ -203,7 +203,7 @@ The following three tasks are considered:
 \item {\bf Convex subpart.} Given:
 \begin{itemize}
 	\item The map $f$ as matrices $A$ and vectors $b$
-	\item The point $y\in F$
+	\item The number $z_{\max}^{\mbox{\small guess}}$
 	\item Number of iterations $k$
 	\item Vector $c_+$ s.t. $c_+\cdot A\succeq 0$
 \end{itemize}
@@ -216,10 +216,12 @@ The following three tasks are considered:
 \end{figure}
 
 \begin{verbatim}
-z_max = get_z_max(A, b, y, c_plus, k)
+z_max = get_z_max(A, b, c_plus, z_max_guess, k)
 \end{verbatim}
 
-This function returns the maximal value $z_{\max}$ such that the cut in the direction of $c_+$ of size $z_{\max}$ is still convex. This procedure is a heuristic (convexity of maximality is not guaranteed)
+This function returns the maximal value $z_{\max}$ such that the cut in the direction of $c_+$ of size $z_{\max}$ is still convex. This procedure is a heuristic (convexity of maximality is not guaranteed).
+
+The value $z_{\max}^{\mbox{\small guess}}$ generates a point $y=y_0-z_{\max}^{\mbox{\small guess}}c_+$, where $y_0$ is the touching point of hyperplane $c_+$ which is used for the nonconvexity certificate.
 
 {\bf Return value:} Maximal value $z_{\max}$ or Inf if no nonconvexities were found
 
