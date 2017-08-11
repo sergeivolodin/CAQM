@@ -5,7 +5,6 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{pdflscape}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 
@@ -42,10 +41,10 @@ We use the following notations:
 \begin{definition} The convex hull of $F$ is denoted as $G$:
 	$$G=\conv F$$
 \end{definition}
-\begin{definition} The boundary points of $F$ touched by a tangent hyperplane with normal vector $c\in\mathbb{R}^m$:
+\begin{definition} The boundary points of $F$ touched by a supporting hyperplane with normal vector $c\in\mathbb{R}^m$:
 	$$\partial F_c=\argmin\limits_{y\in F}(c,y)$$
 \end{definition}
-\begin{definition} The boundary points of $G$ touched by a tangent hyperplane with normal vector $c\in\mathbb{R}^m$:
+\begin{definition} The boundary points of $G$ touched by a supporting hyperplane with normal vector $c\in\mathbb{R}^m$:
 	$$\partial G_c=\argmin\limits_{y\in G}(c,y)$$
 \end{definition}
 \section{Functions}
@@ -79,7 +78,7 @@ This function tries to separate the point $y$ from the convex hull $G$ with a hy
 {\bf Given:}
 \begin{itemize}
 	\item The map $f$ as matrices $A$ and vectors $b$
-	\item A point $y\in F$
+	\item A point $y\in G$
 	\item A direction $d\in\R^m$
 \end{itemize}
 The following two tasks are considered:
@@ -92,10 +91,10 @@ $$t = \sup\{\tau\big| y+\tau d\in G\}$$
 {\bf Return value:}
 \begin{itemize}
 	\item $t$ is the largest step in direction $d$
-	\item is\_in\_F is a binary variable indicating if the resulting point $y+td$ belongs to $F$
+	\item is\_in\_F is a binary variable indicating if the resulting point $y+td$ belongs to $F$: it is 1 if it is true or 0 if the result is uncertain
 \end{itemize}
 
-{\bf Exception:} if optimization task failed
+{\bf Exception:} if optimization task failed, in particular, if $y\notin G$.
 
 \item \begin{verbatim}
 c = get_c_from_d(A, b, y, d)
@@ -105,7 +104,7 @@ This function obtains the normal vector $c$ at the boundary point $y+td$ using d
 
 {\bf Return value:} the normal vector $c$ s.t. $y+td\in\partial G_c$
 
-{\bf Exception:} if optimization task failed
+{\bf Exception:} if optimization task failed, in particular, if $y\notin G$.
 \end{enumerate}
 
 \item {\bf Nonconvexity certificate}\\
@@ -221,28 +220,4 @@ The resulting $z_{\max}$ is a minimum over all obtained $z$'s
 
 {\bf Exception:} None
 \end{enumerate}
-\begin{landscape}
-{\bf Other functions}\\\\
-\begin{tabular}{|p{28mm}|c|p{50mm}|c|p{30mm}|c|}
-	\hline
-	\bf Name & \bf Input & \bf Call & \bf Description & \bf Return value & \bf Exception\\\hline
-	\bf Random map & {Dimensions n, m} & get\_random\_f(n, m, is\_complex) & Generates random map $f$ & [A, b] & None\\\hline
-	\bf Value at x & The point $x\in X$ & quadratic\_map(A, b, x) & Calculates $f(x)$ & $y=f(x)$ & None\\\hline
-	\bf Product $c\cdot A$ & Normal vector $c$ & get\_Ac(A, c) & Calculates $c\cdot A$ & $A_c=c\cdot A$ & None\\\hline
-	\bf Get $H_c$ & $c,y\in\R^m$ & get\_H\_c(A, b, c, y) & $H_c=\left(\begin{array}{cc}A_c & b_c\\b_c' &-(c,y) \end{array}\right)$ & $H_c$ & None\\\hline
-	\bf Minimize $z(c)$ & $c,c_+$, step $\beta$ & minimize\_z\_c(A, b, c, c\_plus, beta\_initial, max\_step) & Calculates $\inf\limits_{c\in C_-}z(c)$ & [z, c\_array, z\_array] & If failed\\\hline
-	\bf  $\R^n$ projection & & project(A, b, c, x\_0, delta\_c, normal, search\_area\_size) & Projects $c+\Delta c$ to $C_-$ & [c\_new, lambda] & If failed\\\hline
-	\bf $\mathbb{C}^n$ projection & & project\_descent(A, b, c, normal\_1, normal\_2) & Projects $c$ to $C_-$ & [c\_new, distance] & If failed\\\hline
-	\bf Gradient $\frac{\partial z}{\partial c}$ & Normal $c$ & get\_dz\_dc(A, b, c) & Calculates $Q$, $\nabla z(c)$, normal vectors $n_1$, $n_2$ & [Q, Q\_inv, k, v, lambda\_min, z, dz\_dc, normal\_re, normal\_im, drho\_dc] & None\\\hline
-	\bf Change of basis & $c_+$ & change\_basis(A, b, c\_plus) & $\begin{cases}
-	x = S(x'+x_0)\\
-	y = y' + y_0
-	\end{cases}
-	$ s.t.
-	$\begin{cases}
-	c_+\cdot A_0=I\\
-	c_+\cdot b_0=0
-	\end{cases}$ & [A\_new, b\_new, x0, y0] & None\\\hline
-\end{tabular}
-\end{landscape}
 \end{document}
