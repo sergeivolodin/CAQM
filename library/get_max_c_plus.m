@@ -1,5 +1,5 @@
-function c = get_best_c_plus(A)
-%% c = get_near_c_plus(A, p, norm_penalty)
+function c = get_max_c_plus(A)
+%% c = get_max_c_plus(A)
 % obtain vector c s.t. lambda_min(c * A) -> max
 % and c ' * c <= 1
 
@@ -24,7 +24,7 @@ function c = get_best_c_plus(A)
     cvx_end
      
     % checking feasibility
-    if cvx_optval >= Inf
+    if cvx_optval >= Inf || cvx_optval < 0
         error('Not found');
     end
      

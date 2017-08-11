@@ -1,7 +1,7 @@
-function z_max = get_z_max(A, b, y, k, c_plus, MAXITER, DEBUG)
-%% z_max = get_z_max(A, b, y, k, c_plus, MAXITER)
+function z_max = get_z_max(A, b, y, c_plus, k, DEBUG)
+%% z_max = get_z_max(A, b, y, c_plus, k)
 % obtain z_max = inf z(c) over C_- using at most
-% k iterations of get_c_minus with MAXITER
+% k iterations of get_c_minus
 %
 % Format for the map f:
 % matrices (A_1, ..., A_m) -> tensor A(i, j, k) -- i'th row, j'th column of matrix A_k
@@ -18,10 +18,10 @@ function z_max = get_z_max(A, b, y, k, c_plus, MAXITER, DEBUG)
 % c_plus = get_c_plus(A, 10, 1);
 % x = [1 1 0 0]';
 % y = quadratic_map(A, b, x);
-% get_z_max(A, b, y, 1, c_plus, 10, 1)
+% get_z_max(A, b, y, c_plus, 10)
 
 %%
-    if nargin == 6
+    if nargin == 5
         DEBUG = 0;
     end
 
@@ -37,7 +37,7 @@ function z_max = get_z_max(A, b, y, k, c_plus, MAXITER, DEBUG)
     for i = 1:k
         try
             %% c, s.t. Theorem 3.4 holds
-            [c, ~] = get_c_minus(A_, b_, y, MAXITER, DEBUG);
+            [c, ~] = get_c_minus(A_, b_, y, 1, DEBUG);
 
             % minimizing z(c)
             [z, ~, ~] = minimize_z_c(A_, b_, c, c_plus, 1, 1, DEBUG);
