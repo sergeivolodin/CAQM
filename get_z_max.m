@@ -26,8 +26,7 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
     end
 
 %%
-    x = -get_Ac(A, c_plus) * get_Ac(b, c);
-    y = quadratic_map(A, b, x) - z_max_guess * c_plus;
+    y = point_inside(A, b, c_plus, z_max_guess);
 
 %% basis: c_+A=I, c_+b=0
     [A_, b_, ~, y0] = change_basis(A, b, c_plus);
@@ -38,19 +37,73 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
 % resulting z
     z_array = Inf(k + 1, 1);
 
+    % resulting c
+    c_array = zeros(size(A, 3), k);
+
+    % how many c found
+    found = 0;
+
+    if DEBUG
+        h = waitbar(0, 'Nonconvexity cert.: starting jobs');
+    end
+
+    % m dimension
+    m = size(A, 3);
+    % H from article
+    H = get_H(A, b);
+
+    % vectors d
+    D = randn(m, k);
+
+    % obtaining c via dual problem from d
+    get_c_d = @(d) get_c_from_d(H, y, d);
+    p = gcp();
+
+    for i = 1:k
+        f(i) = parfeval(p, get_c_d, 1, D(:, i));
+    end
+
+    for i = 1:k
+        [idx, c] = fetchNext(f);
+        if norm(c) > 0 && is_nonconvex(A, b, c)
+            c = c / norm(c);
+            found = found + 1;
+            c_array(:, i) = c;
+        end
+        if DEBUG
+            s = sprintf('Nonconvexity cert. %d/%d, found %d, success %.1f%%', i, k, found, 100. * found / i);
+            waitbar(1. * i / k, h, s);
+        end
+    end
+
+    if DEBUG
+        close(h);
+        h = waitbar(0, 'Gradient descent');
+    end
+
+    processed = 0;
+
     for i = 1:k
         try
-            %% c, s.t. Theorem 3.4 holds
-            [c, ~] = get_c_minus(A_, b_, y, 1, DEBUG);
-
             % minimizing z(c)
-            [z, ~, ~] = minimize_z_c(A_, b_, c, c_plus, 1, 1, DEBUG);
+            if norm(c_array(:, i)) > 0
+                if DEBUG
+                    s = sprintf('Gradient descent %d/%d', processed, found);
+                    waitbar(1. * processed / found, h, s);
+                end
+                [z, ~, ~] = minimize_z_c(A_, b_, c_array(:, i), c_plus, 1, 1, DEBUG);
 
-            % adding z(c^*) to z_array
-            z_array(end + 1) = z;
+                % adding z(c^*) to z_array
+                z_array(end + 1) = z;
+                processed = processed + 1;
+            end
         catch
             continue
         end
+    end
+
+    if DEBUG
+        close(h);
     end
 
     z_max = min(z_array);

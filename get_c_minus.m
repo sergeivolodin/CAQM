@@ -47,7 +47,7 @@ function [c, i] = get_c_minus(A, b, y0, MAXITER, DEBUG)
     % making MAXITER attemts or less
     while (~found) && (i < MAXITER)
         if DEBUG
-            fprintf('get_nonconvex_c attempt %d\n', i);
+            fprintf('get_c_minus attempt %d\n', i);
         end
         
         % random direction
