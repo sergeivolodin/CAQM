@@ -61,7 +61,7 @@ axis equal;
 plot_c = plot3(c_item_array_p(1, :), c_item_array_p(2, :), c_item_array_p(3, :));
 scatter3(c_item_array_p(1, :), c_item_array_p(2, :), c_item_array_p(3, :));
 plot_end = scatter3(c_item_array_p(1, N + 1 : N_new), c_item_array_p(2, N + 1 : N_new), c_item_array_p(3, N + 1 : N_new), 100, [1 0 0], 'Marker', 'hexagram');
-plot_c_dot = quiver3(c_item_array_p(1, 1:N), c_item_array_p(2, 1:N), c_item_array_p(3, 1:N), c_dot_array_p(1, 1:N), c_dot_array_p(2, 1:N), c_dot_array_p(3, 1:N), 1);
+plot_c_dot = quiver3(c_item_array_p(1, 1:N), c_item_array_p(2, 1:N), c_item_array_p(3, 1:N), c_dot_array_p(1, 1:N), c_dot_array_p(2, 1:N), c_dot_array_p(3, 1:N), 1.5);
 %plot_end = scatter3(c_item_array_p(1, N + 1), c_item_array_p(2, N), c_item_array_p(3, N + 1), 100, [1 0 0], 'Marker', 'hexagram');
 plot_start = scatter3(c_item_array_p(1, start_id), c_item_array_p(2, start_id), c_item_array_p(3, start_id), 100, [1 0 0], 'Marker', 'diamond');
 
