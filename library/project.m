@@ -65,6 +65,10 @@ function [c_new, lambda] = project(A, b, c, x_0, delta_c, normal, search_area_si
     
         i = i + 1;
     end
+    
+    if ~exist('value')
+        error('Empty search area');
+    end
 
     if abs(value) > max_value
         error('Too big value. Projection failed');

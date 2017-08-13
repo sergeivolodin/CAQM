@@ -53,6 +53,6 @@ function [c_new, distance] = project_descent(A, b, c, normal_1, normal_2, DEBUG)
         end
     end
     
-    c_new = c;
+    c_new = c / norm(c);
     distance = abs(distance);
 end
