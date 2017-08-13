@@ -162,3 +162,5 @@ for i = 1:(2 * N)
     xlabel('t')
     ylabel('z(c(t))')
 end
+
+save('output/example01_c_dot.mat', 'A_', 'b_', 'c_plus', 'c_array', 'item_size', 'A', 'b', 'c_start', 'z_value', 'R', 'v');
