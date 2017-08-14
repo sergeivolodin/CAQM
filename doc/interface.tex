@@ -46,8 +46,11 @@ For example, for a vector $c\in \mathbb{R}^n$ and a tuple of matrices $A=(A_1,..
 \begin{definition} The convex hull of $F$ is denoted as $G$:
 	$$G=\conv F$$
 \end{definition}
-\begin{definition} The boundary points of $F$ (or $G$) touched by a supporting hyperplane with the normal vector $c\in\mathbb{R}^m$:
-	$$\partial F_c=\partial G_c=\argmin\limits_{y\in F}(c\cdot y)$$
+\begin{definition} The boundary points of $F$ touched by a supporting hyperplane with the normal vector $c\in\mathbb{R}^m$:
+	$$\partial F_c=\argmin\limits_{y\in F}(c\cdot y)$$
+\end{definition}
+\begin{definition} The boundary points of $G$ touched by a supporting hyperplane with the normal vector $c\in\mathbb{R}^m$:
+	$$\partial G_c=\argmin\limits_{y\in G}(c\cdot y)$$
 \end{definition}
 \section{Functions}
 The library consists of a number of functions defined in separate .m files. Input format for the map is the following: 
