@@ -57,7 +57,15 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
 
     % obtaining c via dual problem from d
     get_c_d = @(d) get_c_from_d(H, y, d);
-    p = gcp();
+    try
+        p = gcp();
+        if isempty(p)
+            error('Empty pool');
+        end
+    catch
+        parpool();
+        p = gcp();
+    end
 
     for i = 1:k
         f(i) = parfeval(p, get_c_d, 1, D(:, i));
