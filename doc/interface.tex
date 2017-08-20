@@ -1,5 +1,5 @@
 \documentclass[a4paper]{article}
-\usepackage[a4paper, left=15mm, right=15mm, top=15mm, bottom=15mm]{geometry}
+\usepackage[a4paper, left=15mm, right=15mm, top=10mm, bottom=10mm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{indentfirst}
 \usepackage{amsmath}
@@ -52,6 +52,12 @@ For example, for a vector $c\in \mathbb{R}^n$ and a tuple of matrices $A=(A_1,..
 \begin{definition} The boundary points of $G$ touched by a supporting hyperplane with the normal vector $c\in\mathbb{R}^m$:
 	$$\partial G_c=\argmin\limits_{y\in G}(c\cdot y)$$
 \end{definition}
+\begin{definition}\label{ex:c_minus}
+	Set of normal vectors $c$, for which $\partial F_c$ is nonconvex is denoted as $C_-$:
+	$$
+	C_-=\{c\in\R^m\,\big|\,\mbox{Set }\partial F_c\mbox{ is nonconvex}\}
+	$$
+\end{definition}
 \section{Functions}
 The library consists of a number of functions defined in separate .m files. Input format for the map is the following: 
 
@@ -66,20 +72,20 @@ The library consists of a number of functions defined in separate .m files. Inpu
 \item The map $f$ as matrices $A$ and vectors $b$
 \item A point $y\in\mathbb{R}^m$.
 \end{itemize}
-{\bf Determine:} if $y\in F$
+{\bf Determine:} if $y\in G$
 
 \begin{figure}[H]
 	\centering\includegraphics[width=100pt]{fig/infeasibility_oracle}
-	\caption{Infeasibility oracle: hyperplane $c$ separates the point $y^0$ from the image $F$}
+	\caption{Infeasibility oracle: hyperplane $c$ separates the point $y$ from the convex hull $G$}
 \end{figure}
 
 \begin{verbatim}
 is_infeasible = infeasibility_oracle(A, b, y)
 \end{verbatim}
 
-This function tries to separate the point $y$ from the convex hull $G$ with a hyperplane. See Theorem 3.2 from the article.
+This function tries to certify that the point $y$ does not belong to the convex hull $G$. It separates the point $y$ from the convex hull $G$ with a hyperplane. See Theorem 3.2 from the article.
 
-{\bf Return value:} $1$ means that the separation was successful and the point $y\notin G$. This implies $y\notin F$. On the contrary, $0$ means that the feasibility is uncertain.
+{\bf Return value:} $1$ means that the point $y\notin G$ (separation was successful). This implies $y\notin F$. On the contrary, $0$ means that the feasibility is uncertain.
 
 \item {\bf Boundary oracle.} Given:
 \begin{itemize}
@@ -110,7 +116,7 @@ $$t = \sup\{\tau\big| y+\tau d\in G\}$$
 
 {\bf Exception:} if optimization task failed, in particular, if $y\notin G$ or the normal vector does not exist at that point.
 
-\item {\bf Find:} the normal vector $c$ at the boundary point $y+td$.
+\item {\bf Find:} the normal vector $c$ at the boundary point $y+td$ of the convex hull $G$.
 
 \begin{figure}[H]
 	\centering\includegraphics[width=100pt]{fig/get_c_from_d}
