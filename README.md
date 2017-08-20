@@ -17,7 +17,7 @@ See tests/convex_subpart.m as an example. A [Youtube video](https://youtu.be/Ikh
 See LICENSE.txt
 
 ## Files and folders
-* / -- main functions (see doc/interface.pdf)
+* / -- main functions (see doc/readme.pdf)
 * library/ -- supplementary functions (see doc/library.pdf)
 * doc -- documentation
 * examples/figures -- code for drawing figures from the article
@@ -25,6 +25,6 @@ See LICENSE.txt
 * tests -- code for testing the setup on each machine
 
 ## Further reading
-Refer to the documentation in doc/interface.pdf and the article
+Refer to the documentation in doc/readme.pdf and the article
 
 Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin
