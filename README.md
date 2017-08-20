@@ -11,7 +11,7 @@ Code for cutting convex parts from a quadratic image
 2. Add this folder and library/ to PATH
 
 ## Testing
-See tests/get_z_max_test.m as an example. A [Youtube video](https://youtu.be/Ikh_GDHnu-4 "Certificate cutting: z_max test") demonstrates how the test normally performs.
+See tests/convex_subpart.m as an example. A [Youtube video](https://youtu.be/Ikh_GDHnu-4 "Certificate cutting: z_max test") demonstrates how the test normally performs.
 
 ## License
 See LICENSE.txt
