@@ -30,12 +30,12 @@ catch
 end
 
 %% setting the random seed
-rng(42);
+rng(43);
 
 
 %% cutting the convex part
 try
-    z_max = get_z_max(A, b, c_plus, 10, 200, 1);
+    z_max = get_z_max(A, b, c_plus, 10, 20, 1);
     
     fprintf('z_max = %f\n', z_max);
     display('TEST PASSED');

@@ -57,30 +57,44 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
 
     % obtaining c via dual problem from d
     get_c_d = @(d) get_c_from_d(H, y, d);
+
+    % parallel/non-parallel implementation
+    % for different MATLAB versions
     try
         p = gcp();
         if isempty(p)
             error('Empty pool');
         end
-    catch
-        parpool();
-        p = gcp();
-    end
 
-    for i = 1:k
-        f(i) = parfeval(p, get_c_d, 1, D(:, i));
-    end
-
-    for i = 1:k
-        [idx, c] = fetchNext(f);
-        if norm(c) > 0 && is_nonconvex(A, b, c)
-            c = c / norm(c);
-            found = found + 1;
-            c_array(:, i) = c;
+        for i = 1:k
+            f(i) = parfeval(p, get_c_d, 1, D(:, i));
         end
-        if DEBUG
-            s = sprintf('Nonconvexity cert. %d/%d, found %d, success %.1f%%', i, k, found, 100. * found / i);
-            waitbar(1. * i / k, h, s);
+
+        for i = 1:k
+            [idx, c] = fetchNext(f);
+            if norm(c) > 0 && is_nonconvex(A, b, c)
+                c = c / norm(c);
+                found = found + 1;
+                c_array(:, i) = c;
+            end
+            if DEBUG
+                s = sprintf('Nonconvexity cert. %d/%d, found %d, success %.1f%%', i, k, found, 100. * found / i);
+                waitbar(1. * i / k, h, s);
+            end
+        end
+    catch
+        for i = 1:k
+            c = get_c_d(D(:, i));
+            if norm(c) > 0 && is_nonconvex(A, b, c)
+                c = c / norm(c);
+                found = found + 1;
+                c_array(:, i) = c;
+            end
+
+            if DEBUG
+                s = sprintf('Nonconvexity cert. %d/%d, found %d, success %.1f%%', i, k, found, 100. * found / i);
+                waitbar(1. * i / k, h, s);
+            end
         end
     end
 
