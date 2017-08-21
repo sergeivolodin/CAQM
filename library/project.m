@@ -48,7 +48,7 @@ function [c_new, lambda] = project(A, b, c, x_0, delta_c, normal, search_area_si
         value = get_m(A, b, c_1, normal, x_0, center);
         
         if DEBUG
-            fprintf('   projection l = %f (%f %d) r = %f (%f %d) val = %f\n', l, value_m, sign_m, r, value_p, sign_p, value);
+            fprintf('  Projection l=%f/%f r=%f/%f val=%f\n', l, value_m, r, value_p, value);
         end
     
         if abs(value) < min_value
@@ -60,18 +60,18 @@ function [c_new, lambda] = project(A, b, c, x_0, delta_c, normal, search_area_si
         elseif ~(sign_c == sign_m)
             r = center;
         else
-            error('All signs equal. Projection failed.');
+            error('  Projection error: All signs equal');
         end
     
         i = i + 1;
     end
     
     if ~exist('value')
-        error('Empty search area');
+        error('  Projection error: Empty search area');
     end
 
     if abs(value) > max_value
-        error('Too big value. Projection failed');
+        error('  Projection error: Too big value');
     end
     
     % updating c

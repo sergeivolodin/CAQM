@@ -27,7 +27,7 @@ function [c_new, distance] = project_descent(A, b, c, normal_1, normal_2, DEBUG)
         distance = abs(k' * (b * c));
         
         if DEBUG
-            fprintf('Project Descent dist = %f alpha = %f\n', distance, alpha);
+            fprintf('  Projection dist=%f alpha=%f\n', distance, alpha);
         end
         
         if distance < eps_tolerance

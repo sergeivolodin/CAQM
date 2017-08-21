@@ -69,12 +69,12 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
 
         % checking if z is too big
         if abs(z) >= eps_z
-            error('z value too big!');
+            error('Gradient descent finished: z(c) value too big');
         end
         
         % check for rank(Q) == n - 1
         if ~(rank(Q, eps_rank) == n - 1)
-            error('Rank Q error');
+            error('Gradient descent finished: rankQ < n - 1');
         end
 
         % distance to c_minus (b_c, x_0)
@@ -91,7 +91,7 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
         
         % intermediate result
         if DEBUG
-            fprintf('Gradient step cos=%.5f cos1=%.5f dz_dc_tangent=%.2f Q_norm=%.2f Rank_Q=%d z(c)=%.4f lambda=%.2f distance=%.2f beta=%.2f\n', ...
+            fprintf('Gradient descent cosRe=%.5f cosIm=%.5f grad_tan=%.2f |Q|=%.2f RgQ=%d z=%.4f lam=%.2f dist=%.2f beta=%.2f\n', ...
                 abs(cos_theta), abs(cos_theta_1), norm(dz_dc_tangent),...
                 norm(Q_inv), rank(Q, eps_rank), z, lambda, abs(c_minus_distance), beta);
         end
@@ -100,7 +100,7 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
         if (norm(dz_dc) < eps_norm) || (norm(normal) < eps_norm) ||...
                 (~is_real && norm(dz_dc_tangent) < eps_norm)
             if DEBUG
-                disp('norm too small (end)')
+                disp('Gradient descent finished: too small value')
             end
             break
         end
@@ -112,7 +112,7 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
         % checking if dz_dc parallel normal
         if (abs(cos_theta) >= cos_theta_max) || (~is_real && (abs(cos_theta_1) >= cos_theta_max))
             if DEBUG
-                disp('gradient parallel to normal vector(s) (end)')
+                disp('Gradient descent finished: gradient parallel to normal vector')
             end
             break;
         end
@@ -158,7 +158,7 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
         
         % projection failed for all beta
         if size(c_new, 1) == 0
-            error('Projection failed');
+            error('Gradient descent finished: Projection failed');
         end
         
         c = c_new;

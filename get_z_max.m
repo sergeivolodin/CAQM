@@ -31,10 +31,11 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
 %% basis: c_+A=I, c_+b=0
     [A_, b_, ~, y0] = change_basis(A, b, c_plus);
 
-% new y0 for A_, b_
+%% new y0 for A_, b_
     y = y - y0;
 
-% resulting z
+%% resulting variables
+    % resulting z
     z_array = Inf(k + 1, 1);
 
     % resulting c
@@ -43,6 +44,7 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
     % how many c found
     found = 0;
 
+%% looking for C_-
     if DEBUG
         h = waitbar(0, 'Nonconvexity cert.: starting jobs');
     end
@@ -60,49 +62,77 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
 
     % parallel/non-parallel implementation
     % for different MATLAB versions
-    try
-        p = gcp();
-        if isempty(p)
-            error('Empty pool');
-        end
+    is_parallel = 0;
 
+    try
+        try
+            p = gcp();
+            if isempty(p)
+                error('Empty pool');
+            end
+            is_parallel = 1;
+        catch
+            parpool();
+            p = gcp();
+            is_parallel = 1;
+        end
+    catch
+        is_parallel = 0;
+    end
+
+    if is_parallel
+        fprintf('C_- search: Using parallel mode\n');
+    else
+        fprintf('C_- search: Using non-parallel mode\n');
+    end
+
+    if is_parallel
         for i = 1:k
             f(i) = parfeval(p, get_c_d, 1, D(:, i));
         end
+    end
 
-        for i = 1:k
-            [idx, c] = fetchNext(f);
-            if norm(c) > 0 && is_nonconvex(A, b, c)
-                c = c / norm(c);
-                found = found + 1;
-                c_array(:, i) = c;
-            end
-            if DEBUG
-                s = sprintf('Nonconvexity cert. %d/%d, found %d, success %.1f%%', i, k, found, 100. * found / i);
-                waitbar(1. * i / k, h, s);
-            end
-        end
-    catch
-        for i = 1:k
+    for i = 1:k
+        if is_parallel
+            [~, c] = fetchNext(f);
+        else
             c = get_c_d(D(:, i));
-            if norm(c) > 0 && is_nonconvex(A, b, c)
-                c = c / norm(c);
-                found = found + 1;
-                c_array(:, i) = c;
-            end
-
-            if DEBUG
-                s = sprintf('Nonconvexity cert. %d/%d, found %d, success %.1f%%', i, k, found, 100. * found / i);
-                waitbar(1. * i / k, h, s);
-            end
+        end
+        if norm(c) > 0 && is_nonconvex(A, b, c)
+            c = c / norm(c);
+            found = found + 1;
+            c_array(:, i) = c;
+        end
+        if DEBUG == 1
+            s = sprintf('Nonconvexity cert. %d/%d, found %d, success %.1f%%', i, k, found, 100. * found / i);
+            waitbar(1. * i / k, h, s);
+        elseif DEBUG == 2
+            s = sprintf('Nonconvexity cert. (%d/%d, found %d)', i, k, found);
+            waitbar(1. * i / k, h, s);
         end
     end
 
+%% displaying info
     if DEBUG
         close(h);
+        fprintf('Found C_-: %d/%d iterations (success %.1f%%)\n', found, k, 100. * found / k);
+
+        for i = 1:k
+            if norm(c_array(:, i)) > 0
+                fprintf('c(%d/%d): ', i, k);
+                for val=c_array(:, i)
+                    fprintf('%.4f ', val);
+                end
+                fprintf('\n');
+            end
+        end
+
+        fprintf('\n');
+
         h = waitbar(0, 'Gradient descent');
     end
 
+%% gradient descent
     processed = 0;
 
     for i = 1:k
@@ -110,10 +140,14 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
             % minimizing z(c)
             if norm(c_array(:, i)) > 0
                 if DEBUG
-                    s = sprintf('Gradient descent %d/%d', processed, found);
+                    s = sprintf('Gradient descent (%d/%d)', processed, found);
                     waitbar(1. * processed / found, h, s);
                 end
                 [z, ~, ~] = minimize_z_c(A_, b_, c_array(:, i), c_plus, 1, 1, DEBUG);
+
+                if DEBUG
+                    fprintf('\n');
+                end
 
                 % adding z(c^*) to z_array
                 z_array(end + 1) = z;

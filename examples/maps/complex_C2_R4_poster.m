@@ -1,6 +1,9 @@
 %% This file generates a random map
 % and stores the result to a .mat file
 
+% changing cwd to directory of .m file
+cd(fileparts(which(mfilename)));
+
 clear all;
 
 %% generating map
