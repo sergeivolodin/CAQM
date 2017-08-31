@@ -1,17 +1,12 @@
 clear all;
 
-n = 3;
-m = 3;
+% changing cwd to directory of .m file
+cd(fileparts(which(mfilename)));
 
-A(:, :, 1) = [1 1 1; 1 2 0; 1 0 2];
-A(:, :, 2) = [3 -1 0; -1 0 -1; 0 -1 1];
-A(:, :, 3) = eye(n);
+% loading map
+load('./maps/article_example01_R3_R3.mat');
 
-b(:, 1) = [1 1 1]';
-b(:, 2) = [1 0 -1]';
-b(:, 3) = [0 0 0]';
-
-disp('1. The map R4->R4');
+disp('1. The map R3->R3');
 for i = 1:n
     fprintf('A_%d = %s\n', i, mat2str(A(:, :, i)));
 end
@@ -21,7 +16,6 @@ for i = 1:n
 end
 
 %%
-c_plus = [0 0 1]';
 
 fprintf('2. c_+ = %s\n', mat2str(c_plus));
 

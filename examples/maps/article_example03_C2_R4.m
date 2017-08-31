@@ -1,12 +1,10 @@
-%% This file generates a random map
-% and stores the result to a .mat file
+%%
+clear all;
 
 % changing cwd to directory of .m file
 cd(fileparts(which(mfilename)));
 
-clear all;
-
-%% generating map
+%% defining map
 n = 2;
 m = 4;
 is_complex = 1;
@@ -27,4 +25,4 @@ b(:, 4) = [0     0]';
 c_plus = [1 1 0 0]' / sqrt(2);
 
 %% saving results
-save('complex_C2_R4_poster.mat', 'A', 'b', 'n', 'm', 'is_complex', 'c_plus');
+save('article_example03_C2_R4.mat', 'A', 'b', 'n', 'm', 'is_complex', 'c_plus');

@@ -1,7 +1,10 @@
-%% loading map
 clear all;
+
+% changing cwd to directory of .m file
 cd(fileparts(which(mfilename)));
-load('./maps/complex_C2_R4_poster.mat');
+
+% loading map
+load('./maps/article_example03_C2_R4.mat');
 
 %% displaying the map
 display(A);

@@ -1,8 +1,10 @@
+%%
 clear all;
 
 % changing cwd to directory of .m file
 cd(fileparts(which(mfilename)));
 
+%% defining map
 n = 4;
 m = 4;
 
@@ -34,4 +36,4 @@ end
 
 c_plus = [1 0 0 0]';
 
-save('real_R4_R4_example01.mat', 'A', 'b', 'c_plus', 'n','m');
+save('article_example05_R4_R4.mat', 'A', 'b', 'c_plus', 'n', 'm');

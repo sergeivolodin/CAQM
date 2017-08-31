@@ -1,15 +1,10 @@
 clear all;
 
-n = 3;
-m = 3;
+% changing cwd to directory of .m file
+cd(fileparts(which(mfilename)));
 
-A(:, :, 1) = [1 -0.25 0.5;-0.25 0 0;0.5 0 0];
-A(:, :, 2) = [0 -0.25 0;-0.25 1 -0.5;0 -0.5 0];
-A(:, :, 3) = [0 0 -eps;0 0 -eps;-eps -eps 1];
-
-b(:, 1) = [-0.75 0 0]';
-b(:, 2) = [0 0.25 0]';
-b(:, 3) = [0 0 -0.5];
+% loading map
+load('./maps/article_example02_R3_R3.mat');
 
 disp('1. The map R3->R3');
 for i = 1:n
@@ -21,8 +16,6 @@ for i = 1:n
 end
 
 %%
-c_plus = [0.5 0.5 0.25]';
-c_plus = c_plus / norm(c_plus);
 
 fprintf('2. c_+ = %s\n', mat2str(c_plus));
 

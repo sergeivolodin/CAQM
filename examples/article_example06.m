@@ -4,9 +4,9 @@ clear all;
 cd(fileparts(which(mfilename)));
 
 % loading map
-load('./maps/article_example04_C2_R4.mat');
+load('./maps/article_example06_R4_R4.mat');
 
-disp('1. The map C2->R4');
+disp('1. The map R4->R4');
 for i = 1:n
     fprintf('A_%d = %s\n', i, mat2str(A(:, :, i)));
 end

@@ -11,10 +11,10 @@ cd(strcat(fileparts(which(mfilename)),'/../'));
 %% using saved map
 try
     % Real case R4->R4
-    load('examples/maps/real_R4_R4.mat');
+    load('examples/maps/article_example07_R4_R4.mat');
 
     % Complex case C2->R4, pre-defined c_plus
-    %load('examples/maps/complex_C2_R4_poster.mat')
+    %load('examples/maps/article_example03_C2_R4.mat')
     
     fprintf('Map load OK\n\n');
 catch
