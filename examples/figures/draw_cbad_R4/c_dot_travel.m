@@ -1,7 +1,9 @@
-clear all
+clear all;
 
-% getting an image
+% changing cwd to directory of .m file
+cd(fileparts(which(mfilename)));
 
+% getting a map
 load('example01.mat');
 
 % basis: c_+A=I, c_+b=0
@@ -131,8 +133,8 @@ plot_dest = scatter3(v(1), v(2), v(3), 1000, [1 0 0], 'p');
 
 [Sx, Sy, Sz] = sphere(32);
 s=surf(Sx,Sy,Sz);
-set(s, 'FaceColor', [0 0 0], 'FaceAlpha', 0.1);
-set(s, 'EdgeColor', [0 0 0], 'EdgeAlpha', 0.3)
+set(s, 'FaceColor', [0 0 0], 'FaceAlpha', 0.05);
+set(s, 'EdgeColor', [0 0 0], 'EdgeAlpha', 0.1)
 
 legend([plot_path, plot_cdot_inv, plot_cdot_forw, plot_end_inv, plot_end_forw, plot_begin, plot_dest], {'Path', 'Backwards', 'Forwards', 'End backwards', 'End forwards', 'Start point (certificate)', 'Global minimum'});
 
