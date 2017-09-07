@@ -1,6 +1,6 @@
 clear all;
-load('example02.mat');
-k = 150;
+load('example03.mat');
+k = 300;
 z_max_guess = 0.5;
 n = size(A, 1);
 m = size(A, 3);
@@ -11,7 +11,7 @@ c_plus_max = get_max_c_plus(A);
 z_max_max = get_z(c_plus_max);
 
 %%
-[SX, SY, SZ] = sphere(4);
+[SX, SY, SZ] = sphere(10);
 SX = SX(:);
 SY = SY(:);
 SZ = SZ(:);
@@ -42,4 +42,4 @@ end
 close(h);
 
 %% saving results
-save('output/example02_max_c_plus.mat');
+save('output/example03_max_c_plus.mat');
