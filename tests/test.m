@@ -7,6 +7,7 @@ clear all;
 
 %% changing cwd to project folder (with README.md)
 cd(strcat(fileparts(which(mfilename)),'/../'));
+addpath('library');
 
 %% using saved map
 try
