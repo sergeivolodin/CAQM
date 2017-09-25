@@ -26,15 +26,27 @@
 
 \begin{document}
 \maketitle
-MatLab library CAQM is a tool to analyze geometric properties of quadratic maps (manifolds of real-valued solutions of systems of quadratic equations).
-Main functionality described below is contained in 5 MatLab functions located in the main folder.
-Additional functionality is described in the accompanying file {\tt library.pdf}.
+CAQM is a MATLAB library designed to analyze geometric properties of images of quadratic maps (which are manifolds of real-valued solutions of systems of quadratic equations).
+
+This file is aimed at both guiding users with the installation steps and enumerating the methods and techniques which constitute the library. The main functionality described below is contained in several MATLAB functions located in the main folder.
+
+Additional procedures which reside in the {\tt library/} folder are described in the accompanying file {\tt library.pdf}.
 
 \section*{Installation and Testing}
-The library does not require additional installation beyond unpacking and adding the main folder, including subfolders, to the Matlab path.
-To test installation and functionality one can run {\tt CAQMtest.m} located in {\tt tests} folder.
-A sucessful run should end with {\tt TEST PASSED} message.
-Full output and other details can be found in this \href{https://youtu.be/Ikh_GDHnu-4}{video}.
+The library requires \href{https://www.mathworks.com/downloads/}{MATLAB} and \href{http://cvxr.com/cvx/download/}{CVX} as prerequisites. Having obtained those, the following steps are required in order to use CAQM.
+\begin{enumerate}
+\item {\bf Obtaining source code} can be done in two ways. First one requires basic knowledge of the GIT version control system. Simply clone the repository:
+\begin{verbatim}
+git clone git@github.com:sergeivolodin/CertificateCutting.git
+\end{verbatim}
+The second option is to download the latest snapshot of the repository in form of a .zip archive. To do so, navigate to \href{https://github.com/sergeivolodin/CertificateCutting}{github.com/sergeivolodin/CertificateCutting}, press the green ,,Clone or download'' button and then choose ,,Download ZIP'' in the drop-down menu. Then unpack the obtained archive. Both cases should give a folder called {\tt CertificateCutting} (or {\tt CertificateCutting-master} in the latter case). This folder must contain a file {\tt README.md}.
+\item {\bf Configuring MATLAB} involves adding the folder to PATH. The following directories (assuming that the root folder is called {\tt CertificateCutting}) should be added: {\tt CertificateCutting}, {\tt CertificateCutting/library}, {\tt CertificateCutting/tests}. MATLAB gives two ways of adding a folder to MATLAB PATH. The first one involves \href{https://www.mathworks.com/help/matlab/ref/addpath.html}{console commands} and the second one \href{http://www.mathworks.com/help/matlab/ref/pathtool.html}{uses GUI}.
+\item {\bf Testing the library} is an essential step which ensures that the library and all of its dependencies were installed correctly. To run the test, open MATLAB, navigate to {\tt CertificateCutting/tests} and run the {\tt CAQMtest.m} file. This file will go through essential parts of the functionality. During that period, a parallel cluster might be started (depending on the MATLAB version) and several GUI dialog boxes might be displayed. If the test succeeded, a message {\tt TEST PASSED} should be displayed in the console output. Otherwise, if the test has failed, a YouTube \href{https://youtu.be/Ikh_GDHnu-4}{video} demonstrating normal test operations might prove helpful in diagnosing the issue and overcoming installation mistakes. In other cases, feel free to contact the authors.
+\end{enumerate}
+
+After installation and testing, the library is ready to use in your applications. The sections below describe the functionality in details.
+
+\newpage
 
 \section*{Notations}
 \begin{enumerate}
@@ -81,6 +93,8 @@ The image of $f$ is denoted as $F$,
 	$$
 \end{definition}
 
+\newpage
+
 \section*{Functionality}
 The library consists of several functions, each of them is defined in a separate .m file.
 Input format for specify the quadratic map is as follows.
@@ -91,7 +105,7 @@ Input format for specify the quadratic map is as follows.
 \end{itemize}
 
 \begin{enumerate}
-\item {\bf Feasibility membership oracle\ \ \  }{\tt \large  infeasibility$\_$oracle.m}
+\item {\bf Feasibility membership oracle,\hskip 6pt}\boxed{\tt \large  infeasibility\_oracle.m}
 \begin{verbatim}
 is_infeasible = infeasibility_oracle(A, b, y)
 \end{verbatim}
