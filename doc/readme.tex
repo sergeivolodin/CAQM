@@ -218,21 +218,21 @@ This function stops and returns $c$ if non-convexity of $\partial_c F$ was estab
 If $y$ and $k$ are not specified, the function uses default values $y=f(0)=0$ and $k=10$.
 
 
-\item {\bf Nonconvexity certificate,\hskip 6pt}\boxed{\tt \large non-convexity\_certificate.m} 
+\item {\bf Nonconvexity certificate,\hskip 6pt}\boxed{\tt \large nonconvexity\_certificate.m} 
 	\begin{verbatim}
-	is_non-convex = non-convexity_certificate(A, b, [y], [k])
+	is_nonconvex = nonconvexity_certificate(A, b, [y], [k])
 	\end{verbatim}
 {\bf Input:}
 \begin{itemize}
-	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
-	\item  $[$optional$]$ a point $y\in G$,
-	\item $[$optional$]$ number of iterations $k$.
+	\item The map $f$ specified by matrices $A_k$ and vectors $b_k$,
+	\item {\it (optional)} A point $y\in G$,
+	\item {\it (optional)} Number of iterations $k$.
 \end{itemize}
-{\bf Output:} attempts to establish if $F$ is convex, returns {\tt is\_non-convex}=$1$ if $F$ is non-convex,  {\tt is\_non-convex}=$0$ if uncertain.
+{\bf Output:} attempts to establish if $F$ is convex, returns {\tt is\_nonconvex}=$1$ if $F$ is non-convex,  {\tt is\_nonconvex}=$0$ if uncertain.
 {\bf Exceptions:} None
 
 	
-This function calls {\tt get\_c\_minus} and returns  {\tt is\_non-convex}=$1$ if the latter returns a non-trivial $c$. 
+This function calls {\tt get\_c\_minus} and returns  {\tt is\_nonconvex}=$1$ if the latter returns a non-trivial $c$. 
 
 
 \item {\bf Positive-definite $c\cdot A$,\hskip 6pt}\boxed{\tt \large get\_c\_plus.m}
