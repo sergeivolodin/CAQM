@@ -1,5 +1,5 @@
 \documentclass[a4paper]{article}
-\usepackage[a4paper, left=15mm, right=15mm, top=10mm, bottom=10mm]{geometry}
+\usepackage[a4paper, left=20mm, right=20mm, top=20mm, bottom=20mm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{indentfirst}
 \usepackage{amsmath}
@@ -7,9 +7,15 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{amsthm}
+\usepackage{authblk}
 \usepackage{hyperref}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
+\renewcommand{\footnoterule}{%
+	\kern -3pt
+	\hrule width \textwidth height 1pt
+	\kern 2pt
+}
 
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\R}{\mathbb{R}}
@@ -22,9 +28,15 @@
 
 \title{CAQM: Convexity Analysis of Quadratic Maps}
 \date{}
-\author{Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin}
+\author[1]{Anatoly Dymarsky\thanks{a.dymarsky@skoltech.ru}}
+\author[1]{Elena Gryazina\thanks{e.gryazina@skoltech.ru}} 
+\author[2]{Boris Polyak\thanks{boris@ipu.ru}}
+\author[1]{Sergei Volodin\thanks{sergei.volodin@phystech.edu}}
+\affil[1]{Skolkovo Institute of Science and Technology}
+\affil[2]{Institute for Control Sciences RAS}
 
 \begin{document}
+\newgeometry{left=30mm, right=30mm, top=30mm, bottom=30mm}
 \maketitle
 CAQM is a MATLAB library designed to analyze geometric properties of images of quadratic maps (which are manifolds of real-valued solutions of systems of quadratic equations).
 
@@ -32,6 +44,8 @@ This file is aimed at both guiding users with the installation steps and enumera
 
 Additional procedures which reside in the {\tt library/} folder are described in the accompanying file {\tt library.pdf}.
 
+\newpage
+\newgeometry{left=20mm, right=20mm, top=20mm, bottom=20mm}
 \section*{Installation and Testing}
 The library requires \href{https://www.mathworks.com/downloads/}{MATLAB} and \href{http://cvxr.com/cvx/download/}{CVX} as prerequisites. Having obtained those, the following steps are required in order to use CAQM.
 \begin{enumerate}
@@ -87,8 +101,8 @@ The image of $f$ is denoted as $F$,
 	$$\partial G_c=\argmin\limits_{y\in G}(c\cdot y)$$
 \end{definition}
 \begin{definition}\label{ex:c_minus}
-	Set of normal vectors $c$, such that $\partial F_c$ is nonconvex is denoted as $C_-$,
-	$$C_-=\{c\in\R^m\,\big|\,\mbox{Set }\partial F_c\mbox{ is nonconvex}\}$$
+	Set of normal vectors $c$, such that $\partial F_c$ is non-convex is denoted as $C_-$,
+	$$C_-=\{c\in\R^m\,\big|\,\mbox{Set }\partial F_c\mbox{ is non-convex}\}$$
 \end{definition}
 
 \newpage
@@ -109,10 +123,11 @@ is_infeasible = infeasibility_oracle(A, b, y)
 \end{verbatim}
 {\bf Input:}
 \begin{itemize}
-\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
-\item point $y\in\mathbb{R}^m$.
+\item The map $f$ specified by matrices $A_k$ and vectors $b_k$,
+\item A point $y\in\mathbb{R}^m$.
 \end{itemize}
-{\bf Output:} determines if $y\in G$, returns {\tt is\_infeasible}=1 if $y\notin G$, {\tt is\_infeasible}=0 if $y\in G$.
+{\bf Output:} determines if $y\in G$, returns {\tt is\_infeasible}=1 if $y\notin G$, {\tt is\_infeasible}=0 if $y\in G$.\\
+{\bf Exceptions:} None
 
 \begin{figure}[H]
 	\centering\includegraphics[width=100pt]{fig/infeasibility_oracle}
@@ -123,61 +138,65 @@ is_infeasible = infeasibility_oracle(A, b, y)
 This function attempts to certify that the point $y$ does not belong to the convex hull $G$ of $F$ by separating $y$ and $G$ by an appropriate hyperplane.
 This is illustrated in Fig.~\ref{fig:one}, see Theorem 3.2 in the accompanying article for details.
 
-The function returns {\tt is\_infeasible}$=1$ if the desired hyperplane was found.
+Procedure returns {\tt is\_infeasible}$=1$ if the desired hyperplane was found.
 In this case $y\notin G$ and consequently $y\notin F$, implying there is no $x\in \mathbb{V}$ such that $y=f(x)$, i.e.~this point is infeasible.
 If the hyperplane was not found the function returns {\tt is\_infeasible}$=0$, which means the feasibility  of $y$ with respect to $F$ is uncertain.
-
-We note that feasibility of $y$  is exactly the same as solvability of the system of quadratic equations $y=f(x)$ with real-valued $x$ when the map $f$ is real, or with $x$ and $x^*$ being complex conjugate to each other if $f$ is complex as defined in eq.~\eqref{complex}.
-
+\newpage
 \item {\bf Boundary oracle,\hskip 6pt}\boxed{\tt \large boundary\_oracle.m}
 \begin{verbatim}
 [t, is_in_F] = boundary_oracle(A, b, y, d)
 \end{verbatim}
 {\bf Input:}
 \begin{itemize}
-	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
-	\item a point $y\in G$,
-	\item a direction $d\in\R^m$.
+	\item The map $f$ specified by matrices $A_k$ and vectors $b_k$,
+	\item A point $y\in G$,
+	\item A direction $d\in\R^m$.
 \end{itemize}
-{\bf Output:}  finds and returns distance $t$ to the boundary of $G$ from the point $y$ inside $G$ in the direction $d$; verifies if boundary point belongs to $F$. 
+{\bf Output:}  finds and returns distance $t$ to the boundary of $G$ from the point $y$ inside $G$ in the direction $d$; verifies if the boundary point belongs to $F$.\\
+{\bf Exception:}  if the input vector $y\notin G$ or in the case if $\partial G$ is not smooth at the boundary point $y+t\,d\in \partial G$, the function produces an exception.
 
 
 \begin{figure}[H]
 	\centering\includegraphics[width=100pt]{fig/boundary_oracle}
-	\caption{Boundary oracle: distance from $y$ to the boundary $\partial G$ in the direction $d$. The boundary point of $G$ may or may not belong to $\partial F$ (cases of $d=d_1$ and $d=d_2$ respectively).}
+	\caption{Boundary oracle: distance from $y$ to the boundary $\partial G$ in the direction $d$.
+	The boundary point of $G$ may or may not belong to $\partial F$ (cases of $d=d_1$ and $d=d_2$ respectively).}
 \label{fig:two}
 \end{figure}
 
 
 This function finds point $y+t\,d$ on the boundary $\partial G$ with the largest $ {t} = \sup\{\tau\big| y+\tau d\in G\}$ and checks if this point belongs to $F$. 
-This is illustrated in Fig.~\ref{fig:two}, see Theorem ??!! in the accompanying article for details. The function returns $\tt t$ with the value of $t$, variable
-	{\tt  is\_in\_F}$=1$ if the boundary point $y+t\,d$ belongs to $F$, and variable {\tt  is\_in\_F}$=0$ if feasibility of $y+t\,d$ with respect to $F$ is uncertain.\\
-{\it Exception:}  if on input $y\notin G$ or $\partial G$ is not smooth at the boundary point $y+t\,d\in \partial G$ the function produces an exception. 
+This is illustrated in Fig.~\ref{fig:two}, see Optimization task (3) in the accompanying article for details.
+
+The function returns $\tt t$ with the value of $t$, variable {\tt  is\_in\_F}$=1$ if the boundary point $y+t\,d$ belongs to $F$, and variable {\tt  is\_in\_F}$=0$ if feasibility of $y+t\,d$ with respect to $F$ is uncertain.
+
+\newpage
+
+\item {\bf Normal vector at the boundary,\hskip 6pt}\boxed{\tt get\_c\_from\_d.m} 
+\begin{verbatim}
+c = get_c_from_d(A, b, y, d)
+\end{verbatim}
+{\bf Input:}
+\begin{itemize}
+	\item The map $f$ specified by matrices $A_k$ and vectors $b_k$,
+	\item A point $y\in G$,
+	\item A direction $d\in\R^m$.
+\end{itemize}
+{\bf Output:}  finds point $y+t\,d$ at the boundary of $G$ and returns vector $c$ normal to $\partial G$ at that point\\
+{\bf Exception:} if on the input $y\notin G$ or the normal vector to $\partial G$ at $y+td$ does not exist (because $\partial G$ is not smooth at this point)  the function produces an exception.
 
 
+\begin{figure}[H]
+	\centering\includegraphics[width=100pt]{fig/get_c_from_d}
+	\caption{Normal vector at the boundary: vector $c$ normal to $\partial G$ at the boundary point $y+td$. This function only considers the convex hull $G$ and does not distinguish between points $y+td$ which do or do not belong to $F$.}
+\label{fig:three}
+\end{figure}
 
-%\item {\bf Normal vector at the boundary\ \ \  }{\tt get\_c\_from\_d.m} 
-%\begin{verbatim}
-%c = get_c_from_d(A, b, y, d)
-%\end{verbatim}
-%{\bf Input:}
-%\begin{itemize}
-%	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
-%	\item a point $y\in G$,
-%	\item a direction $d\in\R^m$.
-%\end{itemize}
-%{\bf Output:}  finds point $y+t\,d$ at the boundary of $G$ and returns vector $c$ normal to $\partial G$ at that point 
-%
-%
-%\begin{figure}[H]
-%	\centering\includegraphics[width=100pt]{fig/get_c_from_d}
-%	\caption{Normal vector at the boundary: vector $c$ normal to $\partial G$ at the boundary point $y+td$. This function only ``knows" about $G$ and does not distinguish between points $y+td$ which do and do not belong to $F$.}
-%\label{fig:three}
-%\end{figure}
-%
-%This function finds boundary point $y+td\in \partial G$ and calculates vector $c$ normal to $\partial G$ at that point by using the dual formulation of the optimization problem, see ?? of the accompanying article. This is schematically illustrated in Fig.~\ref{fig:three}. The function returns vector variable $\tt c$ with the value of $c$ .
-%
-%{\it Exception:} if on the input $y\notin G$ or the normal vector to $\partial G$ at $y+td$ does not exist (because $\partial G$ is not smooth at this point)  the function produces an exception. 
+This function finds the boundary point $y+td\in \partial G$ and calculates the vector $c$ normal to $\partial G$ at that point by using the dual formulation of the optimization problem, see equation (4) of the accompanying article.
+This is schematically illustrated in Fig.~\ref{fig:three}.
+
+The function returns vector variable $\tt c$ with the value of $c$.
+
+\newpage
 
 \item {\bf ``Non-convex direction",\hskip 6pt}\boxed{\tt \large get\_c\_minus.m} 
 	\begin{verbatim}
@@ -185,21 +204,23 @@ This is illustrated in Fig.~\ref{fig:two}, see Theorem ??!! in the accompanying 
 	\end{verbatim}
 {\bf Input:}
 \begin{itemize}
-	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
-	\item  $[$optional$]$ a point $y\in G$,
-	\item $[$optional$]$ number of iterations $k$.
+	\item The map $f$ specified by matrices $A_k$ and vectors $b_k$,
+	\item {\it (optional)} A point $y\in G$,
+	\item {\it (optional)} Number of iterations $k$.
 \end{itemize}
-{\bf Output:}  finds and returns vector $c$ such that $\partial F_c$ is nonconvex through a stochastic algorithm using up to $k$ iterations; returns empty vector if such $c$ was not  found.\\
-{\it Exception:} really??!!
-%\\[-1pt]
+{\bf Output:}  finds and returns vector $c$ such that $\partial F_c$ is non-convex through a stochastic algorithm using up to $k$ iterations\\
+{\bf Exception:} The functions throws an exception in the case if the vector $c$ was not found during the $k$ iterations
 
-	This function consequently generates up to $k$ random directions $d$ and for each one finds vector $c$ normal to $\partial G$ at the boundary point $y+t\, d\in \partial G$.  Next it finds $\partial_c F$, the intersection of $F$ with the supporting hyperplane orthogonal to $c$ and checks if it is nonconvex.  We note that non-convexity of $\partial_c F$ implies non-convexity of $F$. This function stops and returns $c$ if non-convexity of $\partial_c F$ was established during one of the iterations, and empty vector ${\tt c=[\ ]}$ otherwise. 
+This function consequently generates up to $k$ random directions $d$ and for each one finds vector $c$ normal to $\partial G$ at the boundary point $y+t\, d\in \partial G$.
+Next it finds $\partial_c F$, the intersection of $F$ with the supporting hyperplane orthogonal to $c$ and checks if it is non-convex. 
+We note that non-convexity of $\partial_c F$ implies non-convexity of $F$.
+This function stops and returns $c$ if non-convexity of $\partial_c F$ was established during one of the iterations. If the vector $c$ was not found, an exception is produced.
 If $y$ and $k$ are not specified, the function uses default values $y=f(0)=0$ and $k=10$.
 
 
-\item {\bf Nonconvexity certificate,\hskip 6pt}\boxed{\tt \large nonconvexity\_certificate.m} 
+\item {\bf Nonconvexity certificate,\hskip 6pt}\boxed{\tt \large non-convexity\_certificate.m} 
 	\begin{verbatim}
-	is_nonconvex = nonconvexity_certificate(A, b, [y], [k])
+	is_non-convex = non-convexity_certificate(A, b, [y], [k])
 	\end{verbatim}
 {\bf Input:}
 \begin{itemize}
@@ -207,10 +228,11 @@ If $y$ and $k$ are not specified, the function uses default values $y=f(0)=0$ an
 	\item  $[$optional$]$ a point $y\in G$,
 	\item $[$optional$]$ number of iterations $k$.
 \end{itemize}
-{\bf Output:} attempts to establish if $F$ is convex, returns {\tt is\_nonconvex}=$1$ if $F$ is non-convex,  {\tt is\_nonconvex}=$0$ if uncertain.
+{\bf Output:} attempts to establish if $F$ is convex, returns {\tt is\_non-convex}=$1$ if $F$ is non-convex,  {\tt is\_non-convex}=$0$ if uncertain.
+{\bf Exceptions:} None
 
 	
-	This function calls {\tt get\_c\_minus} and returns  {\tt is\_nonconvex}=$1$ if the latter returns a non-trivial $c$. 
+This function calls {\tt get\_c\_minus} and returns  {\tt is\_non-convex}=$1$ if the latter returns a non-trivial $c$. 
 
 
 \item {\bf Positive-definite $c\cdot A$,\hskip 6pt}\boxed{\tt \large get\_c\_plus.m}
@@ -220,14 +242,19 @@ If $y$ and $k$ are not specified, the function uses default values $y=f(0)=0$ an
 
 {\bf Input:}
 \begin{itemize}
-	\item matrices $A_k$
-	\item $[$optional$]$ number of iterations $k$
+	\item Matrices $A_k$
+	\item {\it (optional)} The number of iterations $k$
 \end{itemize}
 {\bf Output:} finds and returns vector $c_+$ such that $c_+\cdot A\succ 0$.\\
-{\it Exception:} if $c_+$  was not found during $k$ random iterations.
-
+{\bf Exception:} if $c_+$  was not found during $k$ iterations of the randomized procedure.
 	
-	This function generates a random ``seed" which is used to find $c_+$ such that $c_+\cdot A\succ 0$. If successful, the function terminates and returns $c_+$ on the exit, otherwise the search attempt is repeated up to $k$ times. If not specified explicitly, the default value of $k=10$. If $c_+$ is not found during $k$ iterations the function produces an exception. 
+This function utilizes a randomized algorithm which is used to find $c_+$ such that $c_+\cdot A\succ 0$.
+
+If successful, the function terminates and returns $c_+$ on the exit, otherwise the search attempt is repeated up to $k$ times.
+If not specified explicitly, the default value of $k=10$.
+If $c_+$ is not found during $k$ iterations the function produces an exception. 
+
+\newpage
 	
 \item {\bf Convex subpart,\hskip 6pt}\boxed{\tt \large get\_z\_max.m}
 \begin{verbatim}
@@ -235,27 +262,39 @@ z_max = get_z_max(A, b, c_plus, [z_max_guess], [k])
 \end{verbatim}
 {\bf Input:}
 \begin{itemize}
-	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
-	\item vector $c_+$ such that $c_+\cdot A\succeq 0$,
-	\item $[$optional$]$ the guess value  $z^{\rm guess}_{\rm max}$,
-	\item $[$optional$]$ number of iterations $k$.
+	\item The map $f$ specified by matrices $A_k$ and vectors $b_k$,
+	\item The vector $c_+$ such that $c_+\cdot A\succeq 0$,
+	\item {\it (optional)} The guess value  $z^{\rm guess}_{\rm max}$,
+	\item {\it (optional)} The number of iterations $k$.
 \end{itemize}
 {\bf Output:} finds and returns maximal value $z_{\max}$ such that the compact part of $F$ ``cut" by the hyperplane  $c_+ \cdot (y-y_0)=z_{\max}$, where $y_0\in \partial_{c_+}F$, is still convex. \\
-{\it Exception:} produces an exception if non-convexity of $F$ confined within the half-plane $c_+ \cdot (y-y_0)\leq z^{\rm guess}_{\rm max}$  has not been established.  ??!!
+{\bf Exception:} produces an exception if non-convexity of $F$ confined within the half-plane $c_+ \cdot (y-y_0)\leq z^{\rm guess}_{\rm max}$  has not been established, i.e. no non-convexities were found in that region.
 
 \begin{figure}[H]
 	\centering\includegraphics[width=100pt]{fig/get_z_max}
-	\caption{Maximal value of $z_{\max}$ such that  the subpart of $F$, $F_{z_{\rm max}}\equiv \{y\, | y\in F, c_+ \cdot (y-y_0)\leq z_{\rm max}\}$, which is ``cut" from $F$ by a hyperplane orthogonal  to $c_+$ is still convex.}
+	\caption{Maximal value of $z_{\max}$ such that  the subpart of $F$, $F^{c_+}_{z_{\rm max}}\equiv \{y\, | y\in F, c_+ \cdot (y_0-y)\leq z_{\rm max}\}$, which is ``cut" from $F$ by a hyperplane orthogonal  to $c_+$ does not contain non-convexities.}
 \label{fig:four}
 \end{figure}
 
 
+This function returns maximal value $z_{\max}$ such that the hyperplane perpendicular to $c_+$ and located distance $z_{\max}$ away from the boundary of $F$ still does not contain non-convexities.
+More precisely, the compact part of $F$ confined by the half-space $\{y\, |c_+ \cdot (y_0-y)\leq z^{\rm guess}_{\rm max}\}$ is convex.
+Here $y_0\in \partial_{c_+}F$, and since $c_+\cdot A\succ 0$, the set $\partial_{c_+}F$ is a singleton $\{y_0\}$.
+Moreover, $z_{\max}$ is maximal in a sense that enlarging it would result in the resulting ,,cut'' containing at least one boundary non-convexity, which are non-convex subsets of the boundary $\partial F_c$ defined as the points touched by a hyperplane with a normal vector $c$.
+The geometric meaning of $z_{\max}$ is illustrated in Fig. \ref{fig:four}. 
 
-This function returns maximal value $z_{\max}$ such that the hyperplane perpendicular to $c_+$ and located distance $z_{\max}$ away from the boundary of $F$ is still convex. More precisely,  the compact part of $F$ confined by the half-space $\{y\, |c_+ \cdot (y-y_0)\leq z^{\rm guess}_{\rm max}\}$ is convex. Here $y_0\in \partial_{c_+}F$, and since $c_+\cdot A\succ 0$, the set $\partial_{c_+}F$ consists of only one point $y_0$. The geometric meaning of $z_{\max}$ is illustrated in Fig.~{fig:four}. 
-The function first tries to identify ``non-convex directions" $c_-$ using {\tt get\_c\_minus} and then ``follow" each non-convexity to the smallest value of $z$. This is described in detail in the section ??!! of the accompanying paper.
-If no ``non-convex directions" found, the function returns $z^{\rm guess}_{\rm max}$ assuming the part of $F$ confined within the half-space $\{y\, |c_+ \cdot (y-y_0)\leq z^{\rm guess}_{\rm max}\}$ is convex. 
-In case the input value of $c_+$ does not satisfy $c_+\cdot A\succ 0$, the function produced as exception ???
-If the maximal number of iterations $k$ (to be used with {\tt get\_c\_minus}) is not specified on input, the default value $k=10$ (or $k=100$?) is used by default. The guess value $z^{\rm guess}_{\rm max}$ is supposed to be substantially large to detect non-convexity of $F$. If it is not specified on input, a default value of $z^{\rm guess}_{\rm max}=10 {\rm Tr}(c_+\cdot A)$ is used.  It is important to keep in mind that the algorithm is heuristic. A non-trivial return value $z_{\max}\neq z^{\rm guess}_{\rm max}$ does not guarantee convexity of  $F_{z_{\rm max}}\equiv \{y\, | y\in F, c_+ \cdot (y-y_0)\leq z_{\rm max}\}$, but only that $\{y\, | y\in F,c_+ \cdot (y-y_0)\leq z\}$ for any $z>z_{\rm max}$ is non-convex. Nevertheless, increasing $k$ would increase certainty (in the probabilistic sense) that $F_{z_{\rm max}}$ is indeed convex. 
+The function first tries to identify ``non-convex directions" $c_-$ using {\tt get\_c\_minus} and then ``follow" each non-convexity to the smallest value of $z$. This is described in detail in the section 4.4 of the accompanying paper.
+
+If no ``non-convex directions" found, the function produces an exception.
+In case the input value of $c_+$ does not satisfy $c_+\cdot A\succ 0$, the function produced as exception.
+If the maximal number of iterations $k$ (to be used with {\tt get\_c\_minus}) is not specified on input, a heuristic default value $k=10$ is used.
+
+The guess value $z^{\rm guess}_{\rm max}$ is supposed to be substantially large to detect non-convexity of $F$.
+If it is not specified on input, a default value of $z^{\rm guess}_{\rm max}=10 {\rm Tr}(c_+\cdot A)$ is used.
+
+It is important to keep in mind that the algorithm is heuristic.
+A non-trivial return value $z_{\max}\neq z^{\rm guess}_{\rm max}$ does not guarantee convexity of  $F_{z_{\rm max}}\equiv \{y\, | y\in F, c_+ \cdot (y_0-y)\leq z_{\rm max}\}$, but only that $\{y\, | y\in F,c_+ \cdot (y_0-y)\leq z\}$ for any $z>z_{\rm max}$ contains boundary non-convexities.
+Nevertheless, increasing $k$ would increase certainty (in the probabilistic sense) that $F_{z_{\rm max}}$ is indeed convex. 
 
 \end{enumerate}
 \end{document}
