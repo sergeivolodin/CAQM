@@ -36,9 +36,9 @@ Additional procedures which reside in the {\tt library/} folder are described in
 The library requires \href{https://www.mathworks.com/downloads/}{MATLAB} and \href{http://cvxr.com/cvx/download/}{CVX} as prerequisites. Having obtained those, the following steps are required in order to use CAQM.
 \begin{enumerate}
 \item {\bf Obtaining source code} can be done in two ways. First one requires basic knowledge of the GIT version control system. Simply clone the repository:
-\begin{verbatim}
+\begin{center}\tt
 git clone git@github.com:sergeivolodin/CertificateCutting.git
-\end{verbatim}
+\end{center}
 The second option is to download the latest snapshot of the repository in form of a .zip archive. To do so, navigate to \href{https://github.com/sergeivolodin/CertificateCutting}{github.com/sergeivolodin/CertificateCutting}, press the green ,,Clone or download'' button and then choose ,,Download ZIP'' in the drop-down menu. Then unpack the obtained archive. Both cases should give a folder called {\tt CertificateCutting} (or {\tt CertificateCutting-master} in the latter case). This folder must contain a file {\tt README.md}.
 \item {\bf Configuring MATLAB} involves adding the folder to PATH. The following directories (assuming that the root folder is called {\tt CertificateCutting}) should be added: {\tt CertificateCutting}, {\tt CertificateCutting/library}, {\tt CertificateCutting/tests}. MATLAB gives two ways of adding a folder to MATLAB PATH. The first one involves \href{https://www.mathworks.com/help/matlab/ref/addpath.html}{console commands} and the second one \href{http://www.mathworks.com/help/matlab/ref/pathtool.html}{uses GUI}.
 \item {\bf Testing the library} is an essential step which ensures that the library and all of its dependencies were installed correctly. To run the test, open MATLAB, navigate to {\tt CertificateCutting/tests} and run the {\tt CAQMtest.m} file. This file will go through essential parts of the functionality. During that period, a parallel cluster might be started (depending on the MATLAB version) and several GUI dialog boxes might be displayed. If the test succeeded, a message {\tt TEST PASSED} should be displayed in the console output. Otherwise, if the test has failed, a YouTube \href{https://youtu.be/Ikh_GDHnu-4}{video} demonstrating normal test operations might prove helpful in diagnosing the issue and overcoming installation mistakes. In other cases, feel free to contact the authors.
@@ -88,9 +88,7 @@ The image of $f$ is denoted as $F$,
 \end{definition}
 \begin{definition}\label{ex:c_minus}
 	Set of normal vectors $c$, such that $\partial F_c$ is nonconvex is denoted as $C_-$,
-	$$
-	C_-=\{c\in\R^m\,\big|\,\mbox{Set }\partial F_c\mbox{ is nonconvex}\}
-	$$
+	$$C_-=\{c\in\R^m\,\big|\,\mbox{Set }\partial F_c\mbox{ is nonconvex}\}$$
 \end{definition}
 
 \newpage
@@ -100,8 +98,8 @@ The library consists of several functions, each of them is defined in a separate
 Input format for specify the quadratic map is as follows.
 
 \begin{itemize}
-\item The array $A(i, j, k)$ denotes $i$'th row and $j$'th column of a $n\times n$ matrix $A_k\in\mathbb{V}^2$
-\item The array $b(i, k)$ denotes $i$'th element of a vector $b_k\in\mathbb{V}$
+\item The array $A(i, j, k)$ denotes $i$'th row and $j$'th column of the $n\times n$ matrix $A_k\in\mathbb{V}^2$
+\item The array $b(i, k)$ denotes $i$'th element of the vector $b_k\in\mathbb{V}$
 \end{itemize}
 
 \begin{enumerate}
@@ -109,12 +107,12 @@ Input format for specify the quadratic map is as follows.
 \begin{verbatim}
 is_infeasible = infeasibility_oracle(A, b, y)
 \end{verbatim}
-{\it Input:}
+{\bf Input:}
 \begin{itemize}
 \item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
 \item point $y\in\mathbb{R}^m$.
 \end{itemize}
-{\it Output:} determines if $y\in G$, returns {\tt is\_infeasible}=1 if $y\notin G$, {\tt is\_infeasible}=0 if $y\in G$.
+{\bf Output:} determines if $y\in G$, returns {\tt is\_infeasible}=1 if $y\notin G$, {\tt is\_infeasible}=0 if $y\in G$.
 
 \begin{figure}[H]
 	\centering\includegraphics[width=100pt]{fig/infeasibility_oracle}
@@ -122,20 +120,26 @@ is_infeasible = infeasibility_oracle(A, b, y)
 \label{fig:one}
 \end{figure}
 
-This function attempts to certify that the point $y$ does not belong to the convex hull $G$ of $F$ by separating $y$ and $G$ by an appropriate hyperplane. This is illustrated in Fig.~\ref{fig:one}, see Theorem 3.2 in the accompanying article for details.
-The function returns {\tt is\_infeasible}$=1$ if the desired hyperplane was found. In this case $y\notin G$ and consequently $y\notin F$, implying there is no $x\in \mathbb{V}$ such that $y=f(x)$, i.e.~this point is infeasible. If the hyperplane was not found the function returns {\tt is\_infeasible}$=0$, which means the feasibility  of $y$ with respect to $F$ is uncertain. We note that feasibility of $y$  is exactly the same as solvability of the system of quadratic equations $y=f(x)$ with real-valued $x$ when the map $f$ is real, or with $x$ and $x^*$ being complex conjugate to each other if $f$ is complex as defined in eq.~\eqref{complex}.
+This function attempts to certify that the point $y$ does not belong to the convex hull $G$ of $F$ by separating $y$ and $G$ by an appropriate hyperplane.
+This is illustrated in Fig.~\ref{fig:one}, see Theorem 3.2 in the accompanying article for details.
 
-\item {\bf Boundary oracle\ \ \  }{\tt \large boundary$\_$oracle.m}
+The function returns {\tt is\_infeasible}$=1$ if the desired hyperplane was found.
+In this case $y\notin G$ and consequently $y\notin F$, implying there is no $x\in \mathbb{V}$ such that $y=f(x)$, i.e.~this point is infeasible.
+If the hyperplane was not found the function returns {\tt is\_infeasible}$=0$, which means the feasibility  of $y$ with respect to $F$ is uncertain.
+
+We note that feasibility of $y$  is exactly the same as solvability of the system of quadratic equations $y=f(x)$ with real-valued $x$ when the map $f$ is real, or with $x$ and $x^*$ being complex conjugate to each other if $f$ is complex as defined in eq.~\eqref{complex}.
+
+\item {\bf Boundary oracle,\hskip 6pt}\boxed{\tt \large boundary\_oracle.m}
 \begin{verbatim}
 [t, is_in_F] = boundary_oracle(A, b, y, d)
 \end{verbatim}
-{\it Input:}
+{\bf Input:}
 \begin{itemize}
 	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
 	\item a point $y\in G$,
 	\item a direction $d\in\R^m$.
 \end{itemize}
-{\it Output:}  finds and returns distance $t$ to the boundary of $G$ from the point $y$ inside $G$ in the direction $d$; verifies if boundary point belongs to $F$. 
+{\bf Output:}  finds and returns distance $t$ to the boundary of $G$ from the point $y$ inside $G$ in the direction $d$; verifies if boundary point belongs to $F$. 
 
 
 \begin{figure}[H]
@@ -156,13 +160,13 @@ This is illustrated in Fig.~\ref{fig:two}, see Theorem ??!! in the accompanying 
 %\begin{verbatim}
 %c = get_c_from_d(A, b, y, d)
 %\end{verbatim}
-%{\it Input:}
+%{\bf Input:}
 %\begin{itemize}
 %	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
 %	\item a point $y\in G$,
 %	\item a direction $d\in\R^m$.
 %\end{itemize}
-%{\it Output:}  finds point $y+t\,d$ at the boundary of $G$ and returns vector $c$ normal to $\partial G$ at that point 
+%{\bf Output:}  finds point $y+t\,d$ at the boundary of $G$ and returns vector $c$ normal to $\partial G$ at that point 
 %
 %
 %\begin{figure}[H]
@@ -175,17 +179,17 @@ This is illustrated in Fig.~\ref{fig:two}, see Theorem ??!! in the accompanying 
 %
 %{\it Exception:} if on the input $y\notin G$ or the normal vector to $\partial G$ at $y+td$ does not exist (because $\partial G$ is not smooth at this point)  the function produces an exception. 
 
-\item {\bf ``Non-convex direction"\ \ \  }{\tt get\_c\_minus.m} 
+\item {\bf ``Non-convex direction",\hskip 6pt}\boxed{\tt \large get\_c\_minus.m} 
 	\begin{verbatim}
 	c = get_c_minus(A, b, [y], [k])
 	\end{verbatim}
-{\it Input:}
+{\bf Input:}
 \begin{itemize}
 	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
 	\item  $[$optional$]$ a point $y\in G$,
 	\item $[$optional$]$ number of iterations $k$.
 \end{itemize}
-{\it Output:}  finds and returns vector $c$ such that $\partial F_c$ is nonconvex through a stochastic algorithm using up to $k$ iterations; returns empty vector if such $c$ was not  found.\\
+{\bf Output:}  finds and returns vector $c$ such that $\partial F_c$ is nonconvex through a stochastic algorithm using up to $k$ iterations; returns empty vector if such $c$ was not  found.\\
 {\it Exception:} really??!!
 %\\[-1pt]
 
@@ -193,50 +197,50 @@ This is illustrated in Fig.~\ref{fig:two}, see Theorem ??!! in the accompanying 
 If $y$ and $k$ are not specified, the function uses default values $y=f(0)=0$ and $k=10$.
 
 
-\item {\bf Nonconvexity certificate\ \ \  }{\tt nonconvexity\_certificate.m} 
+\item {\bf Nonconvexity certificate,\hskip 6pt}\boxed{\tt \large nonconvexity\_certificate.m} 
 	\begin{verbatim}
 	is_nonconvex = nonconvexity_certificate(A, b, [y], [k])
 	\end{verbatim}
-{\it Input:}
+{\bf Input:}
 \begin{itemize}
 	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
 	\item  $[$optional$]$ a point $y\in G$,
 	\item $[$optional$]$ number of iterations $k$.
 \end{itemize}
-{\it Output:} attempts to establish if $F$ is convex, returns {\tt is\_nonconvex}=$1$ if $F$ is non-convex,  {\tt is\_nonconvex}=$0$ if uncertain.
+{\bf Output:} attempts to establish if $F$ is convex, returns {\tt is\_nonconvex}=$1$ if $F$ is non-convex,  {\tt is\_nonconvex}=$0$ if uncertain.
 
 	
 	This function calls {\tt get\_c\_minus} and returns  {\tt is\_nonconvex}=$1$ if the latter returns a non-trivial $c$. 
 
 
-\item {\bf Positive-definite $c\cdot A$\ \ \ }{\tt get\_c\_plus.m}
+\item {\bf Positive-definite $c\cdot A$,\hskip 6pt}\boxed{\tt \large get\_c\_plus.m}
 \begin{verbatim}
 	c_plus = get_c_plus(A, k)
 \end{verbatim}
 
-{\it Input:}
+{\bf Input:}
 \begin{itemize}
 	\item matrices $A_k$
 	\item $[$optional$]$ number of iterations $k$
 \end{itemize}
-{\it Output:} finds and returns vector $c_+$ such that $c_+\cdot A\succ 0$.\\
+{\bf Output:} finds and returns vector $c_+$ such that $c_+\cdot A\succ 0$.\\
 {\it Exception:} if $c_+$  was not found during $k$ random iterations.
 
 	
 	This function generates a random ``seed" which is used to find $c_+$ such that $c_+\cdot A\succ 0$. If successful, the function terminates and returns $c_+$ on the exit, otherwise the search attempt is repeated up to $k$ times. If not specified explicitly, the default value of $k=10$. If $c_+$ is not found during $k$ iterations the function produces an exception. 
 	
-\item {\bf Convex subpart\ \ \ }{\tt get\_z\_max.m}
+\item {\bf Convex subpart,\hskip 6pt}\boxed{\tt \large get\_z\_max.m}
 \begin{verbatim}
 z_max = get_z_max(A, b, c_plus, [z_max_guess], [k])
 \end{verbatim}
-{\it Input:}
+{\bf Input:}
 \begin{itemize}
 	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
 	\item vector $c_+$ such that $c_+\cdot A\succeq 0$,
 	\item $[$optional$]$ the guess value  $z^{\rm guess}_{\rm max}$,
 	\item $[$optional$]$ number of iterations $k$.
 \end{itemize}
-{\it Output:} finds and returns maximal value $z_{\max}$ such that the compact part of $F$ ``cut" by the hyperplane  $c_+ \cdot (y-y_0)=z_{\max}$, where $y_0\in \partial_{c_+}F$, is still convex. \\
+{\bf Output:} finds and returns maximal value $z_{\max}$ such that the compact part of $F$ ``cut" by the hyperplane  $c_+ \cdot (y-y_0)=z_{\max}$, where $y_0\in \partial_{c_+}F$, is still convex. \\
 {\it Exception:} produces an exception if non-convexity of $F$ confined within the half-plane $c_+ \cdot (y-y_0)\leq z^{\rm guess}_{\rm max}$  has not been established.  ??!!
 
 \begin{figure}[H]
