@@ -54,7 +54,7 @@ function [c, i] = get_c_minus(A, b, y0, MAXITER, DEBUG)
         d = randn(m, 1);
         
         % obtaining c via dual problem
-        c = get_c_from_d(H, y0, d);
+        c = get_c_from_d_H(H, y0, d);
         
         % checking if c is a vector
         if size(c, 1) == m

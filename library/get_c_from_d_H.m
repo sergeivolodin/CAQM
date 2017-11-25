@@ -1,5 +1,5 @@
-function c = get_c_from_d(H_, y0, d)
-%% c = get_c_from_d(H_, y0, d)
+function c = get_c_from_d_H(H_, y0, d)
+%% c = get_c_from_d_H(H_, y0, d)
 % solve dual problem for direction d
 %
 % get normal vector for a hyperplanetouching at y \in F

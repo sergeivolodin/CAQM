@@ -58,7 +58,7 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
     D = randn(m, k);
 
     % obtaining c via dual problem from d
-    get_c_d = @(d) get_c_from_d(H, y, d);
+    get_c_d = @(d) get_c_from_d_H(H, y, d);
 
     % parallel/non-parallel implementation
     % for different MATLAB versions
