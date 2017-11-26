@@ -212,13 +212,14 @@ The function returns vector variable $\tt c$ with the value of $c$.
 
 \item {\bf ``Non-convex direction",\hskip 6pt}\boxed{\tt \large get\_c\_minus.m} 
 	\begin{verbatim}
-	c = get_c_minus(A, b, [y], [k])
+	c = get_c_minus(A, b, [y], [k], [DEBUG])
 	\end{verbatim}
 {\bf Input:}
 \begin{itemize}
 	\item The map $f$ specified by matrices $A_k$ and vectors $b_k$,
 	\item {\it (optional)} A point $y\in G$,
 	\item {\it (optional)} Number of iterations $k$.
+	\item {\it (optional)} Binary variable adding verbose output.
 \end{itemize}
 {\bf Output:}  finds and returns vector $c$ such that $\partial F_c$ is non-convex through a stochastic algorithm using up to $k$ iterations\\
 {\bf Exception:} The functions throws an exception in the case if the vector $c$ was not found during the $k$ iterations
@@ -249,13 +250,14 @@ This function calls {\tt get\_c\_minus} and returns  {\tt is\_nonconvex}=$1$ if 
 
 \item {\bf Positive-definite $c\cdot A$,\hskip 6pt}\boxed{\tt \large get\_c\_plus.m}
 \begin{verbatim}
-	c_plus = get_c_plus(A, [k])
+	c_plus = get_c_plus(A, [k], [DEBUG])
 \end{verbatim}
 
 {\bf Input:}
 \begin{itemize}
 	\item Matrices $A_k$
 	\item {\it (optional)} The number of iterations $k$
+	\item {\it (optional)} Binary variable adding verbose output.
 \end{itemize}
 {\bf Output:} finds and returns vector $c_+$ such that $c_+\cdot A\succ 0$.\\
 {\bf Exception:} if $c_+$  was not found during $k$ iterations of the randomized procedure.
@@ -270,7 +272,7 @@ If $c_+$ is not found during $k$ iterations the function produces an exception.
 	
 \item {\bf Convex subpart,\hskip 6pt}\boxed{\tt \large get\_z\_max.m}
 \begin{verbatim}
-z_max = get_z_max(A, b, c_plus, [z_max_guess], [k])
+z_max = get_z_max(A, b, c_plus, [z_max_guess], [k], [DEBUG])
 \end{verbatim}
 {\bf Input:}
 \begin{itemize}
@@ -278,6 +280,7 @@ z_max = get_z_max(A, b, c_plus, [z_max_guess], [k])
 	\item The vector $c_+$ such that $c_+\cdot A\succeq 0$,
 	\item {\it (optional)} The guess value  $z^{\rm guess}_{\rm max}$,
 	\item {\it (optional)} The number of iterations $k$.
+	\item {\it (optional)} Binary variable adding verbose output.
 \end{itemize}
 {\bf Output:} finds and returns maximal value $z_{\max}$ such that the compact part of $F$ ``cut" by the hyperplane  $c_+ \cdot (y-y_0)=z_{\max}$, where $y_0\in \partial_{c_+}F$, is still convex. \\
 {\bf Exception:} produces an exception if non-convexity of $F$ confined within the half-plane $c_+ \cdot (y-y_0)\leq z^{\rm guess}_{\rm max}$  has not been established, i.e. no non-convexities were found in that region.
