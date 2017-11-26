@@ -7,11 +7,18 @@ Code for cutting convex parts from a quadratic image
 * CVX
 
 ## Installing
-1. Clone repository
-2. Add this folder and library/ to PATH
+See [doc/readme.pdf](doc/readme.pdf) file
 
 ## Testing
-See tests/convex_subpart.m as an example. A [Youtube video](https://youtu.be/Ikh_GDHnu-4 "Certificate cutting: z_max test") demonstrates how the test normally performs.
+For test of separate functions run in matlab:
+```
+>> cd tests
+>> runtests('testFunctions')
+```
+
+Moreover, see [tests/testCAQM.m](tests/testCAQM.m) as an example of library usage. A [Youtube video](https://youtu.be/Ikh_GDHnu-4 "Certificate cutting: z_max test") demonstrates how the test normally performs.
+
+For more information see [doc/readme.pdf](doc/readme.pdf)
 
 ## License
 See LICENSE.txt
