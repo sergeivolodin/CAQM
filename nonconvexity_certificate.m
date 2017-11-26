@@ -1,4 +1,5 @@
 function is_nonconvex = nonconvexity_certificate(A, b, y, k)
+% TODO: description
 %% is_nonconvex = nonconvexity_certificate(A, b, y, k)
 % Certificate nonconvexity of F
 % if TRUE, then the image F is nonconvex

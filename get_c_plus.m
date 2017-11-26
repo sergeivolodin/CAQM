@@ -1,4 +1,5 @@
 function c = get_c_plus(A, k, DEBUG)
+% TODO: description
 %% get_c_plus(A)
 % obtain vector c s.t. c * A > 0
 % use at most k iterations

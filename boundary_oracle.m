@@ -1,4 +1,5 @@
 function [t, is_in_F] = boundary_oracle(A, b, y, d)
+% TODO: description
 %% [t, is_in_F] = boundary_oracle(A, b, y, d)
 % get maximal t
 % s.t. y+td in G = convF

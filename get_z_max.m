@@ -1,4 +1,5 @@
 function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
+% TODO: description
 %% z_max = get_z_max(A, b, c_plus, z_max_guess, k)
 % obtain z_max = inf z(c) over C_- using at most
 % k iterations of get_c_minus

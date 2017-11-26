@@ -1,4 +1,5 @@
 function [c, i] = get_c_minus(A, b, y0, MAXITER, DEBUG)
+% TODO: description
 %% [c, iterations_count] = get_c_minus(A, b, y0, max_iterations)
 % obtain c from C_-
 % using nonconvexity certificate
