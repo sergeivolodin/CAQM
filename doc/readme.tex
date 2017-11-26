@@ -64,10 +64,15 @@ MATLAB gives two ways of adding a folder to MATLAB PATH. The first one involves 
 \item {\bf Testing the library} is an essential step which ensures that the library and all of its dependencies were installed correctly. To run the test, open MATLAB,
 
 \begin{center}
-navigate to {\tt CertificateCutting/tests} and run the {\tt CAQMtest.m} file.
+navigate to {\tt CertificateCutting/tests} and run the {\tt testCAQM.m} file.
 \end{center}
 
 This file will go through essential parts of the functionality. During that period, a parallel cluster might be started (depending on the MATLAB version) and several GUI dialog boxes might be displayed. If the test succeeded, a message {\tt TEST PASSED} should be displayed in the console output. Otherwise, if the test has failed, a YouTube \href{https://youtu.be/Ikh_GDHnu-4}{video} demonstrating normal test operations might prove helpful in diagnosing the issue and overcoming installation mistakes. In other cases, feel free to contact the authors.
+
+Moreover, these tests check each function individually in a more thorough manner (run in MATLAB console from the {\tt CertificateCutting/tests} directory:
+\begin{verbatim}
+>> runtests('testFunctions')
+\end{verbatim}
 \end{enumerate}
 
 After installation and testing, the library is ready to use in your applications. The sections below describe the functionality in details.
