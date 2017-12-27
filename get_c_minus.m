@@ -78,12 +78,12 @@ get_c_minus(A, b, y, 10, 1)
 
     % 2 arguments => assuming y0 = f(0)
     if nargin == 2
-        y0 = quadratic_map(A, b, zeros(size(A, 1), 1))
+        y0 = quadratic_map(A, b, zeros(size(A, 1), 1));
     end
 
     % no 4th argument => assuming MAXITER=10
     if nargin <= 3
-        MAXITER = 10
+        MAXITER = 10;
     end
 
     % no 5th argument => assuming no debug
