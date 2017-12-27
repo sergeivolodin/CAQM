@@ -35,6 +35,15 @@
 \affil[1]{Skolkovo Institute of Science and Technology}
 \affil[2]{Institute for Control Sciences RAS}
 
+% fix ' character in verbatim
+% see https://stackoverflow.com/questions/1662037/how-to-write-programming-code-containing-the-character-in-latex
+\makeatletter
+\let \@sverbatim \@verbatim
+\def \@verbatim {\@sverbatim \verbatimplus}
+{\catcode`'=13 \gdef \verbatimplus{\catcode`'=13 \chardef '=13 }}
+\makeatother
+
+
 \begin{document}
 \newgeometry{left=30mm, right=30mm, top=30mm, bottom=30mm}
 \maketitle
