@@ -16,6 +16,13 @@ To test separate functions run in MATLAB from root directory:
 >> runtests('testFunctions')
 ```
 
+Result should be like the following:
+```
+Totals:
+   15 Passed, 0 Failed, 0 Incomplete.
+   45.7854 seconds testing time.
+```
+
 Moreover, see [tests/testCAQM.m](tests/testCAQM.m) as an example of library usage. A [Youtube video](https://youtu.be/Ikh_GDHnu-4 "Certificate cutting: z_max test") demonstrates how the test normally performs.
 
 For more information see [doc/readme.pdf](doc/readme.pdf)
