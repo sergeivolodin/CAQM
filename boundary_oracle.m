@@ -1,31 +1,70 @@
 function [t, is_in_F] = boundary_oracle(A, b, y, d)
-% TODO: description
-%% [t, is_in_F] = boundary_oracle(A, b, y, d)
-% get maximal t
-% s.t. y+td in G = convF
-% returns is_in_F if y+td is also in F
+%% Usage
+% [t, is_in_F] = boundary_oracle(A, b, y, d)
 %
-% Format for the map f:
-% matrices (A_1, ..., A_m) -> tensor A(i, j, k) -- i'th row, j'th column of matrix A_k
-% vectors  (b_1, ..., b_m) -> tensor b(i, j)    -- i'th element          of vector b_j
+%% Description
+% This function finds point y + td on the boundary ∂G with the largest t = sup{τ | y + τd ∈ G}
+% and checks if this point belongs to F. See Optimization task (3) in the accompanying
+% article for details.
 %
-%% example
-% 1) loading map from file
-% 2) calculating y = f(x) for pre-defined x
-% 3) running boundary oracle for y and pre-defined d
+%% Input
+% * A -- tensor of rank 3
+%   Dimensions: n x n x m
+%     The element A(i, j, k) denotes i'th row and j'th column of the n x n matrix A_k
+%     (k from 1 to m)
 %
-% clear all;
-% load('maps/real_R4_R4.mat');
-% x = [1 2 3 4]';
-% y = quadratic_map(A, b, x);
-% d = [4 3 2 1]';
-% try
-%     boundary_oracle(A, b, y, d)
-% catch
-%     disp('optimization failed');
-% end
-% ans = 193.3203
+% * b -- tensor of rank 2
+%   Dimensions: n x m
+%     The element b(i, k) denotes i'th element of the vector b_k (k from 1 to m)
+%
+% * y -- column vector
+%   Dimensions: m x 1
+%     The point inside G = conv F, where F is the image of the quadratic map
+%     specified by A and b
+%
+% * d -- column vector
+%   Dimensions: m x 1
+%     The direction of interest. The resulting point on the boundary will be of the form
+%     y + t * d, where t is a scalar
+%
+%% Output
+% The function returns t with the value of t, variable is_in_F = 1 if the boundary point y + td
+% belongs to F ,and variable is_in_F = 0 if feasibility of y + td with respect to F is uncertain.
+%
+% Exception: if the input vector y not in G or in the case if ∂G is not smooth at the
+% boundary point y + td ∈ ∂G, the function produces an exception.
+%
+%% Example
+%{
+% --------------------------------------------------------------------------------------
+% Unset all variables in the workspace
+clear all;
 
+% should be executed from the root project folder which contains the file README.md
+ls README.md
+% ans = README.md
+
+% Load the map from file
+load('examples/maps/article_example05_R4_R4.mat');
+
+% Compute the point y from pre-image point x
+x = [0 0 1 0]';
+y = quadratic_map(A, b, x);
+
+% Set the direction
+d = [0 0 1 0]';
+
+% Run the procedure
+boundary_oracle(A, b, y, d)
+% ans = 4.0169
+% --------------------------------------------------------------------------------------
+%}
+%
+%% Copyright
+% CAQM: Convexity Analysis of Quadratic Maps
+% Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin
+%
+%% Implementation
 %% configuration
     rank_eps = 1e-3;
 
