@@ -25,15 +25,17 @@ function [c, i] = get_c_minus(A, b, y0, MAXITER, DEBUG)
 %   Dimensions: n x m
 %     The element b(i, k) denotes i'th element of the vector b_k (k from 1 to m)
 %
-% * y (optional parameter) -- column vector
+% * y (optional) -- column vector
 %   Dimensions: m x 1
 %     The point inside G = conv F, where F is the image of the quadratic map specified
 %     by A and b. This point is used in the heuristic algorithm, see get_c_from_d
+%   Default: f(0)
 %
-% * k (optional parameter) -- integer
+% * k (optional) -- integer
 %     This parameter specifies the number of iterations for the heuristic algorithm.
 %     The procedure will use up to k random directions d. If your current k does not
 %     yield the vector c, try larger number k
+%   Default: 10
 %
 %% Output
 % This function stops and returns c if non-convexity of ∂F c was established during one

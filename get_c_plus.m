@@ -1,30 +1,72 @@
 function c = get_c_plus(A, k, DEBUG)
-% TODO: description
-%% get_c_plus(A)
-% obtain vector c s.t. c * A > 0
-% use at most k iterations
+%% Usage
+% c_plus = get_c_plus(A, [k], [DEBUG])
 %
-% Format for the map f:
-% matrices (A_1, ..., A_m) -> tensor A(i, j, k) -- i'th row, j'th column of matrix A_k
-% vectors  (b_1, ..., b_m) -> tensor b(i, j)    -- i'th element          of vector b_j
+%% Description
+% This function utilizes a randomized algorithm which is used to find c_+ such that c_+ · A > 0.
 %
-%% example:
-% 1) loading map from file
-% 2) obtaining c_plus using 10 iterations at most
+% DEBUG, if set to 1, will produce additional output indicating progress. Default value is 0
+% which gives no additional output
 %
-% clear all;
-% load('maps/real_R4_R4.mat');
-% try
-%     get_c_plus(A, 10, 1)
-% catch
-%     disp('no c_plus obtained');
-% end
+%% Input
+% * A -- tensor of rank 3
+%   Dimensions: n x n x m
+%     The element A(i, j, k) denotes i'th row and j'th column of the n x n matrix A_k
+%     (k from 1 to m)
+%
+% * k (optional) -- integer
+%     The number of iterations for a heuristic algorithm. If your current k does not yield any c_+,
+%     try larger value of k
+%   Default: 10
+%
+%% Output
+% If successful, the function terminates and returns c_+ on the exit, otherwise the search attempt is repeated
+% up to k times. If not specified explicitly, the default value of k is 10. If c_+ is not found during k iterations,
+% the function produces an exception.
+%
+%% Example
+%{
+% --------------------------------------------------------------------------------------
+% Unset all variables in the workspace
+clear all;
 
-%% initializing
-    if nargin == 2
+% should be executed from the root project folder which contains the file README.md
+ls README.md
+% ans = README.md
+
+% Load the map from file
+load('examples/maps/article_example05_R4_R4.mat');
+
+% Fix the random seed
+rng(10);
+
+% Run the procedure
+get_c_plus(A, 10, 1)
+% ans = 1 0 0 0
+% --------------------------------------------------------------------------------------
+%}
+%
+%% Copyright
+% CAQM: Convexity Analysis of Quadratic Maps
+% Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin
+%
+%% Implementation
+%% Processing arguments
+    % error message on too few arguments
+    if nargin < 1
+        error('This function accepts at least 1 argument, see readme.pdf');
+    end
+
+    % 1 argument => assuming k = 10
+    if nargin == 1
+        k = 10;
+    end
+
+    if nargin <= 2
         DEBUG = 0;
     end
 
+%% initializing
     % resulting c
     c = [];
     

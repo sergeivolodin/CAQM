@@ -15,16 +15,18 @@ function is_nonconvex = nonconvexity_certificate(A, b, y, k)
 %   Dimensions: n x m
 %     The element b(i, k) denotes i'th element of the vector b_k (k from 1 to m)
 %
-% * y (optional parameter) -- column vector
+% * y (optional) -- column vector
 %   Dimensions: m x 1
 %     The point inside G = conv F, where F is the image of the quadratic map specified
 %     by A and b. This point is used in the heuristic algorithm, see get_c_from_d
 %     and get_c_minus
+%   Default: f(0)
 %
-% * k (optional parameter) -- integer
+% * k (optional) -- integer
 %     This parameter specifies the number of iterations for the heuristic algorithm.
 %     The procedure will use up to k random directions d. Larger number k will result in
 %     greater certainty if the result is is_nonconvex = 0
+%   Default: 10
 %
 %% Output
 % This function attempts to establish if F is convex, returns is_nonconvex = 1 if F is non-convex,
