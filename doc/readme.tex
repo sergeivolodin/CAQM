@@ -239,9 +239,9 @@ The function returns vector variable $\tt c$ with the value of $c$.
 {\bf Exception:} The functions throws an exception in the case if the vector $c$ was not found during the $k$ iterations
 
 This function consequently generates up to $k$ random directions $d$ and for each one finds vector $c$ normal to $\partial G$ at the boundary point $y+t\, d\in \partial G$.
-Next it finds $\partial_c F$, the intersection of $F$ with the supporting hyperplane orthogonal to $c$ and checks if it is non-convex. 
-We note that non-convexity of $\partial_c F$ implies non-convexity of $F$.
-This function stops and returns $c$ if non-convexity of $\partial_c F$ was established during one of the iterations. If the vector $c$ was not found, an exception is produced.
+Next it finds $\partial F_c$, the intersection of $F$ with the supporting hyperplane orthogonal to $c$ and checks if it is non-convex.
+We note that non-convexity of $\partial F_c$ implies non-convexity of $F$.
+This function stops and returns $c$ if non-convexity of $\partial F_c$ was established during one of the iterations. If the vector $c$ was not found, an exception is produced.
 If $y$ and $k$ are not specified, the function uses default values $y=f(0)=0$ and $k=10$.
 
 
