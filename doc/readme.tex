@@ -279,8 +279,8 @@ This function calls {\tt get\_c\_minus} and returns  {\tt is\_nonconvex}=$1$ if 
 This function utilizes a randomized algorithm which is used to find $c_+$ such that $c_+\cdot A\succ 0$.
 
 If successful, the function terminates and returns $c_+$ on the exit, otherwise the search attempt is repeated up to $k$ times.
-If not specified explicitly, the default value of $k=10$.
-If $c_+$ is not found during $k$ iterations the function produces an exception. 
+If not specified explicitly, the default value of $k$ is $10$.
+If $c_+$ is not found during $k$ iterations, the function produces an exception.
 
 \newpage
 	
