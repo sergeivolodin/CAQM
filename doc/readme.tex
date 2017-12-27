@@ -296,7 +296,7 @@ z_max = get_z_max(A, b, c_plus, [z_max_guess], [k], [DEBUG])
 	\item {\it (optional)} The number of iterations $k$.
 	\item {\it (optional)} Binary variable adding verbose output.
 \end{itemize}
-{\bf Output:} finds and returns maximal value $z_{\max}$ such that the compact part of $F$ ``cut" by the hyperplane  $c_+ \cdot (y-y_0)=z_{\max}$, where $y_0\in \partial_{c_+}F$, is still convex. \\
+{\bf Output:} finds and returns maximal value $z_{\max}$ such that the compact part of $F$ ``cut" by the hyperplane  $c_+ \cdot (y-y_0)=z_{\max}$, where $y_0\in \partial F_{c_+}$, is still convex. \\
 {\bf Exception:} produces an exception if non-convexity of $F$ confined within the half-plane $c_+ \cdot (y-y_0)\leq z^{\rm guess}_{\rm max}$  has not been established, i.e. no non-convexities were found in that region.
 
 \begin{figure}[H]
@@ -308,7 +308,7 @@ z_max = get_z_max(A, b, c_plus, [z_max_guess], [k], [DEBUG])
 
 This function returns maximal value $z_{\max}$ such that the hyperplane perpendicular to $c_+$ and located distance $z_{\max}$ away from the boundary of $F$ still does not contain non-convexities.
 More precisely, the compact part of $F$ confined by the half-space $\{y\, |c_+ \cdot (y_0-y)\leq z^{\rm guess}_{\rm max}\}$ is convex.
-Here $y_0\in \partial_{c_+}F$, and since $c_+\cdot A\succ 0$, the set $\partial_{c_+}F$ is a singleton $\{y_0\}$.
+Here $y_0\in \partial F_{c_+}$, and since $c_+\cdot A\succ 0$, the set $\partial F_{c_+}$ is a singleton $\{y_0\}$.
 Moreover, $z_{\max}$ is maximal in a sense that enlarging it would result in the resulting ,,cut'' containing at least one boundary non-convexity, which are non-convex subsets of the boundary $\partial F_c$ defined as the points touched by a hyperplane with a normal vector $c$.
 The geometric meaning of $z_{\max}$ is illustrated in Fig. \ref{fig:four}. 
 
