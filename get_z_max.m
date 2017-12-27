@@ -1,28 +1,101 @@
 function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
-% TODO: description
-%% z_max = get_z_max(A, b, c_plus, z_max_guess, k)
-% obtain z_max = inf z(c) over C_- using at most
-% k iterations of get_c_minus
+%% Usage
+% z_max = get_z_max(A, b, c_plus, [z_max_guess], [k], [DEBUG])
 %
-% Format for the map f:
-% matrices (A_1, ..., A_m) -> tensor A(i, j, k) -- i'th row, j'th column of matrix A_k
-% vectors  (b_1, ..., b_m) -> tensor b(i, j)    -- i'th element          of vector b_j
+%% Description
+% This function returns maximal value z_max such that the hyperplane perpendicular to c_+ and located
+% distance z_max away from the boundary of F still does not contain non-convexities.
 %
-% y = y_0 - z_max_guess * c_plus
-% where y_0 is the boundary point which is touched by hyperplane c_plus
+% DEBUG, if set to 1, will produce additional graphical output indicating progress.
+% Default value is 0, which gives no additional output.
 %
-%% example
-% 1) loading map from file
-% 2) obtaining c_plus for map
-% 3) minimizing z(c) over c_- using k = 1 starting point
+% This function uses MATLAB parallel capabilities, if they are detected on the system.
+% Otherwise, a single thread is used.
 %
-% clear all;
-% load('maps/real_R4_R4.mat');
-% c_plus = get_c_plus(A, 10, 1);
-% get_z_max(A, b, c_plus, 0.01, 10)
+%% Input
+% * A -- tensor of rank 3
+%   Dimensions: n x n x m
+%     The element A(i, j, k) denotes i'th row and j'th column of the n x n matrix A_k
+%     (k from 1 to m)
+%
+% * b -- tensor of rank 2
+%   Dimensions: n x m
+%     The element b(i, k) denotes i'th element of the vector b_k (k from 1 to m)
+%
+% * c_plus -- column vector
+%   Dimensions: m x 1
+%     The direction in the image space satisfying c_+ · A >= 0. The resulting convex subpart will be
+%     specified in terms of hyperplanes in the image space which are normal to this vector.
+%
+% * z_max_guess (optional) -- real
+%     The guess value for the answer used by the heuristic algorithm. This value should be greater than
+%     the answer. If too small value does not work, try bigger guess.
+%   Default: 10 * Trace(c_+ · A) (heuristic)
+%
+% * k (optional) -- integer
+%     Number of iterations for the heuristic algorithm. At each iteration, the algorithm tries to locate
+%     a nonconvexity and thus lower the z_max bound. If your number of iterations k does not yield any
+%     nonconvexities, try larger k
+%   Default: 10
+%
+%% Output
+% The function finds and returns maximal value z_max such that the compact part of F “cut” by the hyperplane
+% c_+ · (y − y_0) = z_max, is still convex. Here y_0 ∈ ∂F_c+, the latter set is singleton.
+%
+% Exception: produces an exception if non-convexity of F confined within the half-plane c_+ ·(y - y_0) ≤ z_max
+% has not been established, i.e. no non-convexities were found in that region.
+%
+%% Example
+%{
+% --------------------------------------------------------------------------------------
+% Unset all variables in the workspace
+clear all;
 
-%%
-    if nargin == 5
+% should be executed from the root project folder which contains the file README.md
+ls README.md
+% ans = README.md
+
+% Load the map from file
+load('examples/maps/article_example05_R4_R4.mat');
+
+% Fix the random seed
+rng(10);
+
+% Obtain c_plus s.t. c_plus · A > 0
+c_plus = get_c_plus(A, 10, 1);
+
+% Fix the random seed
+rng(10);
+
+% Run the procedure with graphical debug output
+get_z_max(A, b, c_plus, 100, 10, 1)
+% ans = 0.0073
+% --------------------------------------------------------------------------------------
+%}
+%
+%% Copyright
+% CAQM: Convexity Analysis of Quadratic Maps
+% Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin
+%
+%% Implementation
+%% Process arguments
+    % too few arguments
+    if nargin < 3
+        error('This function accepts at least 3 arguments, see readme.pdf');
+    end
+
+    % no z_max_guess provided
+    if nargin == 3
+        z_max_guess = 10 * trace(get_Ac(A, c_plus));
+    end
+
+    % no k provided
+    if nargin <= 4
+        k = 10;
+    end
+
+    % no DEBUG set
+    if nargin <= 5
         DEBUG = 0;
     end
 
