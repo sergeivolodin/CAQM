@@ -29,7 +29,7 @@ function [t, is_in_F] = boundary_oracle(A, b, y, d)
 %
 %% Output
 % The function returns t with the value of t, variable is_in_F = 1 if the boundary point y + td
-% belongs to F ,and variable is_in_F = 0 if feasibility of y + td with respect to F is uncertain.
+% belongs to F, and variable is_in_F = 0 if feasibility of y + td with respect to F is uncertain.
 %
 % Exception: if the input vector y not in G or in the case if ∂G is not smooth at the
 % boundary point y + td ∈ ∂G, the function produces an exception.
