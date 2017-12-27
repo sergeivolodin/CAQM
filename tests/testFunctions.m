@@ -13,7 +13,6 @@ y = quadratic_map(A, b, x);
 rng(10);
 assert(infeasibility_oracle(A, b, y) == 0);
 
-
 %% is_infeasible test 2
 load('../examples/maps/article_example01_R3_R3.mat');
 y = [100 -100 500]';
@@ -45,7 +44,7 @@ x = [1 1 0 0]';
 y = quadratic_map(A, b, x);
 rng(10);
 c = get_c_minus(A, b, y, 10);
-assert(norm(c - [0.3271, -0.7157, 0.5276, 0.3201]') < 1e-3);
+assert(norm(c - [0.3803, 0.9227, -0.0558, 0.0292]') < 1e-3);
 
 %% get_c_minus test 2 (all arguments but iterations)
 load('../examples/maps/article_example07_R4_R4.mat');
@@ -53,16 +52,19 @@ x = [1 1 0 0]';
 y = quadratic_map(A, b, x);
 rng(10);
 c = get_c_minus(A, b, y);
-assert(norm(c - [0.3271, -0.7157, 0.5276, 0.3201]') < 1e-3);
+assert(norm(c - [0.3803, 0.9227, -0.0558, 0.0292]') < 1e-3);
 
 %% get_c_minus test 3 (only A, b)
 load('../examples/maps/article_example07_R4_R4.mat');
 x = [0 0 0 0]';
 y = quadratic_map(A, b, x);
 rng(10);
-assert(get_c_minus(A, b, y, 10) == get_c_minus(A, b))
+c1 = get_c_minus(A, b, y, 10);
+rng(10);
+c2 = get_c_minus(A, b);
+assert(norm(c1 - c2) < 1e-3);
 
-%% get_c_minus test 1 (only A, b)
+%% nonconvexity_certificate test 1 (all parameters)
 load('../examples/maps/article_example07_R4_R4.mat');
 x = [0 0 0 0]';
 y = quadratic_map(A, b, x);
@@ -70,7 +72,7 @@ rng(10);
 is_nonconvex = nonconvexity_certificate(A, b, y, 10);
 assert(is_nonconvex == 1)
 
-%% get_c_minus test 2 (all arguments but iterations)
+%% nonconvexity_certificate test 2 (all arguments but iterations)
 load('../examples/maps/article_example07_R4_R4.mat');
 x = [0 0 0 0]';
 y = quadratic_map(A, b, x);
@@ -100,6 +102,7 @@ assert(norm(c - [0.6624; -0.5430; 0.3050; 0.4164]) < 1e-3)
 
 %% minimize_z_c (all arguments)
 load('../examples/maps/article_example07_R4_R4.mat');
+rng(10);
 c_plus = get_max_c_plus(A);
 rng(10);
 z_max = get_z_max(A, b, c_plus, 10, 4);
@@ -107,6 +110,7 @@ assert(abs(z_max - 0.2046) < 1e-3);
 
 %% minimize_z_c (w/o iterations)
 load('../examples/maps/article_example07_R4_R4.mat');
+rng(10);
 c_plus = get_max_c_plus(A);
 rng(10);
 z_max = get_z_max(A, b, c_plus, 10);
@@ -114,6 +118,7 @@ assert(abs(z_max - 0.2046) < 1e-3);
 
 %% minimize_z_c (A, b, c_plus)
 load('../examples/maps/article_example07_R4_R4.mat');
+rng(10);
 c_plus = get_max_c_plus(A);
 rng(10);
 z_max = get_z_max(A, b, c_plus);
