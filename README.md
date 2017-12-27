@@ -23,7 +23,15 @@ Totals:
    45.7854 seconds testing time.
 ```
 
-Moreover, see [tests/testCAQM.m](tests/testCAQM.m) as an example of library usage. A [Youtube video](https://youtu.be/Ikh_GDHnu-4 "Certificate cutting: z_max test") demonstrates how the test normally performs.
+Moreover, see [tests/testCAQM.m](tests/testCAQM.m) as an example of library usage.
+
+```
+>> cd tests
+>> testCAQM
+```
+
+Should give output ending with `TEST PASSED`.
+A [Youtube video](https://youtu.be/Ikh_GDHnu-4 "Certificate cutting: z_max test") demonstrates how the test normally performs.
 
 For more information see [doc/readme.pdf](doc/readme.pdf)
 
