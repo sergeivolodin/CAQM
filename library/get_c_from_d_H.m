@@ -42,5 +42,8 @@ function c = get_c_from_d_H(H_, y0, d)
     % no result (infeasible)
     if cvx_optval == Inf
         c = [];
+    else
+        % renormalizing
+        c = c / norm(c);
     end
 end
