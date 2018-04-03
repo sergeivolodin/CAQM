@@ -140,6 +140,8 @@ The input format to specify a quadratic map is as follows.
 \item The array $b(i, k)$ denotes $i$'th element of the vector $b_k\in\mathbb{V}$
 \end{itemize}
 
+In order to interpret the input map as complex, the tensor $A$ or the matrix $b$ should contain at least one complex number. Otherwise, the library assumes the map to be real.
+
 \begin{enumerate}
 \item {\bf Feasibility membership oracle,\hskip 6pt}\underline{\tt  infeasibility\_oracle.m}
 \begin{verbatim}
@@ -316,8 +318,10 @@ If the maximal number of iterations $k$ (to be used with {\tt get\_c\_minus}) is
 
 The guess value $z^{\rm guess}_{\rm max}$ is supposed to be substantially large to detect non-convexity of $F$.
 If it is not specified on input, a default value of $z^{\rm guess}_{\rm max}=10 {\rm Tr}(c_+\cdot A)$ is used.
+It is generally the case that a bigger value of $z_{\rm max}$ results in a lower probability of finding the non-convexity.
+It means that the value must both allow for the non-convexity to appear and keep it large enough to be discovered by the algorithm.
 
-It is important to keep in mind that the algorithm is stochastic.
+It is important to keep in mind that the algorithm is stochastic and heuristic.
 A non-trivial return value $z_{\max}\neq z^{\rm guess}_{\rm max}$ does not guarantee convexity of  $F^{c_+}_{z_{\rm max}}\equiv \{y\, | y\in F, c_+ \cdot (y_0-y)\leq z_{\rm max}\}$, but only that $\{y\, | y\in F,c_+ \cdot (y_0-y)\leq z\}$ for any $z>z_{\rm max}$ contains boundary non-convexities.
 Nevertheless, provided all (families of) $c_-$ were identified, see Proposition 6.1 of the accompanying paper guarantees convexity of $F^{c_+}_{z_{\rm max}}$. Hence, increasing $k$ in turn increases certainty (in the probabilistic sense) that $F_{z_{\rm max}}$ is indeed convex.
 
