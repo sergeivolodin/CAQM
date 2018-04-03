@@ -65,6 +65,12 @@ boundary_oracle(A, b, y, d)
 % Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin
 %
 %% Implementation
+%% check for infeasibility
+    is_infeasible = infeasibility_oracle(A, b, y);
+    if is_infeasible
+        error('The input point y is not in the convex hull G (proven by infeasibility oracle). Please find a point y in G = conv F to use in this function.');
+    end
+
 %% configuration
     rank_eps = 1e-3;
 
@@ -105,7 +111,7 @@ boundary_oracle(A, b, y, d)
     if cvx_optval ~= Inf
         is_in_F = (rank(X, rank_eps) == 1);
     else
-        error('Boundary oracle failed');
+        error('Boundary oracle failed. Try direction -d instead of d.');
     end
 end
 
