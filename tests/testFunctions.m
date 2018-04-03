@@ -1,7 +1,5 @@
 % test public functions of the library
 clear all;
-
-% changing cwd to directory of .m file
 cd(fileparts(which(mfilename)));
 
 % preconditions
@@ -36,7 +34,7 @@ y = quadratic_map(A, b, x);
 d = [4 3 2 1]';
 rng(10);
 c = get_c_from_d(A, b, y, d);
-assert(abs(norm(c) - 1.3622) < 1e-3);
+assert(abs(norm(c - [0.4535, -0.8288, 0.1215, -0.3045]')) < 1e-3);
 
 %% get_c_minus test 1 (all arguments)
 load('../examples/maps/article_example07_R4_R4.mat');
