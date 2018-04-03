@@ -93,6 +93,12 @@ get_c_minus(A, b, y, 10, 1)
         DEBUG = 0;
     end
 
+%% check for infeasibility
+    is_infeasible = infeasibility_oracle(A, b, y0);
+    if is_infeasible
+        error('The input point y0 is not in the convex hull G (proven by infeasibility oracle). Please find a point y0 in G = conv F to use in this function.');
+    end
+
 %% initializing
     % resulting c
     c = [];

@@ -73,6 +73,12 @@ nonconvexity_certificate(A, b, y, 10)
         y = quadratic_map(A, b, zeros(size(A, 1), 1));
     end
 
+%% check for infeasibility
+    is_infeasible = infeasibility_oracle(A, b, y);
+    if is_infeasible
+        error('The input point y is not in the convex hull G (proven by infeasibility oracle). Please find a point y in G = conv F to use in this function.');
+    end
+
     % no 4th argument => assuming MAXITER=10
     if nargin <= 3
         k = 10;

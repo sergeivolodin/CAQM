@@ -63,5 +63,12 @@ get_c_from_d(A, b, y, d)
 % Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin
 %
 %% Implementation
+%% check for infeasibility
+    is_infeasible = infeasibility_oracle(A, b, y);
+    if is_infeasible
+        error('The input point y is not in the convex hull G (proven by infeasibility oracle). Please find a point y in G = conv F to use in this function.');
+    end
+
+%% call to function
     c = get_c_from_d_H(get_H(A, b), y, d);
 end
