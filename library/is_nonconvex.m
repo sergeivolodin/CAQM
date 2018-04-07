@@ -40,10 +40,15 @@ function r = is_nonconvex(A, b, c, check_f1_f2)
     [q1, q2] = eig(Ac);
     [~, q3] = sort(diag(q2));
     q1 = q1(:, q3);
+
+    % require: c * A >= 0
+    if sum(diag(q2) < 0) > 0
+        return
+    end
     
     % indexes: lambda < eps0
     inde = find(abs(eig(Ac)) < eps0);
-    
+
     % simple zero eigenvalue check
     if size(inde, 1) == 1
         % zero eigenvector
