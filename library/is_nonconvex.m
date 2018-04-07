@@ -49,6 +49,14 @@ function r = is_nonconvex(A, b, c, check_f1_f2)
     % indexes: lambda < eps0
     inde = find(abs(eig(Ac)) < eps0);
 
+    % homogeneous case: just checking Rg == n - 2
+    % Dropping non-collinearity test
+    if norm(b) == 0
+        r = rank(Ac, eps0) == 2;
+        return;
+    end
+
+    % non-homogeneous case: Rg = n - 1 AND other conditions
     % simple zero eigenvalue check
     if size(inde, 1) == 1
         % zero eigenvector
