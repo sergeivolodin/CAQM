@@ -2,9 +2,9 @@ function r = is_nonconvex(A, b, c, check_f1_f2)
 %% r = is_nonconvex(A, b, c, check_f1_f2)
 % check if c is a normal vector for a hyperplane
 % touching image F at nonconvex set
-% see Theorem 3.4
+% see Proposition 5.1
 % if check_f1_f2 == 1,
-% then check if f_1\nparallel f_2
+% then check if u not parallel to v (see Article)
 
 %% initialization
     
@@ -65,21 +65,25 @@ function r = is_nonconvex(A, b, c, check_f1_f2)
         % check if b_c \bot e
         if abs(e' * bc + bc' * e) < eps0
             
-            if check_f1_f2
+            if check_f1_f2 && is_real
                 % e_0 from the article
                 e0 = -pinv(Ac) * bc;
 
-                % fill f_1 and f_2
+                % fill f_1 (u in Article) and f_2 (v in Article)
                 f1 = zeros(m, 1);
                 f2 = zeros(m, 1);
                 for j = 1:m
-                    f1(j) = e' * A(:, :, j) * e0 + b(:, j)' * e;
-                    f2(j) = e' * A(:, :, j) * e;
+                    f1(j) = e0' * A(:, :, j) * e + b(:, j)' * e;
+                    f2(j) = real(e' * A(:, :, j) * e);
                 end
 
-                % check if f_1 parallel f_2
-                cos_theta = abs(dot(f1, f2) / (norm(f1) * norm(f2)));
-                r = (cos_theta < 1 - eps0);
+                if is_real
+                    % check in real case: Rg == 2
+                    r = rank([f1'; f2'], eps0) == 2;
+                else
+                    % check in complex case: Rg >= 2
+                    r = rank([real(f1)'; imag(f1)'; f2'], eps0) >= 2;
+                end
             else
                 r = 1;
             end
