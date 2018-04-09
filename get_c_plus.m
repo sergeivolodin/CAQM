@@ -1,14 +1,14 @@
 function c = get_c_plus(A, k, DEBUG)
-%% Usage
+% USAGE
 % c_plus = get_c_plus(A, [k], [DEBUG])
 %
-%% Description
+% DESCRIPTION
 % This function utilizes a randomized algorithm which is used to find c_+ such that c_+ · A > 0.
 %
 % DEBUG, if set to 1, will produce additional output indicating progress. Default value is 0
 % which gives no additional output
 %
-%% Input
+% INPUT
 % * A -- tensor of rank 3
 %   Dimensions: n x n x m
 %     The element A(i, j, k) denotes i'th row and j'th column of the n x n matrix A_k
@@ -19,37 +19,34 @@ function c = get_c_plus(A, k, DEBUG)
 %     try larger value of k
 %   Default: 10
 %
-%% Output
+% OUTPUT
 % If successful, the function terminates and returns c_+ on the exit, otherwise the search attempt is repeated
 % up to k times. If not specified explicitly, the default value of k is 10. If c_+ is not found during k iterations,
 % the function produces an exception.
 %
-%% Example
-%{
-% --------------------------------------------------------------------------------------
-% Unset all variables in the workspace
-clear all;
-
-% should be executed from the root project folder which contains the file README.md
-ls README.md
-% ans = README.md
-
-% Load the map from file
-load('examples/maps/article_example05_R4_R4.mat');
-
-% Fix the random seed
-rng(10);
-
-% Run the procedure
-get_c_plus(A, 10, 1)
-% ans = 1 0 0 0
-% --------------------------------------------------------------------------------------
-%}
+% EXAMPLE
+%% Unset all variables in the workspace
+%clear all;
 %
-%% Copyright
+%% should be executed from the root project folder which contains the file README.md
+%ls README.md
+%% ans = README.md
+%
+%% Load the map from file
+%load('examples/maps/article_example05_R4_R4.mat');
+%
+%% Fix the random seed
+%rng(10);
+%
+%% Run the procedure
+%get_c_plus(A, 10, 1)
+%% ans = 1 0 0 0
+%
+% COPYRIGHT
 % CAQM: Convexity Analysis of Quadratic Maps
 % Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin
 %
+
 %% Implementation
 %% Processing arguments
     % error message on too few arguments

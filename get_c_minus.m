@@ -1,8 +1,8 @@
 function [c, i] = get_c_minus(A, b, y0, MAXITER, DEBUG)
-%% Usage
+% USAGE
 % c = get_c_minus(A, b, [y], [k], [DEBUG])
 %
-%% Description
+% DESCRIPTION
 % This function finds and returns vector c such that ∂F_c is non-convex through a stochastic
 % algorithm using up to k iterations.
 %
@@ -15,7 +15,7 @@ function [c, i] = get_c_minus(A, b, y0, MAXITER, DEBUG)
 % DEBUG, if set to 1, will produce additional output indicating progress. Default value is 0
 % which gives no additional output
 %
-%% Input
+% INPUT
 % * A -- tensor of rank 3
 %   Dimensions: n x n x m
 %     The element A(i, j, k) denotes i'th row and j'th column of the n x n matrix A_k
@@ -37,40 +37,37 @@ function [c, i] = get_c_minus(A, b, y0, MAXITER, DEBUG)
 %     yield the vector c, try larger number k
 %   Default: 10
 %
-%% Output
+% OUTPUT
 % This function stops and returns c if non-convexity of ∂F c was established during one
 % of the iterations. If the vector c was not found, an exception is produced.
 %
-%% Example
-%{
-% --------------------------------------------------------------------------------------
-% Unset all variables in the workspace
-clear all;
-
-% should be executed from the root project folder which contains the file README.md
-ls README.md
-% ans = README.md
-
-% Load the map from file
-load('examples/maps/article_example05_R4_R4.mat');
-
-% Construct y in G
-x = [1 1 0 0]';
-y = quadratic_map(A, b, x);
-
-% Fix the random seed
-rng(10);
-
-% Run the procedure
-get_c_minus(A, b, y, 10, 1)
-% ans = 0.7891 0.3782 -0.3916 -0.2843
-% --------------------------------------------------------------------------------------
-%}
+% EXAMPLE
+%% Unset all variables in the workspace
+%clear all;
 %
-%% Copyright
+%% should be executed from the root project folder which contains the file README.md
+%ls README.md
+%% ans = README.md
+%
+%% Load the map from file
+%load('examples/maps/article_example05_R4_R4.mat');
+%
+%% Construct y in G
+%x = [1 1 0 0]';
+%y = quadratic_map(A, b, x);
+%
+%% Fix the random seed
+%rng(10);
+%
+%% Run the procedure
+%get_c_minus(A, b, y, 10, 1)
+%% ans = 0.7891 0.3782 -0.3916 -0.2843
+%
+% COPYRIGHT
 % CAQM: Convexity Analysis of Quadratic Maps
 % Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin
 %
+
 %% Implementation
 %% Processing arguments
     % error message on too few arguments

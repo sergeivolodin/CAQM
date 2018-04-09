@@ -1,8 +1,8 @@
 function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
-%% Usage
+% USAGE
 % z_max = get_z_max(A, b, c_plus, [z_max_guess], [k], [DEBUG])
 %
-%% Description
+% DESCRIPTION
 % This function returns maximal value z_max such that the hyperplane perpendicular to c_+ and located
 % distance z_max away from the boundary of F still does not contain non-convexities.
 %
@@ -12,7 +12,7 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
 % This function uses MATLAB parallel capabilities, if they are detected on the system.
 % Otherwise, a single thread is used.
 %
-%% Input
+% INPUT
 % * A -- tensor of rank 3
 %   Dimensions: n x n x m
 %     The element A(i, j, k) denotes i'th row and j'th column of the n x n matrix A_k
@@ -38,45 +38,42 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
 %     nonconvexities, try larger k
 %   Default: 10
 %
-%% Output
+% OUTPUT
 % The function finds and returns maximal value z_max such that the compact part of F “cut” by the hyperplane
 % c_+ · (y − y_0) = z_max, is still convex. Here y_0 ∈ ∂F_c+, the latter set is singleton.
 %
-% Exception: produces an exception if non-convexity of F confined within the half-plane c_+ ·(y - y_0) ≤ z_max
+% EXCEPTION: produces an exception if non-convexity of F confined within the half-plane c_+ ·(y - y_0) ≤ z_max
 % has not been established, i.e. no non-convexities were found in that region.
 %
-%% Example
-%{
-% --------------------------------------------------------------------------------------
-% Unset all variables in the workspace
-clear all;
-
-% should be executed from the root project folder which contains the file README.md
-ls README.md
-% ans = README.md
-
-% Load the map from file
-load('examples/maps/article_example05_R4_R4.mat');
-
-% Fix the random seed
-rng(10);
-
-% Obtain c_plus s.t. c_plus · A > 0
-c_plus = get_c_plus(A, 10, 1);
-
-% Fix the random seed
-rng(10);
-
-% Run the procedure with graphical debug output
-get_z_max(A, b, c_plus, 100, 10, 1)
-% ans = 0.0073
-% --------------------------------------------------------------------------------------
-%}
+% EXAMPLE
+%% Unset all variables in the workspace
+%clear all;
 %
-%% Copyright
+%% should be executed from the root project folder which contains the file README.md
+%ls README.md
+%% ans = README.md
+%
+%% Load the map from file
+%load('examples/maps/article_example05_R4_R4.mat');
+%
+%% Fix the random seed
+%rng(10);
+%
+%% Obtain c_plus s.t. c_plus · A > 0
+%c_plus = get_c_plus(A, 10, 1);
+%
+%% Fix the random seed
+%rng(10);
+%
+%% Run the procedure with graphical debug output
+%get_z_max(A, b, c_plus, 100, 10, 1)
+%% ans = 0.0073
+%
+% COPYRIGHT
 % CAQM: Convexity Analysis of Quadratic Maps
 % Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin
 %
+
 %% Implementation
 %% Process arguments
     % too few arguments

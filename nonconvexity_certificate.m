@@ -1,11 +1,11 @@
 function is_nonconvex = nonconvexity_certificate(A, b, y, k)
-%% Usage
+% USAGE
 % is_nonconvex = nonconvexity_certificate(A, b, [y], [k])
 %
-%% Description
+% DESCRIPTION
 % This function calls get_c_minus and returns is_nonconvex = 1 if the latter returns a non-trivial c.
 %
-%% Input
+% INPUT
 % * A -- tensor of rank 3
 %   Dimensions: n x n x m
 %     The element A(i, j, k) denotes i'th row and j'th column of the n x n matrix A_k
@@ -28,40 +28,37 @@ function is_nonconvex = nonconvexity_certificate(A, b, y, k)
 %     greater certainty if the result is is_nonconvex = 0
 %   Default: 10
 %
-%% Output
+% OUTPUT
 % This function attempts to establish if F is convex, returns is_nonconvex = 1 if F is non-convex,
 % is_nonconvex = 0 if the convexity of F is uncertain
 %
-%% Example
-%{
-% --------------------------------------------------------------------------------------
-% Unset all variables in the workspace
-clear all;
-
-% should be executed from the root project folder which contains the file README.md
-ls README.md
-% ans = README.md
-
-% Load the map from file
-load('examples/maps/article_example05_R4_R4.mat');
-
-% Construct y in G
-x = [1 1 0 0]';
-y = quadratic_map(A, b, x);
-
-% Fix the random seed
-rng(10);
-
-% Run the procedure
-nonconvexity_certificate(A, b, y, 10)
-% ans = 1
-% --------------------------------------------------------------------------------------
-%}
+% EXAMPLE
+%% Unset all variables in the workspace
+%clear all;
 %
-%% Copyright
+%% should be executed from the root project folder which contains the file README.md
+%ls README.md
+%% ans = README.md
+%
+%% Load the map from file
+%load('examples/maps/article_example05_R4_R4.mat');
+%
+%% Construct y in G
+%x = [1 1 0 0]';
+%y = quadratic_map(A, b, x);
+%
+%% Fix the random seed
+%rng(10);
+%
+%% Run the procedure
+%nonconvexity_certificate(A, b, y, 10)
+%% ans = 1
+%
+% COPYRIGHT
 % CAQM: Convexity Analysis of Quadratic Maps
 % Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin
 %
+
 %% Implementation
 %% Processing arguments
     if nargin < 2
