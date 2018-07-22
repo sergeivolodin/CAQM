@@ -1,12 +1,58 @@
+%% dimensions
+clear all;
+n = 4;
+m = 4;
+
+% fixing the random seed
+rng(47, 'twister');
+
+% defining A matrices
 A(:, :, 1) = [0 1 0 0; 1 0 0 0; 0 0 0 1; 0 0 1 0];
 A(:, :, 2) = [0 0 1 0; 0 2 0 1; 1 0 2 0; 0 1 0 0];
 A(:, :, 3) = [0 0 0 1; 0 -1 1 0; 0 1 1 0; 1 0 0 0];
 A(:, :, 4) = eye(4);
-b = zeros(4);
-rng(10);
-c_minus = get_c_minus(A, b, [0, 0, 0, 1]', 10);
-rng(10);
-is_nonconvex = nonconvexity_certificate(A, b, [0, 0, 0, 1]', 10);
 
-display(is_nonconvex);
-display(c_minus);
+% homogeneous map, therefore b = 0
+b = zeros(4);
+
+%% calculating c_plus
+c_plus = get_c_plus(A);
+disp('=== c_plus:');
+disp(c_plus');
+
+%% boundary oracle
+d = -[1,2,3,4]';
+y = quadratic_map(A, b, [1,2,3,4]');
+disp('=== Boundary oracle');
+t = boundary_oracle(A, b, y, d);
+fprintf('t = %.5f\n\n', t);
+
+%% c from d
+disp('=== Get c from d');
+c_d = get_c_from_d(A, b, y, d);
+disp('c_d = ');
+disp(c_d');
+
+%% c minus
+rng(10);
+disp('=== c_minus');
+c_minus = get_c_minus(A, b, [0, 0, 0, 1]', 10);
+disp(c_minus');
+
+%% certificate
+rng(10);
+disp('=== Non-convexity certificate');
+result = nonconvexity_certificate(A, b, [0, 0, 0, 1]', 10);
+if result == 1
+    disp('Search finished. The image is non-convex.');
+else
+    disp('Search finished. Cannot certify non-convexity.');
+end
+
+%% zmax
+disp('=== z_max');
+% Warning: get_z_max doesn't work for homogeneous cases yet.
+disp('z_max search for continuous homogeneous cases is not implemented yet');
+%z_max_guess = 0.1;
+%z_max = get_z_max(A, b, c_plus, z_max_guess, 100, 1);
+%fprintf('Search finished. z_max=%.15f\n', z_max);
