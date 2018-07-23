@@ -1,4 +1,5 @@
 % dimensions
+clear all;
 n = 3;
 m = 6;
 

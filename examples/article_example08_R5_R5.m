@@ -1,4 +1,5 @@
 % dimensions
+clear all;
 n = 5;
 m = 5;
 
