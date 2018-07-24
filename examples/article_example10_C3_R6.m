@@ -46,7 +46,7 @@ disp('OK');
 
 %% boundary oracle
 d = -[1,2,3,4,5,6]';
-y = [0 0 0 0 0,0]';
+y = quadratic_map(A, b, [1, 2, 3]');
 disp('=== Boundary oracle');
 t = boundary_oracle(A, b, y, d);
 fprintf('t = %.5f\n\n', t);

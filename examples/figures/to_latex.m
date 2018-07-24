@@ -6,14 +6,16 @@ disp('');
 disp('{\tiny');
 for k = 1:m
     fprintf('$A_%d=\\left(\\arraycolsep=1.4pt\\def\\arraystretch{1}\n', k);
-    fprintf('\\begin{array}{%s}\n', repmat('c', 1, m));
-    latex(A(:, :, k), 'nomath', '%d');
+    fprintf('\\begin{array}{%s}\n', repmat('c', 1, n));
+    %latex(A(:, :, k), 'nomath', '%d');
+    latex1(A(:, :, k));
     disp('\end{array}\right)$,');
 end
 for k = 1:m
     fprintf('$b_%d=\\left(\\arraycolsep=1.4pt\\def\\arraystretch{1}\n', k)
     disp('\begin{array}{c}');
-    latex(b(:, k), 'nomath', '%d')
+    %latex(b(:, k), 'nomath', '%d')
+    latex1(b(:, k));
     disp('\end{array}\right)$.')
 end
 disp('}');
