@@ -71,7 +71,7 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
 %
 % COPYRIGHT
 % CAQM: Convexity Analysis of Quadratic Maps
-% Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin
+% Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Sergei Volodin, Boris Polyak
 %
 
 %% Implementation

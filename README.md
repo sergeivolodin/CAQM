@@ -49,4 +49,4 @@ See [LICENSE.txt](LICENSE.txt)
 ## Further reading
 Refer to the documentation in [doc/readme.pdf](doc/readme.pdf) and the article
 
-Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin
+Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Sergei Volodin, Boris Polyak

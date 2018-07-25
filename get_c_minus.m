@@ -65,7 +65,7 @@ function [c, i] = get_c_minus(A, b, y0, MAXITER, DEBUG)
 %
 % COPYRIGHT
 % CAQM: Convexity Analysis of Quadratic Maps
-% Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Boris Polyak, Sergei Volodin
+% Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Sergei Volodin, Boris Polyak
 %
 
 %% Implementation
