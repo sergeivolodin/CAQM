@@ -1,0 +1,5 @@
++example05_R4_R4_c_minus.eps (in figures: example01)
++example05_R4_R4_c_minus_cdot.eps (example01)
++example05_z_c_t_2.eps (example01)
++example05_c_dot_rg_n_2.eps (example01)
+example06_c_dot.eps (example03)
