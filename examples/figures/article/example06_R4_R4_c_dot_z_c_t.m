@@ -225,7 +225,7 @@ for i = 1:length(objh)
 end
 
 % adjusting view (az, el)
-view(-44, 2);
+view(-37, 0);
 
 %% plotting z(c(t))
 
