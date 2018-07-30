@@ -2,6 +2,9 @@
 
 clear all;
 
+% changing cwd to directory of .m file
+cd(fileparts(which(mfilename)));
+
 % getting a map
 load('../../maps/article_example05_R4_R4.mat');
 

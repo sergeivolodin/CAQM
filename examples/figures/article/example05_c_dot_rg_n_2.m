@@ -1,4 +1,8 @@
 clear all;
+
+% changing cwd to directory of .m file
+cd(fileparts(which(mfilename)));
+
 % loading the saved data
 load('example05_c_dot.mat');
 
