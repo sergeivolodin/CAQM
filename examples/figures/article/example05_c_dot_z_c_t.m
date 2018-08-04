@@ -34,7 +34,7 @@ i = 1;
 j = 1;
 
 % number of points want to obtain from the nonconvexity certificate
-N = 1;
+N = 2;
 
 % maximal number of attempts for the certificate
 max_c_attempts = 20;
@@ -64,7 +64,11 @@ while i <= 2 * N
     all_c(:, find(sum(abs(all_c)) == 0)) = [];
     
     % running the nonconvexity certificate
-    [c, c_attempts] = get_c_minus(A_, b_, y0_, max_c_attempts, DEBUG);
+    try
+        [c, c_attempts] = get_c_minus(A_, b_, y0_, max_c_attempts, DEBUG);
+    catch
+        c = [];
+    end
     
     % if not found OR found but it was already added before, discard this c
     if size(c, 1) == 0 || (size(all_c, 2) > 0 && cminus_distance(all_c, c_plus, c) < min_sin)
@@ -259,6 +263,9 @@ for i = 1:(2 * N)
     
     % need to stop plotting at s_curve to remove too large z
     [~, s_curve] = max(z_item_value_orig > z_threshold);
+    if s_curve == 1
+        s_curve = s;
+    end
     
     % current t and z(c(t)) values
     t_values = c_len_pos(1:s_curve);
