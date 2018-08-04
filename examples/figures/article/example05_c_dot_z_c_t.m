@@ -80,7 +80,6 @@ while i <= 2 * N
     c = c / norm(c);
 
     % showing c
-    display(c);
     fprintf('i = %d j = %d Found c\n', i, j);
     
     % adding c as one of c_start
@@ -218,7 +217,7 @@ for i = 1:length(objh)
 end
 
 % adjusting view (az, el)
-view(-6, 4);
+view(-26, 11);
 
 %% plotting z(c(t))
 
