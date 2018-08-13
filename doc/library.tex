@@ -20,12 +20,12 @@
 	\bf Random map & {Dimensions n, m} & {\tt get\_random\_f(n, m, is\_complex)} & Generates random map $f$ & {\tt [A, b]} & None\\\hline
 	\bf Value at x & The point $x\in X$ & {\tt quadratic\_map(A, b, x)} & Calculates $f(x)$ & $y=f(x)$ & None\\\hline
 	\bf Product $c\cdot A$ & Normal vector $c$ & {\tt get\_Ac(A, c)} & Calculates $c\cdot A$ & $A_c=c\cdot A$ & None\\\hline
-	\bf Get $H_c$ & $c,y\in\R^m$ & {\tt get\_H\_c(A, b, c, y)} & $H_c=\left(\begin{array}{cc}A_c & b_c\\b_c' &-(c,y) \end{array}\right)$ & $H_c$ & None\\\hline
+	\bf Get $H_c$ & $c,y\in\R^m$ & {\tt get\_H\_c(A, b, c, y)} & Calculates $H_c=\left(\begin{array}{cc}A_c & b_c\\b_c' &-(c,y) \end{array}\right)$ & $H_c$ & None\\\hline
 	\bf Minimize $z(c)$ & $c,c_+$, step $\beta$ & {\tt minimize\_z\_c(A, b, c, c\_plus, beta\_initial, max\_step)} & Calculates $\inf\limits_{c\in C_-}z(c)$ & {\tt [z, c\_array, z\_array]} & If failed\\\hline
 	\bf  $\R^n$ projection & & {\tt project(A, b, c, x\_0, delta\_c, normal, search\_area\_size)} & Projects $c+\Delta c$ to $C_-$ & {\tt [c\_new, lambda]} & If failed\\\hline
 	\bf $\mathbb{C}^n$ projection & & {\tt project\_descent(A, b, c, normal\_1, normal\_2)} & Projects $c$ to $C_-$ & {\tt [c\_new, distance]} & If failed\\\hline
 	\bf Gradient $\frac{\partial z}{\partial c}$ & Normal $c$ & {\tt get\_dz\_dc(A, b, c)} & Calculates $Q$, $\nabla z(c)$, normal vectors $n_1$, $n_2$ & {\tt [Q, Q\_inv, k, v, lambda\_min, z, dz\_dc, normal\_re, normal\_im, drho\_dc]} & None\\\hline
-	\bf Change of basis & $c_+$ & {\tt change\_basis(A, b, c\_plus)} & $\begin{cases}
+	\bf Change of basis & $c_+$ & {\tt change\_basis(A, b, c\_plus)} & Finds $\begin{cases}
 	x = S(x'+x_0)\\
 	y = y' + y_0
 	\end{cases}

@@ -10,6 +10,16 @@
 \usepackage{authblk}
 \usepackage{hyperref}
 
+% automatic quotation style, just use "
+\usepackage[autostyle, english=american]{csquotes}
+\MakeOuterQuote{"}
+
+%\usepackage[margin=1in]{geometry}% Just for this example
+%\usepackage{lipsum}% Just for this example
+\usepackage{graphicx,caption}
+
+\usepackage[usenames, dvipsnames]{color}
+
 \DeclareMathOperator*{\argmin}{arg\,min}
 \renewcommand{\footnoterule}{%
 	\kern -3pt
@@ -28,10 +38,14 @@
 
 \title{CAQM: Convexity Analysis of Quadratic Maps}
 \date{}
-\author[1,2]{Anatoly Dymarsky\thanks{a.dymarsky@skoltech.ru}}
-\author[1,3]{Elena Gryazina\thanks{e.gryazina@skoltech.ru}}
-\author[1]{Sergei Volodin\thanks{sergei.volodin@phystech.edu}}
-\author[3]{Boris Polyak\thanks{boris@ipu.ru}}
+%\author[1,2]{Anatoly Dymarsky\thanks{a.dymarsky@skoltech.ru}}
+%\author[1,3]{Elena Gryazina\thanks{e.gryazina@skoltech.ru}}
+%\author[1]{Sergei Volodin\thanks{sergei.volodin@phystech.edu}}
+%\author[3]{Boris Polyak\thanks{boris@ipu.ru}}
+\author[1,2]{Anatoly Dymarsky}
+\author[1,3]{Elena Gryazina}
+\author[1]{Sergei Volodin}
+\author[3]{Boris Polyak}
 \affil[1]{Skolkovo Institute of Science and Technology}
 \affil[2]{University of Kentucky}
 \affil[3]{Institute for Control Sciences RAS}
@@ -48,36 +62,35 @@
 \begin{document}
 \newgeometry{left=30mm, right=30mm, top=30mm, bottom=30mm}
 \maketitle
-CAQM is a MATLAB library designed to analyze geometric properties of the images of quadratic maps (manifolds of real-valued solutions of the systems of quadratic equations).\\
+CAQM is a MATLAB library designed to analyze geometric properties of images of quadratic mappings.\\
 
 This document explains how to install CAQM and describes basic functionality of the library. The corresponding MATLAB functions are located in the main folder.\\
 
-Additional functionality is provided by the functions located in the {\tt library/} folder, which are described in the accompanying file {\tt library.pdf}.
+Additional functionality is provided by the functions located in the folder {\tt library/}. These functions are described in the accompanying file {\tt library.pdf}.
 
 \newpage
 \newgeometry{left=20mm, right=20mm, top=20mm, bottom=20mm}
 \section*{Installation and Testing}
-The library requires \href{https://www.mathworks.com/downloads/}{MATLAB} and \href{http://cvxr.com/cvx/download/}{CVX} as prerequisites. The following steps are required in order to use CAQM.
+The library requires \href{https://www.mathworks.com/downloads/}{MATLAB} and \href{http://cvxr.com/cvx/download/}{CVX} as prerequisites. The following steps are necessary to set up and use CAQM.
 \begin{enumerate}
-\item {\bf Obtaining the source code} can be done in two ways. The first way is through the GIT version control system by simply cloning the repository:
+\item {\bf Obtaining the library} is possible in two ways. First way is by cloning the GIT  repository:
 \begin{center}\tt
 git clone git@github.com:sergeivolodin/CertificateCutting.git
 \end{center}
-The second way is to download the latest snapshot of the repository from \href{https://github.com/sergeivolodin/CAQM}{github.com/sergeivolodin/CAQM} and unpack the obtained archive. 
-Both ways should result in a folder {\tt CAQM} (or {\tt CAQM-master} in the latter case). 
+Second way is to download the latest snapshot of the repository from \href{https://github.com/sergeivolodin/CAQM}{github.com/sergeivolodin/CAQM} and unpack the archive. After obtaining the folder {\tt CAQM} ({\tt CAQM-master} in the latter case), no further installation is required.
 
-\item {\bf Configuring MATLAB} only requires adding the folder {\tt CAQM} or {\tt CAQM-master} to the PATH. The following directories (assuming that the root folder is called  {\tt CAQM} ) should be added: 
-
+\item {\bf Configuring the library} requires adding the folder {\tt CAQM} or {\tt CAQM-master} together with its subfolders
 \begin{center}
- {\tt CAQM},\quad   {\tt CAQM/library},\quad  {\tt CAQM/tests}.
+{\tt CAQM/library},\quad  {\tt CAQM/tests}.
 \end{center}
+to {\tt MATLAB} path. 
 
-\item {\bf Testing the library} is an essential step which ensures that the library and all of its dependencies were installed correctly. To run the test, open MATLAB, navigate to 
-{\tt CAQM/tests} and run the {\tt testCAQM.m} file.
+\item {\bf Testing the library} is an essential step which ensures that the library and all of its components were installed correctly. To run the test, open MATLAB, navigate to 
+{\tt CAQM/tests} and run {\tt testCAQM.m}.
 
-This test will go through all the essential parts of the functionality. Depending on the MATLAB version, it might start a parallel cluster and open several GUI dialog boxes. If the test is succeeded, a message {\tt TEST PASSED} should be printed to the console output. The YouTube \href{https://youtu.be/Ikh_GDHnu-4}{video} demonstrates the normal test operations, which  might be useful to identify possible issues should the test fail. 
+This test will check all essential components. Depending on the MATLAB version, it might start a parallel cluster and open several GUI dialog boxes. If the test succeeds, a message {\tt TEST PASSED} should be printed to the console output. The YouTube \href{https://youtu.be/Ikh_GDHnu-4}{video} demonstrates the normal test operations, which  might be useful to identify possible issues should the test fail. 
 
-There is also another group of tests which checks each function individually in a more thorough manner. To run it, type in MATLAB console from the {\tt CertificateCutting/tests} directory:
+There is an additional group of tests which checks each function individually in a more thorough manner. To run it, type in MATLAB console from the {\tt CertificateCutting/tests} directory:
 \begin{verbatim}
 >> runtests('testFunctions')
 \end{verbatim}
@@ -91,11 +104,11 @@ After installation and testing, the library is ready to use. The rest of this do
 \begin{enumerate}
 \item Real case, the map $f\colon \mathbb{R}^n\to\mathbb{R}^m$
 \begin{equation}
-f_k(x)=x^TA_k x+2b_k^Tx ,\quad A_k=A_k^T ,\quad x, b_k\in \mathbb{R}^n ,\quad k=1\dots m . \label{real}
+f_k(x)=x^TA_k\, x+2b_k^T\,x ,\quad A_k=A_k^T ,\quad x, b_k\in \mathbb{R}^n ,\quad k=1\dots m . \label{real}
 \end{equation}
 \item Complex case, the map $f\colon \mathbb{C}^n\to\mathbb{R}^m$
 \begin{equation}
-f_k(x)=x^*A_k x+b_k^*x+x^*b_k ,\quad A_k=A_k^* ,\quad x, b_k\in \mathbb{C}^n ,\quad k=1\dots m ,\label{complex}
+f_k(x)=x^*A_k\, x+b_k^*\, x+x^*b_k ,\quad A_k=A_k^* ,\quad x, b_k\in \mathbb{C}^n ,\quad k=1\dots m ,\label{complex}
 \end{equation}
 where $\cdot^*$ stands for Hermitian conjugate.
 \end{enumerate}
@@ -141,7 +154,7 @@ The input format to specify a quadratic map is as follows.
 \item The array $b(i, k)$ denotes $i$'th element of the vector $b_k\in\mathbb{V}$
 \end{itemize}
 
-In order to interpret the input map as complex, the tensor $A$ or the matrix $b$ should contain at least one complex number. Otherwise, the library assumes the map to be real.
+In order to interpret the input map as complex, the tensor $A$ or the matrix $b$ should contain at least one complex number. Otherwise, the library assumes the map is real.
 
 \begin{enumerate}
 \item {\bf Feasibility membership oracle,\hskip 6pt}\underline{\tt  infeasibility\_oracle.m}
@@ -157,7 +170,7 @@ is_infeasible = infeasibility_oracle(A, b, y)
 {\bf Exceptions:} None
 
 \begin{figure}[H]
-	\centering\includegraphics[width=100pt]{fig/infeasibility_oracle}
+	\centering\includegraphics[width=100pt]{fig/infeasibility_oracle}\captionsetup{width=.8\linewidth}
 	\caption{Infeasibility oracle: hyperplane orthogonal to $c$ separates the point $y$ from the convex hull $G$ of $F$}
 \label{fig:one}
 \end{figure}
@@ -165,9 +178,9 @@ is_infeasible = infeasibility_oracle(A, b, y)
 This function attempts to certify that the point $y$ does not belong to the convex hull $G$ of $F$ by separating $y$ and $G$ by an appropriate hyperplane.
 This is illustrated in Fig.~\ref{fig:one}, see Theorem 3.2 in the accompanying paper for details.
 
-The function returns {\tt is\_infeasible}=1 if the desired hyperplane was found.
+The function returns {\tt is\_infeasible=1} if the desired hyperplane was found.
 In this case $y\notin G$ and consequently $y\notin F$, implying there is no $x\in \mathbb{V}$ such that $y=f(x)$, i.e.~this point is infeasible.
-If the hyperplane was not found the function returns {\tt is\_infeasible}$=0$, which means $y$ does belong to $G$ but the feasibility  of $y$ with respect to $F$ is uncertain.
+If the hyperplane was not found the function returns {\tt is\_infeasible=0}, which means $y$ does belong to $G$ but the feasibility  of $y$ with respect to $F$ is uncertain.
 \newpage
 \item {\bf Boundary oracle,\hskip 6pt}\underline{\tt boundary\_oracle.m}
 \begin{verbatim}
@@ -185,6 +198,7 @@ If the hyperplane was not found the function returns {\tt is\_infeasible}$=0$, w
 
 \begin{figure}[H]
 	\centering\includegraphics[width=100pt]{fig/boundary_oracle}
+\captionsetup{width=.8\linewidth}
 	\caption{Boundary oracle: distance from $y$ to the boundary $\partial G$ in the direction $d$.
 	The boundary point of $G$ may or may not belong to $\partial F$ (cases of $d=d_1$ and $d=d_2$ respectively).}
 \label{fig:two}
@@ -192,11 +206,11 @@ If the hyperplane was not found the function returns {\tt is\_infeasible}$=0$, w
 
 
 This function finds point $y+t\,d$ on the boundary $\partial G$ with the largest $ {t} = \sup\{\tau\big| y+\tau d\in G\}$ and checks if this point belongs to $F$. 
-This is illustrated in Fig.~\ref{fig:two}, see Optimization task (3) in the accompanying paper for details.
+This is illustrated in Fig.~\ref{fig:two}, see Section 5.2 of the accompanying paper for details.
 
-The variable $\tt t$ on return contains the value of $t$, the variable {\tt  is\_in\_F}=1 if the boundary point $y+t\,d$ belongs to $F$, and variable {\tt  is\_in\_F}$=0$ if feasibility of $y+t\,d$ with respect to $F$ is uncertain.
+The variable $\tt t$ on return contains the value of $t$, the variable {\tt  is\_in\_F=1} if the boundary point $y+t\,d$ belongs to $F$, and variable {\tt  is\_in\_F=0} if feasibility of $y+t\,d$ with respect to $F$ is uncertain.
 
-\newpage
+%\newpage
 
 \item {\bf Normal vector at the boundary,\hskip 6pt}\underline{\tt get\_c\_from\_d.m} 
 \begin{verbatim}
@@ -214,18 +228,17 @@ c = get_c_from_d(A, b, y, d)
 
 \begin{figure}[H]
 	\centering\includegraphics[width=100pt]{fig/get_c_from_d}
-	\caption{Normal vector at the boundary: vector $c$ normal to $\partial G$ at the boundary point $y+td$. This function only considers the convex hull $G$ and does not distinguish between points $y+td$ which do or do not belong to $F$.}
+\captionsetup{width=.8\linewidth}
+	\caption{Normal vector at the boundary: vector $c$ normal to $\partial G$ at the boundary point $y+td$. This function only considers the convex hull $G$ and is agnostic to whether the point $y+td$ does or does not belong to $F$.}
 \label{fig:three}
 \end{figure}
 
-This function finds the boundary point $y+td\in \partial G$ and calculates the vector $c$ normal to $\partial G$ at that point by using the dual formulation of the optimization problem, see equation (12) of the accompanying paper.
-This is schematically illustrated in Fig.~\ref{fig:three}.
+This function finds the boundary point $y+td\in \partial G$ and calculates the vector $c$ normal to $\partial G$ at that point by using the dual formulation of the optimization problem, see Section 5.2 of the accompanying paper.
+This is schematically illustrated in Fig.~\ref{fig:three}. Variable $\tt c$ on return contains the value of $c$.
 
-The variable $\tt c$ on return contains the value of $c$.
+%\newpage
 
-\newpage
-
-\item {\bf ``Non-convex direction",\hskip 6pt}\underline{\tt  get\_c\_minus.m} 
+\item {\bf "Non-convex direction,"\hskip 6pt}\underline{\tt  get\_c\_minus.m} 
 	\begin{verbatim}
 	c = get_c_minus(A, b, [y], [k], [DEBUG])
 	\end{verbatim}
@@ -237,7 +250,7 @@ The variable $\tt c$ on return contains the value of $c$.
 	\item {\it (optional)} binary variable {\tt DEBUG}=1/0 that turns on/off the verbose output.
 \end{itemize}
 {\bf Output:}  finds and returns vector $c$ such that $\partial F_c$ is non-convex by employing up to $k$ iterations/restarts of a stochastic algorithm.\\
-{\bf Exception:} the functions throws an exception if such a vector $c$ was not found.
+{\bf Exception:} this functions throws an exception if such a vector $c$ was not found.
 
 This function consequently generates up to $k$ random directions $d$ and for each one finds vector $c$ normal to $\partial G$ at the boundary point $y+t\, d\in \partial G$.
 Next, it finds $\partial F_c$, the intersection of $F$ with the supporting hyperplane orthogonal to $c$ and checks if it is non-convex.
@@ -252,11 +265,12 @@ If $y$ and $k$ are not specified, the function uses default values $y=f(0)=0$ an
 	\end{verbatim}
 {\bf Input:}
 \begin{itemize}
-	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
+	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$. To use a homogeneous case, supply $b=0$.
 	\item {\it (optional)} a point $y\in G$,
 	\item {\it (optional)} number of iterations $k$.
 \end{itemize}
-{\bf Output:} attempts to establish if $F$ is non-convex, returns {\tt is\_nonconvex}=$1$ if $F$ is non-convex,  {\tt is\_nonconvex}=$0$ if uncertain.\\
+{\bf Output:} attempts to establish if $F$ is non-convex, returns {\tt is\_nonconvex=1} if $F$ is non-convex,  {\tt is\_nonconvex=0} if uncertain.\\
+
 {\bf Exceptions:} None.
 
 	
@@ -283,7 +297,7 @@ If successful, the function terminates and returns $c_+$ on the exit, otherwise 
 If not specified explicitly, the default value of $k$ is $10$.
 If $c_+$ is not found during $k$ iterations, the function produces an exception.
 
-\newpage
+%\newpage
 	
 \item {\bf Convex subpart,\hskip 6pt}\underline{\tt get\_z\_max.m}
 \begin{verbatim}
@@ -292,39 +306,40 @@ z_max = get_z_max(A, b, c_plus, [z_max_guess], [k], [DEBUG])
 {\bf Input:}
 \begin{itemize}
 	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
-	\item the vector $c_+$ such that $c_+\cdot A\succeq 0$,
+	\item a vector $c_+$ such that $c_+\cdot A\succeq 0$,
 	\item {\it (optional)}  guess value  $z^{\rm guess}_{\rm max}$,
 	\item {\it (optional)} the number of iterations $k$,
 	\item {\it (optional)}  binary variable {\tt DEBUG} that =1/0 that turns on/off the verbose output.
 \end{itemize}
-{\bf Output:} finds and returns maximal value $z_{\max}$ such that the compact part of $F$ ``cut" by the hyperplane  $c_+ \cdot (y-y_0)=z_{\max}$, where $y_0\in \partial F_{c_+}$, is still convex. \\
-{\bf Exception:} produces an exception if non-convexity of $F$ confined within the half-plane $c_+ \cdot (y-y_0)\leq z^{\rm guess}_{\rm max}$  has not been established. %i.e.~no non-convexities were found in that region.
+{\bf Output:} finds and returns maximal value $z_{\max}$ such that the compact part of $F$ "cut" by the hyperplane  $c_+ \cdot (y-y_0)=z_{\max}$, where $y_0\in \partial F_{c_+}$, is  likely convex. \\
+{\bf Exception:} produces an exception if non-convexity of $F$ confined within the half-plane $c_+ \cdot (y-y_0)\leq z^{\rm guess}_{\rm max}$  has not been established.
 
 \begin{figure}[H]
 	\centering\includegraphics[width=100pt]{fig/get_z_max}
-	\caption{Maximal value of $z_{\max}$ such that  the subpart of $F$, $F^{c_+}_{z_{\rm max}}\equiv \{y\, | y\in F, c_+ \cdot (y_0-y)\leq z_{\rm max}\}$, which is ``cut" from $F$ by a hyperplane orthogonal  to $c_+$, is (expected to be) convex. See section 6 of the accompanying paper for details. }
+\captionsetup{width=.8\linewidth}
+	\caption{Maximal value of $z_{\max}$ such that  the subpart of $F$, $F^{c_+}_{z_{\rm max}}\equiv \{y\, | y\in F, c_+ \cdot (y_0-y)\leq z_{\rm max}\}$, which is "cut" from $F$ by a hyperplane orthogonal  to $c_+$, is (expected to be) convex. See section 6 of the accompanying paper for details. }
 \label{fig:four}
 \end{figure}
 
 
-This function returns maximal value $z_{\max}$ such that the hyperplane perpendicular to $c_+$ and located distance $z_{\max}$ away from the boundary of $F$ does not contain known non-convexities. Assuming all non-convexities (in the form of corresponding ``non-convex directions" $c_-$) have been identified, this ensures that the compact part of $F$ confined in the half-space $\{y\, |c_+ \cdot (y_0-y)\leq z^{\rm guess}_{\rm max}\}$ is convex.
-Here $y_0\in \partial F_{c_+}$, and since $c_+\cdot A\succ 0$, the set $\partial F_{c_+}$ is a singleton $\{y_0\}$.
+This function returns maximal value $z_{\max}$ such that the hyperplane perpendicular to $c_+$ and located distance $z_{\max}$ away from the boundary of $F$ does not contain known non-convexities. Assuming all non-convexities (in the form of corresponding "non-convex directions" $c_-$) have been identified, this ensures that the compact part of $F$ confined in the half-space $\{y\, |c_+ \cdot (y_0-y)\leq z^{\rm guess}_{\rm max}\}$ is convex.
+Here $y_0\in \partial F_{c_+}$, and since $c_+\cdot A\succ 0$, the set $\partial F_{c_+}$ consists of only one point $\{y_0\}$.
 The value $z_{\max}$ is maximal in the sense that taking any larger value would result in $F^{c_+}_{z_{\rm max}}\equiv \{y\, | y\in F, c_+ \cdot (y_0-y)\leq z_{\rm max}\}$ becoming non-convex. The geometric meaning of $z_{\max}$ is illustrated in Fig. \ref{fig:four}. 
 
-The function first tries to identify the ``non-convex directions" $c_-$ using {\tt get\_c\_minus} and then ``follow" each non-convexity to the smallest value of $z$. This is described in detail in the section 4.4 of the accompanying paper.
+The function first tries to identify the "non-convex directions" $c_-$ using {\tt get\_c\_minus} and then "follow" each non-convexity to the smallest value of $z$. This is described in detail in the section 6 of the accompanying paper.
 
-If no ``non-convex directions" found, the function produces an exception.
-Also, the function produced as exception in case the input value of $c_+$ does not satisfy $c_+\cdot A\succ 0$.
+If no "non-convex directions" found, the function produces an exception.
+Also, this function produced as exception in case the input value of $c_+$ does not satisfy $c_+\cdot A\succ 0$.
 If the maximal number of iterations $k$ (to be used with {\tt get\_c\_minus}) is not specified on input, a default value of $k=10$ is used.
 
 The guess value $z^{\rm guess}_{\rm max}$ is supposed to be substantially large to detect non-convexity of $F$.
 If it is not specified on input, a default value of $z^{\rm guess}_{\rm max}=10 {\rm Tr}(c_+\cdot A)$ is used.
-It is generally the case that a bigger value of $z_{\rm max}$ results in a lower probability of finding the non-convexity.
-It means that the value must both allow for the non-convexity to appear and keep it large enough to be discovered by the algorithm.
+It is generally the case that a bigger value of $z_{\rm max}$ results in a lower probability of finding non-convexity.
+It means that $z_{\rm max}^{\rm guess}$ must be sufficiently large to allow for non-convexity to appear but not too large to still allow algorithm to discover the non-convex directions. The latter restriction can be alleviate by increasing the number of iterations $k$.
 
-It is important to keep in mind that the algorithm is stochastic and heuristic.
+It is important to keep in mind that the algorithm is stochastic and not exact in nature.
 A non-trivial return value $z_{\max}\neq z^{\rm guess}_{\rm max}$ does not guarantee convexity of  $F^{c_+}_{z_{\rm max}}\equiv \{y\, | y\in F, c_+ \cdot (y_0-y)\leq z_{\rm max}\}$, but only that $\{y\, | y\in F,c_+ \cdot (y_0-y)\leq z\}$ for any $z>z_{\rm max}$ contains boundary non-convexities.
-Nevertheless, provided all (families of) $c_-$ were identified, see Proposition 6.1 of the accompanying paper guarantees convexity of $F^{c_+}_{z_{\rm max}}$. Hence, increasing $k$ in turn increases certainty (in the probabilistic sense) that $F_{z_{\rm max}}$ is indeed convex.
+Nevertheless, provided all (families of) $c_-$ were identified, Proposition 6.1 of the accompanying paper guarantees convexity of $F^{c_+}_{z_{\rm max}}$. Hence, increasing $k$ increases certainty (in the probabilistic sense) that $F_{z_{\rm max}}$ is indeed convex.
 
 \end{enumerate}
 \end{document}
