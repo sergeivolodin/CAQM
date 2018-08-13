@@ -12,7 +12,7 @@ addpath('library');
 %% using saved map
 try
     % Real case R4->R4
-    load('examples/maps/article_example07_R4_R4.mat');
+    load('examples/maps/article_example05_R4_R4.mat');
 
     % Complex case C2->R4, pre-defined c_plus
     %load('examples/maps/article_example03_C2_R4.mat')
@@ -39,12 +39,12 @@ catch
 end
 
 %% setting the random seed
-rng(43);
+rng(11);
 
 
 %% cutting the convex part
 try
-    z_max = get_z_max(A, b, c_plus, 10, 20, 2);
+    z_max = get_z_max(A, b, c_plus, 0.01, 20, 2);
     
     fprintf('Optimization finished\n\n');
     
