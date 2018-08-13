@@ -123,7 +123,7 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
     % m dimension
     m = size(A, 3);
     % H from article
-    H = get_H(A, b);
+    H = get_H(A_, b_);
 
     % vectors d
     D = randn(m, k);
@@ -169,7 +169,7 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
         else
             c = get_c_d(D(:, i));
         end
-        if norm(c) > 0 && is_nonconvex(A, b, c)
+        if norm(c) > 0 && is_nonconvex(A_, b_, c)
             c = c / norm(c);
             found = found + 1;
             c_array(:, i) = c;
