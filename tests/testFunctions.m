@@ -102,22 +102,22 @@ assert(norm(c - [0.8192; -0.5187; 0.0231; 0.2437]) < 1e-3)
 load('../examples/maps/article_example06_R4_R4.mat');
 rng(10);
 c_plus = get_max_c_plus(A);
-rng(10);
-z_max = get_z_max(A, b, c_plus, 0.01, 40);
-assert(abs(z_max - 0.0279) < 1e-3);
+rng(4);
+z_max = get_z_max(A, b, c_plus, 0.1, 10);
+assert(abs(z_max - 0.0087) < 1e-3);
 
 %% minimize_z_c (w/o iterations)
 load('../examples/maps/article_example05_R4_R4.mat');
 rng(10);
 c_plus = get_max_c_plus(A);
-rng(11);
-z_max = get_z_max(A, b, c_plus, 10);
+rng(13);
+z_max = get_z_max(A, b, c_plus, 0.1);
 assert(abs(z_max - 0.0073) < 1e-3);
 
 %% minimize_z_c (A, b, c_plus)
 load('../examples/maps/article_example05_R4_R4.mat');
 rng(10);
 c_plus = get_max_c_plus(A);
-rng(11);
+rng(4);
 z_max = get_z_max(A, b, c_plus);
 assert(abs(z_max - 0.0073) < 1e-3);
