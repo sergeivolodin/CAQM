@@ -75,6 +75,6 @@ end
 
 %% zmax
 disp('=== z_max');
-z_max_guess = 0.1;
-z_max = get_z_max(A, b, c_plus, z_max_guess, 100, 1);
+z_max_guess = 1;
+z_max = get_z_max(A, b, c_plus, z_max_guess, 300, 1);
 fprintf('Search finished. z_max=%.15f\n', z_max);

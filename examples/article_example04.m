@@ -27,6 +27,6 @@ fprintf('2. c_+ = %s\n', mat2str(c_plus));
 
 %%
 fprintf('4. Finding convex cut\n');
-z_max = get_z_max(A, b, c_plus, 10, 100, 1);
+z_max = get_z_max(A, b, c_plus, 20, 500, 1);
 
 fprintf('Result: convex cut of size %f\n', z_max);

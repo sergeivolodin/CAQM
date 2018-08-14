@@ -77,5 +77,6 @@ end
 %% zmax
 disp('=== z_max');
 z_max_guess = 10 * trace(get_Ac(A, c_plus));
+rng(11);
 z_max = get_z_max(A, b, c_plus, z_max_guess, 100, 1);
 fprintf('Search finished. z_max=%.5f\n', z_max);
