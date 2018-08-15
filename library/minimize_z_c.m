@@ -96,11 +96,11 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
                 norm(Q_inv), rank(Q, eps_rank), z, lambda, abs(c_minus_distance), beta);
         end
 
-        % too small gradient check
+        % small gradient check
         if (norm(dz_dc) < eps_norm) || (norm(normal) < eps_norm) ||...
                 (~is_real && norm(dz_dc_tangent) < eps_norm)
             if DEBUG
-                disp('Gradient descent finished: too small value')
+                disp('Gradient descent finished: value too small')
             end
             break
         end
