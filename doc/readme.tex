@@ -188,7 +188,7 @@ If the hyperplane was not found the function returns {\tt is\_infeasible=0}, whi
 \end{verbatim}
 {\bf Input:}
 \begin{itemize}
-	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
+	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$.
 	\item a point $y\in G$,
 	\item a direction $d\in\R^m$.
 \end{itemize}
@@ -317,7 +317,7 @@ z_max = get_z_max(A, b, c_plus, [z_max_guess], [k], [DEBUG])
 \begin{figure}[H]
 	\centering\includegraphics[width=100pt]{fig/get_z_max}
 \captionsetup{width=.8\linewidth}
-	\caption{Maximal value of $z_{\max}$ such that  the subpart of $F$, $F^{c_+}_{z_{\rm max}}\equiv \{y\, | y\in F, c_+ \cdot (y_0-y)\leq z_{\rm max}\}$, which is "cut" from $F$ by a hyperplane orthogonal  to $c_+$, is (expected to be) convex. See section 6 of the accompanying paper for details. }
+	\caption{Maximal value of $z_{\max}$ such that  the subpart of $F$, $F^{c_+}_{z_{\rm max}}\equiv \{y\, | y\in F, c_+ \cdot (y_0-y)\leq z_{\rm max}\}$, which is "cut" from $F$ by a hyperplane orthogonal  to $c_+$, is (expected to be) convex. The starting point for the non-convexity certificate is $y=y_0-z^{\rm guess}_{\rm max}c_+$. See section 6 of the accompanying paper for details.}
 \label{fig:four}
 \end{figure}
 
@@ -335,7 +335,7 @@ If the maximal number of iterations $k$ (to be used with {\tt get\_c\_minus}) is
 The guess value $z^{\rm guess}_{\rm max}$ is supposed to be substantially large to detect non-convexity of $F$.
 If it is not specified on input, a default value of $z^{\rm guess}_{\rm max}=10 {\rm Tr}(c_+\cdot A)$ is used.
 It is generally the case that a bigger value of $z_{\rm max}$ results in a lower probability of finding non-convexity.
-It means that $z_{\rm max}^{\rm guess}$ must be sufficiently large to allow for non-convexity to appear but not too large to still allow algorithm to discover the non-convex directions. The latter restriction can be alleviate by increasing the number of iterations $k$.
+It means that $z_{\rm max}^{\rm guess}$ must be sufficiently large to allow for non-convexity to appear but not too large to still allow algorithm to discover the non-convex directions. The latter restriction can be alleviated by increasing the number of iterations $k$.
 
 It is important to keep in mind that the algorithm is stochastic and not exact in nature.
 A non-trivial return value $z_{\max}\neq z^{\rm guess}_{\rm max}$ does not guarantee convexity of  $F^{c_+}_{z_{\rm max}}\equiv \{y\, | y\in F, c_+ \cdot (y_0-y)\leq z_{\rm max}\}$, but only that $\{y\, | y\in F,c_+ \cdot (y_0-y)\leq z\}$ for any $z>z_{\rm max}$ contains boundary non-convexities.
