@@ -164,6 +164,7 @@ is_infeasible = infeasibility_oracle(A, b, y)
 {\bf Input:}
 \begin{itemize}
 \item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
+\item the map {\it can be homogeneous,} simply supply a matrix $b_{ki}=0$ with an appropriate dimension
 \item a point $y\in\mathbb{R}^m$.
 \end{itemize}
 {\bf Output:} determines if $y\in G$, returns {\tt is\_infeasible}=1 if $y\notin G$, {\tt is\_infeasible}=0 if $y\in G$.\\
@@ -176,7 +177,7 @@ is_infeasible = infeasibility_oracle(A, b, y)
 \end{figure}
 
 This function attempts to certify that the point $y$ does not belong to the convex hull $G$ of $F$ by separating $y$ and $G$ by an appropriate hyperplane.
-This is illustrated in Fig.~\ref{fig:one}, see Theorem 3.2 in the accompanying paper for details.
+This is illustrated in Fig.~\ref{fig:one}, see Theorem 4.1 in the accompanying paper for details.
 
 The function returns {\tt is\_infeasible=1} if the desired hyperplane was found.
 In this case $y\notin G$ and consequently $y\notin F$, implying there is no $x\in \mathbb{V}$ such that $y=f(x)$, i.e.~this point is infeasible.
@@ -188,7 +189,8 @@ If the hyperplane was not found the function returns {\tt is\_infeasible=0}, whi
 \end{verbatim}
 {\bf Input:}
 \begin{itemize}
-	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$.
+	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
+	\item the map {\it can be homogeneous,} simply supply a matrix $b_{ki}=0$ with an appropriate dimension
 	\item a point $y\in G$,
 	\item a direction $d\in\R^m$.
 \end{itemize}
@@ -219,6 +221,7 @@ c = get_c_from_d(A, b, y, d)
 {\bf Input:}
 \begin{itemize}
 	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
+	\item the map {\it can be homogeneous,} simply supply a matrix $b_{ki}=0$ with an appropriate dimension
 	\item a point $y\in G$,
 	\item a direction $d\in\R^m$.
 \end{itemize}
@@ -245,6 +248,7 @@ This is schematically illustrated in Fig.~\ref{fig:three}. Variable $\tt c$ on r
 {\bf Input:}
 \begin{itemize}
 	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
+	\item the map {\it can be homogeneous,} simply supply a matrix $b_{ki}=0$ with an appropriate dimension
 	\item {\it (optional)} a point $y\in G$,
 	\item {\it (optional)} number of iterations $k$,
 	\item {\it (optional)} binary variable {\tt DEBUG}=1/0 that turns on/off the verbose output.
@@ -265,7 +269,8 @@ If $y$ and $k$ are not specified, the function uses default values $y=f(0)=0$ an
 	\end{verbatim}
 {\bf Input:}
 \begin{itemize}
-	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$. To use a homogeneous case, supply $b=0$.
+	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
+	\item the map {\it can be homogeneous,} simply supply a matrix $b_{ki}=0$ with an appropriate dimension
 	\item {\it (optional)} a point $y\in G$,
 	\item {\it (optional)} number of iterations $k$.
 \end{itemize}
@@ -284,7 +289,7 @@ This function calls {\tt get\_c\_minus} and returns  {\tt is\_nonconvex}=$1$ if 
 
 {\bf Input:}
 \begin{itemize}
-	\item matrices $A_k$
+	\item matrices $A_k$ defining a non-homogeneous or homogeneous map,
 	\item {\it (optional)} number of iterations $k$
 	\item {\it (optional)} binary variable {\tt DEBUG} that =1/0 that turns on/off the verbose output.
 \end{itemize}
@@ -306,6 +311,7 @@ z_max = get_z_max(A, b, c_plus, [z_max_guess], [k], [DEBUG])
 {\bf Input:}
 \begin{itemize}
 	\item the map $f$ specified by matrices $A_k$ and vectors $b_k$,
+	\item the map {\bf cannot be homogeneous} for this function since the convex subpart should be more complex than the cut with a hyperplane in homogeneous case,
 	\item a vector $c_+$ such that $c_+\cdot A\succeq 0$,
 	\item {\it (optional)}  guess value  $z^{\rm guess}_{\rm max}$,
 	\item {\it (optional)} the number of iterations $k$,
