@@ -7,11 +7,11 @@ cd(fileparts(which(mfilename)));
 load('./maps/article_example02_R3_R3.mat');
 
 disp('1. The map R3->R3');
-for i = 1:n
+for i = 1:m
     fprintf('A_%d = %s\n', i, mat2str(A(:, :, i)));
 end
 
-for i = 1:n
+for i = 1:m
     fprintf('b_%d = %s\n', i, mat2str(b(:, i)));
 end
 
