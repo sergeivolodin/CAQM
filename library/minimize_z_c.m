@@ -69,12 +69,26 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
 
         % checking if z is too big
         if abs(z) >= eps_z
-            error('Gradient descent finished: z(c) value too big');
+            if DEBUG
+                disp('Gradient descent finished: z(c) value too big');
+            end
+            break;
         end
         
-        % check for rank(Q) == n - 1
-        if ~(rank(Q, eps_rank) == n - 1)
-            error('Gradient descent finished: rankQ < n - 1');
+        % check for rank(Q) == n - 1 in real case
+        if ~(rank(Q, eps_rank) == n - 1) && is_real
+            if DEBUG
+                disp('Gradient descent finished: rankQ != n - 1');
+            end
+            break;
+        end
+
+        % check for rank(Q) == n - 2 in complex case
+        if ~(rank(Q, eps_rank) == n - 2) && ~is_real
+            if DEBUG
+                disp('Gradient descent finished: rankQ != n - 2');
+            end
+            break;
         end
 
         % distance to c_minus (b_c, x_0)
