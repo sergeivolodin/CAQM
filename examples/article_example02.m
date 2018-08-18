@@ -16,7 +16,6 @@ for i = 1:m
 end
 
 %%
-
 fprintf('2. c_+ = %s\n', mat2str(c_plus));
 
 %%
