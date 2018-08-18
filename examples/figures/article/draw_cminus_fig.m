@@ -49,7 +49,7 @@ function draw_cminus_fig(N, item_size, c_array, z_value, c_ans, c_plus, z_min, z
     set(s, 'FaceColor', [0 0 0], 'FaceAlpha', 0.05);
     set(s, 'EdgeColor', [0 0 0], 'EdgeAlpha', 0.1)
 
-    [~, objh] = legend([plot_path, plot_gd, plot_end, plot_begin, plot_dest], {'Path', 'Gradient Descent point', 'End (minimize)', 'Start point (certificate)', 'Global minimum'});
+    [~, objh] = legend([plot_gd, plot_end, plot_begin, plot_dest], {'Gradient Descent point', 'GD End', 'Start point (certificate)', 'Global minimum'});
     
     % increasing marker size for legend
     for i = 1:length(objh)
