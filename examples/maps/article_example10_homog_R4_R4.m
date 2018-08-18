@@ -22,7 +22,7 @@ A(:, :, 4) = eye(4);
 b = zeros(4);
 
 %% calculating c_plus
-c_plus = get_c_plus(A);
+c_plus = [0 0 0 1]';
 disp('=== c_plus:');
 disp(c_plus');
 

@@ -1,22 +1,15 @@
-%% dimensions
 clear all;
-n = 4;
-m = 4;
 
-% fixing the random seed
-rng(47, 'twister');
+% changing cwd to directory of .m file
+cd(fileparts(which(mfilename)));
 
-% defining A matrices
-A(:, :, 1) = [0 1 0 0; 1 0 0 0; 0 0 0 1; 0 0 1 0];
-A(:, :, 2) = [0 0 1 0; 0 2 0 1; 1 0 2 0; 0 1 0 0];
-A(:, :, 3) = [0 0 0 1; 0 -1 1 0; 0 1 1 0; 1 0 0 0];
-A(:, :, 4) = eye(4);
+% loading map
+load('./maps/article_example10_homog_R4_R4.mat');
 
-% homogeneous map, therefore b = 0
-b = zeros(4);
+% some fixed random seed
+rng(42);
 
-%% calculating c_plus
-c_plus = get_c_plus(A);
+%% showing c_plus
 disp('=== c_plus:');
 disp(c_plus');
 
