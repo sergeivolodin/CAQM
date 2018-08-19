@@ -103,6 +103,39 @@ end
 % obtain z(c) for given c
 [z_value, c_ans, z_min, z_max, i_min, j_min] = get_z_array(A_, b_, c_array, item_size);
 
+% saving data
+save('example06_c_minus.mat', 'N', 'item_size', 'c_array', 'z_value', 'c_ans', 'c_plus', 'z_min', 'z_max');;
+
 %% plot the results
+% draw c_minus (gradient)
+hold on;
+load('example06_c_minus.mat');
 draw_cminus_fig(N, item_size, c_array, z_value, c_ans, c_plus, z_min, z_max)
+
+% draw c_dot
+load('example06_c_dot.mat');
+N = size(item_size, 2) / 2;
+for i = 1:(2 * N)
+    % obtaining size and array of cs
+    s = item_size(i);
+    c_item_array = [];
+
+    c_item_array(:, :) = c_array(i, :, 1:s);
+
+    % projecting in 3D
+    v = R * c_item_array;
+
+    % renormalizing c
+    for j = 1:size(v, 2)
+        v(:, j) = v(:, j) / norm(v(:, j));
+    end
+
+    % plotting path
+    plot_path = scatter3(v(1, :), v(2, :), v(3, :), 5, 'green');
+end
+
+[LEGH, OBJH, OUTH, OUTM] = legend; % reading handles
+LEGH = legend([OUTH; plot_path], OUTM{:}, 'Whole branch', 'Location','northeast'); % append new plot
+
+% fix view for the article
 view(-37, 0);
