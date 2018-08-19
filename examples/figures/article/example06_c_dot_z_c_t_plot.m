@@ -8,7 +8,7 @@ N = size(item_size, 2) / 2;
 %% plotting z(c(t))
 
 % coefficient for removing too large z (see code below)
-z_multiplier = 10;
+z_multiplier = 2.1;
 
 % array for all t
 all_t = [];
@@ -54,6 +54,7 @@ for i = 1:(2 * N)
     % removing too large values z
     % criteria: z < median(z) * multiplier
     z_threshold = median(z_item_value_orig) * z_multiplier;
+    disp(median(z_item_value_orig));
     
     % need to stop plotting at s_curve to remove too large z
     [~, s_curve] = max(z_item_value_orig > z_threshold);
@@ -102,6 +103,8 @@ for i = 1:(2 * N)
         all_z = [];
     end
 end
+
+ylim([0 0.4]);
 
 [~, objh] = legend([curves(1), curves(2), min_points(1)], {'Branch 1', 'Branch 2', ...
     sprintf('Minimum for branch')});

@@ -135,7 +135,7 @@ for i = 1:(2 * N)
 end
 
 [LEGH, OBJH, OUTH, OUTM] = legend; % reading handles
-LEGH = legend([OUTH; plot_path], OUTM{:}, 'Whole branch', 'Location','northeast'); % append new plot
+LEGH = legend([OUTH; plot_path], OUTM{:}, 'Whole branch', 'Location','southeast'); % append new plot
 
 % fix view for the article
-view(-37, 0);
+view(-42, 5);
