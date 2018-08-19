@@ -105,12 +105,12 @@ end
 [z_value, c_ans, z_min, z_max, i_min, j_min] = get_z_array(A_, b_, c_array, item_size);
 
 % saving data
-save('example05_R4_R4_c_minus.mat', 'N', 'item_size', 'c_array', 'z_value', 'c_ans', 'c_plus', 'z_min', 'z_max');;
+save('example05_c_minus.mat', 'N', 'item_size', 'c_array', 'z_value', 'c_ans', 'c_plus', 'z_min', 'z_max');;
 
 %% plot the results
 % draw c_minus (gradient)
 hold on;
-load('example05_R4_R4_c_minus.mat');
+load('example05_c_minus.mat');
 draw_cminus_fig(N, item_size, c_array, z_value, c_ans, c_plus, z_min, z_max)
 
 % draw c_dot

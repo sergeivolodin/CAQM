@@ -305,4 +305,4 @@ for i = 1:(2 * N)
     end
 end
 
-%save('example06_c_dot.mat', 'A_', 'b_', 'c_plus', 'c_array', 'item_size', 'A', 'b', 'c_start', 'z_value', 'R', 'v');
+save('example06_c_dot.mat', 'A_', 'b_', 'c_plus', 'c_array', 'item_size', 'A', 'b', 'c_start', 'z_value', 'R', 'v');
