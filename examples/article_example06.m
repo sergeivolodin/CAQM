@@ -21,12 +21,10 @@ rng(rand_seed);
 fprintf('3. Random seed set to %d\n', rand_seed);
 
 %%
-c_plus = get_c_plus(A, 10, 1);
-
 fprintf('2. c_+ = %s\n', mat2str(c_plus));
 
 %%
 fprintf('4. Finding convex cut\n');
-z_max = get_z_max(A, b, c_plus, 10, 100, 1);
+z_max = get_z_max(A, b, c_plus, 10, 500, 1);
 
 fprintf('Result: convex cut of size %f\n', z_max);

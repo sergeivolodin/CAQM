@@ -21,8 +21,6 @@ rng(rand_seed);
 fprintf('3. Random seed set to %d\n', rand_seed);
 
 %%
-c_plus = [1, 0, 0, 0]';
-
 fprintf('2. c_+ = %s\n', mat2str(c_plus));
 
 %%
