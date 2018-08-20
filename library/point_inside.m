@@ -6,5 +6,5 @@ function y = point_inside(A, b, c_plus, z)
 
 %% initialization
     x = -pinv(get_Ac(A, c_plus)) * (b * c_plus);
-    y = quadratic_map(A, b, x) - z * c_plus;
+    y = quadratic_map(A, b, x) + z * c_plus;
 end
