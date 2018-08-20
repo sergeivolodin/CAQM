@@ -4,32 +4,36 @@ clear all;
 cd(fileparts(which(mfilename)));
 
 % loading map
-load('../../maps/article_example06_R4_R4.mat');
+load('../../maps/article_example05_R4_R4.mat');
 
-z_array = linspace(0, 0.1, 10);
+z_array = linspace(0, 0.01, 10);
 
 [A_, b_, ~, y0] = change_basis(A, b, c_plus);
 
-load('../../maps/article_example06_R4_R4.mat');
 rng(10);
-c_plus = get_max_c_plus(A);
-for i = 1:100
-rng(i);
-z_max = get_z_max(A, b, c_plus, 0.1, 10);
-if z_max < Inf
-    disp(i);
-    break
-end
-end
+trials = 1500;
 
-return;
+ncvx=[];
 
 for z = z_array
-    disp(z);
-    y = point_inside(A_, b_, c_plus, z);
-    try
-        c = get_c_minus(A_, b_, y, 1, 0);
-    catch
-        c = [];
+    % WHY works  only with "-z"???!
+    y = point_inside(A_, b_, c_plus, -z);
+    
+    ncvx_this = [];
+    
+    for i=1:trials
+        try
+            c = get_c_minus(A_, b_, y, 1, 0);
+            ncvx_this(:, end + 1) = c;
+            %fprintf('!');
+        catch
+            c = [];
+            %fprintf('X');
+        end
     end
+    ncvx(end + 1) = size(ncvx_this, 2);
+    fprintf(' z=%6f ncvx=%d\n', z, ncvx(end));
 end
+
+%%
+save('results_neg.mat', 'ncvx', 'z_array', 'trials');
