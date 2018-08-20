@@ -1,4 +1,4 @@
-function x = get_x(A, b, c)
+function x = boundary_point(A, b, c)
 %% Helper functions which returns
 %% pre-image of a point in dF_c
 
