@@ -16,8 +16,7 @@ trials = 1500;
 ncvx=[];
 
 for z = z_array
-    % WHY works  only with "-z"???!
-    y = point_inside(A_, b_, c_plus, -z);
+    y = point_inside(A_, b_, c_plus, z);
     
     ncvx_this = [];
     
