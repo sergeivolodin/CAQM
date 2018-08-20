@@ -13,7 +13,7 @@ function r = is_nonconvex(A, b, c, check_f1_f2)
     end
 
     % tolerance for lambda_min = 0
-    eps0 = 1e-7;
+    eps0 = 1e-10;
 
     n = size(A, 1);
     m = size(A, 3);
