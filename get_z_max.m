@@ -102,9 +102,6 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
 %% basis: c_+A=I, c_+b=0
     [A_, b_, ~, y0] = change_basis(A, b, c_plus);
 
-%% new y0 for A_, b_
-    y = y - y0;
-
 %% resulting variables
     % resulting z
     z_array = Inf(k + 1, 1);
@@ -122,8 +119,10 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
 
     % m dimension
     m = size(A, 3);
+
     % H from article
-    H = get_H(A_, b_);
+    % Using original map to avoid precision loss caused by change_basis()
+    H = get_H(A, b);
 
     % vectors d
     D = randn(m, k);
@@ -169,7 +168,7 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
         else
             c = get_c_d(D(:, i));
         end
-        if norm(c) > 0 && is_nonconvex(A_, b_, c)
+        if norm(c) > 0 && is_nonconvex(A, b, c)
             c = c / norm(c);
             found = found + 1;
             c_array(:, i) = c;
