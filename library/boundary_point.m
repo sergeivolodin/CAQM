@@ -18,7 +18,7 @@ function x = boundary_point(A, b, c)
     [~,p] = chol(Ac);
     if p == 1
         % if not, dF_c is empty
-        error('f(x) is NOT a boundary point\n');
+        fprintf('f(x) might NOT be a boundary point');
     end
 
     % checking degeneracy
