@@ -150,10 +150,12 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
         is_parallel = 0;
     end
 
-    if is_parallel
-        fprintf('C_- search: Using parallel mode\n');
-    else
-        fprintf('C_- search: Using non-parallel mode\n');
+    if DEBUG
+        if is_parallel
+            fprintf('C_- search: Using parallel mode\n');
+        else
+            fprintf('C_- search: Using non-parallel mode\n');
+        end
     end
 
     if is_parallel
