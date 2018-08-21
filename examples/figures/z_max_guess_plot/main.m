@@ -6,33 +6,54 @@ cd(fileparts(which(mfilename)));
 % loading map
 load('../../maps/article_example05_R4_R4.mat');
 
-z_array = linspace(0, 0.01, 10);
+% name for the output file
+name = 'big';
 
-[A_, b_, ~, y0] = change_basis(A, b, c_plus);
-
-rng(10);
+% number of trials per one z
 trials = 1500;
 
-ncvx=[];
+% array of zs (change with name)
+z_array = linspace(-1, 10, 20);
 
+%% fixing the random seed
+rng(10);
+
+% array of number of nonconvexities
+ncvx = [];
+
+% array with nonconvexities
+ncvx_c = [];
+
+% loop over z values
 for z = z_array
-    y = point_inside(A_, b_, c_plus, z);
+    % point y_boundary + z * c_plus
+    y = point_inside(A, b, c_plus, z);
     
+    % nonconvexities for this y
     ncvx_this = [];
     
-    for i=1:trials
+    % loop over trials
+    for i = 1:trials
+        % trying to get a nonconvexity
         try
-            c = get_c_minus(A_, b_, y, 1, 0);
+            c = get_c_minus(A, b, y, 1, 0);
+
+            % saving it if found
             ncvx_this(:, end + 1) = c;
-            %fprintf('!');
         catch
             c = [];
-            %fprintf('X');
         end
     end
+
+    % saving the size of nonconvexities
     ncvx(end + 1) = size(ncvx_this, 2);
+
+    % displaying the number of nonconvexities for this z
     fprintf(' z=%6f ncvx=%d\n', z, ncvx(end));
 end
 
-%%
-save('results_neg.mat', 'ncvx', 'z_array', 'trials');
+% saving data
+save(sprintf('results_%s.mat', name), 'ncvx', 'z_array', 'trials');
+
+%% plotting the array
+scatter(z_array, ncvx);
