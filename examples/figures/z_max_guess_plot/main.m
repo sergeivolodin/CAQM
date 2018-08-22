@@ -7,13 +7,13 @@ cd(fileparts(which(mfilename)));
 load('../../maps/article_example05_R4_R4.mat');
 
 % name for the output file
-name = 'big';
+name = 'bigger';
 
 % number of trials per one z
-trials = 1500;
+trials = 500;
 
 % array of zs (change with name)
-z_array = linspace(-1, 10, 20);
+z_array = linspace(0, 100, 10);
 
 %% fixing the random seed
 rng(10);
