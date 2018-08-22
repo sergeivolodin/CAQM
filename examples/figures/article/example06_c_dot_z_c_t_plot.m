@@ -87,15 +87,15 @@ for i = 1:(2 * N)
         [value, idx] = min(all_z);
         
         plot_line = plot(all_t, all_z);
-        plot_min = plot(all_t(idx), all_z(idx), 'p', 'MarkerSize', 20, 'color', 'red');
+        plot_min = plot(all_t(idx), all_z(idx), '.', 'MarkerSize', 20, 'color', 'red');
         
-        text(all_t(idx), all_z(idx) + 0.001, sprintf('    z=%6f', min(all_z)));
+        text(all_t(idx), all_z(idx) + 0.001, sprintf('    z=%.4f', min(all_z)));
         
         curves(end + 1) = plot_line;
         min_points(end + 1) = plot_min;
         min_values(end + 1) = min(all_z);
         
-        title('$z(c(t))$ curves for branches', 'Interpreter', 'latex');
+        title('$z(c(t))$ curves for connected components', 'Interpreter', 'latex');
         xlabel('t', 'Interpreter', 'latex');
         ylabel('$z(c(t))$', 'Interpreter', 'latex');
         
@@ -106,8 +106,8 @@ end
 
 ylim([0 0.4]);
 
-[~, objh] = legend([curves(1), curves(2), min_points(1)], {'Branch 1', 'Branch 2', ...
-    sprintf('Minimum for branch')});
+[~, objh] = legend([curves(1), curves(2), min_points(1)], {'Connected component 1', 'Connected component 2', ...
+    'Minimum for connected component'});
 
 for h = 1:length(objh)
     if size(objh(h).Children) == 0

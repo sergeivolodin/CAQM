@@ -135,7 +135,22 @@ for i = 1:(2 * N)
 end
 
 [LEGH, OBJH, OUTH, OUTM] = legend; % reading handles
-LEGH = legend([OUTH; plot_path], OUTM{:}, 'Whole branch', 'Location','southeast'); % append new plot
+[~, objh] = legend([OUTH; plot_path], OUTM{:}, 'Connected components', 'Location', 'southeast'); % append new plot
+
+leg_size_hack = [8 16 16 8 8];
+s = 1;
+
+for h = 1:length(objh)
+    disp(length(objh));
+    if size(objh(h).Children) == 0
+        continue
+    end
+    child = objh(h).Children(1);
+    if isprop(child, 'MarkerSize')
+        objh(h).Children(1).MarkerSize = leg_size_hack(s);
+        s = s + 1;
+    end
+end
 
 % fix view for the article
-view(-42, 5);
+view(3, 55);
