@@ -44,8 +44,6 @@ end
 
 %% zmax
 disp('=== z_max');
-% Warning: get_z_max doesn't work for homogeneous cases yet.
-disp('z_max search for continuous homogeneous cases is not implemented yet');
-%z_max_guess = 0.1;
-%z_max = get_z_max(A, b, c_plus, z_max_guess, 100, 1);
-%fprintf('Search finished. z_max=%.15f\n', z_max);
+
+% Warning: get_z_max doesn't work for homogeneous cases
+disp('Cutting convex subparts of homogeneous maps is not considered for this library.');
