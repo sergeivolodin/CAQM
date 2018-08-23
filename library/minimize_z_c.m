@@ -75,18 +75,10 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
             break;
         end
         
-        % check for rank(Q) == n - 1 in real case
-        if ~(rank(Q, eps_rank) == n - 1) && is_real
+        % check for rank(Q) == n - 1
+        if ~(rank(Q, eps_rank) == n - 1)
             if DEBUG
-                fprintf('Gradient descent finished: rankQ != n - 1; z=%f\n', z);
-            end
-            break;
-        end
-
-        % check for rank(Q) == n - 2 in complex case
-        if ~(rank(Q, eps_rank) == n - 2) && ~is_real
-            if DEBUG
-                fprintf('Gradient descent finished: rankQ != n - 2; z=%f\n', z);
+                fprintf('Gradient descent finished: %d = rankQ != n - 1 = %d; z=%f\n', rank(Q, eps_rank), n - 1, z);
             end
             break;
         end
