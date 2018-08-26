@@ -105,7 +105,7 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
         
         % intermediate result
         if DEBUG
-            fprintf('Gradient descent cosRe=%.5f cosIm=%.5f grad_tan=%.2f |Q|=%.2f RgQ=%d z=%.4f lam=%.2f dist=%.2f beta=%.2f\n', ...
+            fprintf('Gradient descent cosRe=%.5f cosIm=%.5f grad_tan=%.5f |Q|=%.2f RgQ=%d z=%.6f lam=%.2f dist=%.10f beta=%.10f\n', ...
                 abs(cos_theta), abs(cos_theta_1), norm(dz_dc_tangent),...
                 norm(Q_inv), rank(Q, eps_rank), z, lambda, abs(c_minus_distance), beta);
         end
@@ -137,6 +137,9 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
         dz_dc_tangent = dz_dc_tangent / norm(dz_dc_tangent);
         
         c_new = [];
+
+        % found a new c?
+        new_c_found = 0;
         
         % cycle over beta
         while abs(beta) >= beta_min
@@ -158,6 +161,7 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
                 % and if c_new is not too far from c
                 if ((z_new - z) * beta < 0) && ...
                     cminus_distance(c_new, c_plus, c) <= max_step
+                    new_c_found = 1;
                     break;
                 end
             catch
@@ -169,10 +173,20 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
             beta = beta * theta;
         end
         
+        % projection succeeded but the constraints were not met
+        if new_c_found == 0
+            if DEBUG
+                disp('Gradient descent finished: projection leads too far or the value of z(c) increased');
+            end
+            break;
+        end
         
         % projection failed for all beta
         if size(c_new, 1) == 0
-            error('Gradient descent finished: Projection failed');
+            if DEBUG
+                disp('Gradient descent finished: Projection failed');
+            end
+            break;
         end
         
         c = c_new;
