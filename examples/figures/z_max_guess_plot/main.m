@@ -4,16 +4,16 @@ clear all;
 cd(fileparts(which(mfilename)));
 
 % loading map
-load('../../maps/article_example05_R4_R4.mat');
+load('../../maps/article_example06_R4_R4.mat');
 
 % name for the output file
-name = 'bigger4';
+name = 'sz0.6_ex06';
 
 % number of trials per one z
-trials = 1500;
+trials = 500;
 
 % array of zs (change with name)
-z_array = linspace(0, 500000, 30);
+z_array = linspace(0, 0.6, 10);
 
 %% fixing the random seed
 rng(10);
@@ -56,4 +56,4 @@ end
 save(sprintf('results_%s.mat', name), 'ncvx', 'z_array', 'trials');
 
 %% plotting the array
-scatter(z_array, ncvx);
+scatter(z_array, ncvx / trials);
