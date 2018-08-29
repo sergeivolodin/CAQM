@@ -78,7 +78,7 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
         % checking for dimensionality
         if (is_real && m <= 3) || (~is_real && m <= 4)
             if DEBUG
-                fprintf('Gradient descent impossible: discrete C_-\n', z);
+                fprintf('Gradient descent unnecessary: discrete C_-\n', z);
             end
             break;
         end
