@@ -98,7 +98,7 @@ for z_min = reshape(z_min_array, 1, [])
 end
 
 %%
-precision = 0.02;
+precision = 0.01;
 unique_z = uniquetol(z_nonzero, precision);
 
 figure;
