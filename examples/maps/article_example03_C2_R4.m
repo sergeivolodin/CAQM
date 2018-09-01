@@ -22,7 +22,7 @@ b(:, 2) = [0     0]';
 b(:, 3) = [-0.5-0.5i  0]';
 b(:, 4) = [0     0]';
 
-c_plus = [1 0 1 0]' / sqrt(2);
+c_plus = [1 1 0 0]' / sqrt(2);
 
 %% saving results
 save('article_example03_C2_R4.mat', 'A', 'b', 'n', 'm', 'is_complex', 'c_plus');
