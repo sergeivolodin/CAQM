@@ -131,13 +131,17 @@ for i = 1:(2 * N)
     end
 
     % plotting path
-    plot_path = scatter3(v(1, :), v(2, :), v(3, :), 5, 'green');
+    plot_path = line(v(1, :), v(2, :), v(3, :), 'Color', 'green', 'LineWidth', 2);
+    
+    if mod(i, 2) == 0
+        text(mean(v(1, :)) - 0.5, mean(v(2, :)) + 0.9, mean(v(3, :)), sprintf('Connected component %d', i / 2))
+    end
 end
 
 [LEGH, OBJH, OUTH, OUTM] = legend; % reading handles
 [~, objh] = legend([OUTH; plot_path], OUTM{:}, 'Connected components', 'Location', 'southeast'); % append new plot
 
-leg_size_hack = [8 16 16 8 8];
+leg_size_hack = [16 16 16 8 8];
 s = 1;
 
 for h = 1:length(objh)
