@@ -312,7 +312,7 @@ z_max = get_z_max(A, b, c_plus, [z_max_guess], [k], [DEBUG])
 	\item {\it (optional)}  binary variable {\tt DEBUG} that =1/0 that turns on/off the verbose output.
 \end{itemize}
 {\bf Output:} finds and returns maximal value $z_{\max}$ such that the compact part of $F$ "cut" by the hyperplane  $c_+ \cdot (y-y_0)=z_{\max}$, where $y_0\in \partial F_{c_+}$, is  likely convex. \\
-{\bf Exception:} produces an exception if non-convexity of $F$ confined within the half-plane $c_+ \cdot (y-y_0)\leq z^{\rm guess}_{\rm max}$  has not been established.
+{\bf Exception:} produces an exception if non-convexity of $F$ confined within the half-plane $c_+ \cdot (y-y_0)\leq z^{\rm guess}_{\rm max}$ has not been established, or if $c_+\cdot A\nsucc 0$
 
 \begin{figure}[H]
 	\centering\includegraphics[width=100pt]{fig/get_z_max}
