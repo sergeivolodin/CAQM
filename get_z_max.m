@@ -96,6 +96,9 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
         DEBUG = 0;
     end
 
+    % checking if c_plus * A > 0
+    assert(is_c_plus(A, c_plus), 'c_plus * A must be > 0');
+
 %%
     y = point_inside(A, b, c_plus, z_max_guess);
 
