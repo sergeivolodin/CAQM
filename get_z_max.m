@@ -105,6 +105,9 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
 %% basis: c_+A=I, c_+b=0
     [A_, b_, ~, y0] = change_basis(A, b, c_plus);
 
+%% checking that the map is non-homogeneous
+    assert(norm(b_) > 0, 'The map must be non-homogeneous to cut convex subparts with a hyperplane');
+
 %% resulting variables
     % resulting z
     z_array = Inf(k + 1, 1);
