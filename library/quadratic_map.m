@@ -1,6 +1,6 @@
 function y = quadratic_map(A, b, x)
 %% y = quadratic_map(A, b, x)
-% calculate y(i) = x'Ax+2b'x
+% calculate y(i) = x'Ax+b'x+x'b
 
 %%
     m = size(A, 3);

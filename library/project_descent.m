@@ -1,6 +1,6 @@
 function [c_new, distance] = project_descent(A, b, c, normal_1, normal_2, DEBUG)
-%% [c_new, lambda] = project(A, b, c, x_0, delta_c, normal, search_area_size)
-% do the projection of point c to c_minus using bisection method
+%% [c_new, distance] = project_descent(A, b, c, normal_1, normal_2, DEBUG)
+% do the projection of point c to c_minus using gradient descent method
 
 %% parameters
 
