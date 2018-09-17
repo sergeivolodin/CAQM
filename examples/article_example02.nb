@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     26009,        764]
-NotebookOptionsPosition[     24536,        712]
-NotebookOutlinePosition[     24874,        727]
-CellTagsIndexPosition[     24831,        724]
+NotebookDataLength[     26105,        767]
+NotebookOptionsPosition[     24634,        715]
+NotebookOutlinePosition[     24972,        730]
+CellTagsIndexPosition[     24929,        727]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -386,14 +386,14 @@ Cell[CellGroupData[{
 Cell[BoxData[
  RowBox[{
   RowBox[{"(*", " ", 
-   RowBox[{"Solution", " ", 
-    RowBox[{"1", "/", "3"}], " ", 
-    RowBox[{"list", ":", " ", 
+   RowBox[{
+    RowBox[{"Solution", " ", 
+     RowBox[{"1", "/", "3"}]}], ":", " ", 
+    RowBox[{
      RowBox[{
-      RowBox[{
-       RowBox[{"INVALID", ".", " ", "Taking"}], " ", "v0", " ", "and", " ", 
-       "normalized", " ", "c_"}], "-"}]}]}], " ", "*)"}], 
-  "\[IndentingNewLine]", 
+      RowBox[{"INVALID", ".", " ", "Taking"}], " ", "v0", " ", "and", " ", 
+      "normalized", " ", "c_"}], "-"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  
   RowBox[{
    RowBox[{
     RowBox[{"V0", "=", 
@@ -425,14 +425,14 @@ Cell[BoxData[
      RowBox[{
       RowBox[{"(", 
        RowBox[{"b", ".", "cminus"}], ")"}], ".", "V0"}], "\[Equal]", "0"}], "//",
-     "Simplify"}], "\n", 
+     "Simplify"}], "\[IndentingNewLine]", 
    RowBox[{"(*", " ", 
     RowBox[{"OK", " ", "Criteria", " ", "part", " ", "2", " ", 
      RowBox[{"(", 
       RowBox[{"v0", " ", "definition"}], ")"}], " ", "v0", " ", "must", " ", 
      "be", " ", "in", " ", "Ker", 
      RowBox[{"(", 
-      RowBox[{"c", "*", "A"}], ")"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"c", "*", "A"}], ")"}]}], " ", "*)"}], "\n", 
    RowBox[{
     RowBox[{
      RowBox[{
@@ -467,7 +467,8 @@ Cell[BoxData[
        "0"}], "]"}], "\[Equal]", "1"}]}]}]}]], "Input",
  CellChangeTimes->{{3.7444435270179873`*^9, 3.74444365017178*^9}, {
   3.7444437100204887`*^9, 3.7444437302551317`*^9}, {3.7462049341102047`*^9, 
-  3.74620513392446*^9}, {3.746205291940589*^9, 3.7462053143264914`*^9}},
+  3.74620513392446*^9}, {3.746205291940589*^9, 3.7462053143264914`*^9}, {
+  3.746206089227889*^9, 3.746206089323457*^9}},
  ExpressionUUID -> "96f3d4a6-6d47-41fb-add0-faee612f080c"],
 
 Cell[BoxData["True"], "Output",
@@ -497,14 +498,14 @@ Cell[CellGroupData[{
 Cell[BoxData[
  RowBox[{
   RowBox[{"(*", " ", 
-   RowBox[{"Solution", " ", 
-    RowBox[{"2", "/", "3"}], " ", 
-    RowBox[{"list", ":", " ", 
+   RowBox[{
+    RowBox[{"Solution", " ", 
+     RowBox[{"2", "/", "3"}]}], ":", " ", 
+    RowBox[{
      RowBox[{
-      RowBox[{
-       RowBox[{"INVALID", ".", " ", "Taking"}], " ", "v0", " ", "and", " ", 
-       "normalized", " ", "c_"}], "-"}]}]}], " ", "*)"}], 
-  "\[IndentingNewLine]", 
+      RowBox[{"INVALID", ".", " ", "Taking"}], " ", "v0", " ", "and", " ", 
+      "normalized", " ", "c_"}], "-"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  
   RowBox[{
    RowBox[{
     RowBox[{"V0", "=", 
@@ -536,14 +537,14 @@ Cell[BoxData[
      RowBox[{
       RowBox[{"(", 
        RowBox[{"b", ".", "cminus"}], ")"}], ".", "V0"}], "\[Equal]", "0"}], "//",
-     "Simplify"}], "\[IndentingNewLine]", 
+     "Simplify"}], "\n", 
    RowBox[{"(*", " ", 
     RowBox[{"OK", " ", "Criteria", " ", "part", " ", "2", " ", 
      RowBox[{"(", 
       RowBox[{"v0", " ", "definition"}], ")"}], " ", "v0", " ", "must", " ", 
      "be", " ", "in", " ", "Ker", 
      RowBox[{"(", 
-      RowBox[{"c", "*", "A"}], ")"}]}], " ", "*)"}], "\n", 
+      RowBox[{"c", "*", "A"}], ")"}]}], " ", "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{
@@ -577,7 +578,8 @@ Cell[BoxData[
          RowBox[{"cminus", ".", "A"}], ")"}], "//", "Eigenvalues"}], ",", 
        "0"}], "]"}], "\[Equal]", "1"}]}]}]}]], "Input",
  CellChangeTimes->{{3.746205232794735*^9, 3.74620523466009*^9}, {
-  3.746205271266827*^9, 3.746205307497726*^9}}],
+  3.746205271266827*^9, 3.746205307497726*^9}, {3.74620609168641*^9, 
+  3.746206091815814*^9}}],
 
 Cell[BoxData["True"], "Output",
  CellChangeTimes->{
@@ -597,14 +599,14 @@ Cell[CellGroupData[{
 Cell[BoxData[
  RowBox[{
   RowBox[{"(*", " ", 
-   RowBox[{"Solution", " ", 
-    RowBox[{"3", "/", "3"}], " ", 
-    RowBox[{"list", ":", " ", 
+   RowBox[{
+    RowBox[{"Solution", " ", 
+     RowBox[{"3", "/", "3"}]}], ":", " ", 
+    RowBox[{
      RowBox[{
-      RowBox[{
-       RowBox[{"VALID", ".", " ", "Taking"}], " ", "v0", " ", "and", " ", 
-       "normalized", " ", "c_"}], "-"}]}]}], " ", "*)"}], 
-  "\[IndentingNewLine]", 
+      RowBox[{"VALID", ".", " ", "Taking"}], " ", "v0", " ", "and", " ", 
+      "normalized", " ", "c_"}], "-"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  
   RowBox[{
    RowBox[{
     RowBox[{"V0", "=", 
@@ -640,14 +642,14 @@ Cell[BoxData[
      RowBox[{
       RowBox[{"(", 
        RowBox[{"b", ".", "cminus"}], ")"}], ".", "V0"}], "\[Equal]", "0"}], "//",
-     "Simplify"}], "\[IndentingNewLine]", 
+     "Simplify"}], "\n", 
    RowBox[{"(*", " ", 
     RowBox[{"OK", " ", "Criteria", " ", "part", " ", "2", " ", 
      RowBox[{"(", 
       RowBox[{"v0", " ", "definition"}], ")"}], " ", "v0", " ", "must", " ", 
      "be", " ", "in", " ", "Ker", 
      RowBox[{"(", 
-      RowBox[{"c", "*", "A"}], ")"}]}], " ", "*)"}], "\n", 
+      RowBox[{"c", "*", "A"}], ")"}]}], " ", "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{
@@ -680,7 +682,8 @@ Cell[BoxData[
         RowBox[{"(", 
          RowBox[{"cminus", ".", "A"}], ")"}], "//", "Eigenvalues"}], ",", 
        "0"}], "]"}], "\[Equal]", "1"}]}]}]}]], "Input",
- CellChangeTimes->{{3.746205329467681*^9, 3.746205361966999*^9}}],
+ CellChangeTimes->{{3.746205329467681*^9, 3.746205361966999*^9}, {
+  3.746206094037608*^9, 3.746206094157076*^9}}],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -711,7 +714,7 @@ Cell[BoxData[
  ExpressionUUID -> "1ee14b68-b15a-4c39-baee-bec7a7673b74"]
 },
 WindowSize->{715, 707},
-WindowMargins->{{52, Automatic}, {Automatic, 15}},
+WindowMargins->{{42, Automatic}, {Automatic, -8}},
 FrontEndVersion->"10.0 for Linux x86 (64-bit) (September 9, 2014)",
 StyleDefinitions->"Default.nb"
 ]
@@ -729,10 +732,10 @@ Notebook[{
 Cell[558, 20, 2678, 80, 172, "Input"],
 Cell[CellGroupData[{
 Cell[3261, 104, 369, 6, 92, "Input"],
-Cell[3633, 112, 869, 23, 74, "Output"],
-Cell[4505, 137, 912, 25, 74, "Output"],
-Cell[5420, 164, 1011, 29, 110, "Output"],
-Cell[6434, 195, 932, 26, 110, "Output"]
+Cell[3633, 112, 869, 23, 60, "Output"],
+Cell[4505, 137, 912, 25, 60, "Output"],
+Cell[5420, 164, 1011, 29, 96, "Output"],
+Cell[6434, 195, 932, 26, 96, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[7403, 226, 785, 21, 72, "Input"],
@@ -747,25 +750,25 @@ Cell[10334, 313, 1329, 35, 92, "Input"],
 Cell[11666, 350, 1263, 30, 72, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[12966, 385, 3093, 85, 252, "Input"],
-Cell[16062, 472, 355, 5, 31, "Output"],
-Cell[16420, 479, 357, 5, 31, "Output"],
-Cell[16780, 486, 356, 5, 31, "Output"]
+Cell[12966, 385, 3126, 86, 252, "Input"],
+Cell[16095, 473, 355, 5, 31, "Output"],
+Cell[16453, 480, 357, 5, 31, "Output"],
+Cell[16813, 487, 356, 5, 31, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[17173, 496, 2934, 83, 252, "Input"],
-Cell[20110, 581, 124, 2, 31, "Output"],
-Cell[20237, 585, 122, 2, 31, "Output"],
-Cell[20362, 589, 123, 2, 31, "Output"]
+Cell[17206, 497, 2966, 84, 252, "Input"],
+Cell[20175, 583, 124, 2, 31, "Output"],
+Cell[20302, 587, 122, 2, 31, "Output"],
+Cell[20427, 591, 123, 2, 31, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[20522, 596, 3028, 86, 272, "Input"],
-Cell[23553, 684, 189, 4, 31, "Output"],
-Cell[23745, 690, 99, 1, 31, "Output"],
-Cell[23847, 693, 99, 1, 31, "Output"],
-Cell[23949, 696, 97, 1, 31, "Output"]
+Cell[20587, 598, 3061, 87, 272, "Input"],
+Cell[23651, 687, 189, 4, 31, "Output"],
+Cell[23843, 693, 99, 1, 31, "Output"],
+Cell[23945, 696, 99, 1, 31, "Output"],
+Cell[24047, 699, 97, 1, 31, "Output"]
 }, Open  ]],
-Cell[24061, 700, 471, 10, 52, "Input"]
+Cell[24159, 703, 471, 10, 52, "Input"]
 }
 ]
 *)
