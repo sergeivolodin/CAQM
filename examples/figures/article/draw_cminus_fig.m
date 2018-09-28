@@ -32,8 +32,6 @@ function draw_cminus_fig(N, item_size, c_array, z_value, c_ans, c_plus, z_min, z
             v(:, j) = v(:, j) / norm(v(:, j));
         end
 
-        plot_path = plot3([v(1, 1) v(1, end)], [v(2, 1) v(2, end)], [v(3, 1), v(3, end)], '--', 'Color', [0.7 0.7 0.7]');
-
 %        plot_gd = scatter3(v(1, 2:end-1), v(2, 2:end-1), v(3, 2:end-1), 36, ...
 %            c_item_color(:, 2:end-1)', 'd');
         plot_end = scatter3(v(1, end), v(2, end), v(3, end), 1500, c_item_color(:, end)', '.');
@@ -49,7 +47,7 @@ function draw_cminus_fig(N, item_size, c_array, z_value, c_ans, c_plus, z_min, z
     set(s, 'FaceColor', [0 0 0], 'FaceAlpha', 0.05);
     set(s, 'EdgeColor', [0 0 0], 'EdgeAlpha', 0.1)
 
-    [~, objh] = legend([plot_end, plot_begin, plot_dest, plot_path], {'End of Gradient Descent', 'Start of G. D. (certificate)', 'Global minimum', 'End for each G.D. start'});
+    [~, objh] = legend([plot_end, plot_begin, plot_dest], {'End of Gradient Descent', 'Start of G. D. (certificate)', 'Global minimum'});
     
     % increasing marker size for legend
     for i = 1:length(objh)
