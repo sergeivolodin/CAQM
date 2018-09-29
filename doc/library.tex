@@ -1,5 +1,5 @@
 \documentclass[a4paper]{article}
-\usepackage[a4paper, left=25mm, right=25mm, top=25mm, bottom=25mm, landscape]{geometry}
+\usepackage[a4paper, left=25mm, right=25mm, top=8mm, bottom=8mm, landscape]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{indentfirst}
 \usepackage{amsmath}
@@ -14,7 +14,12 @@
 
 \begin{document}
 \maketitle
-\begin{tabular}{|p{28mm}|c|p{50mm}|c|p{30mm}|c|}
+
+\section{Additional functions in {\rm library/}}
+
+\renewcommand{\arraystretch}{1.8}
+\hspace{-3em}
+\begin{tabular}{|p{35mm}|c|p{50mm}|c|p{30mm}|c|}
 	\hline
 	\bf Name & \bf Input & \bf Call & \bf Description & \bf Return value & \bf Exception\\\hline
 	\bf Random map & {Dimensions n, m} & {\tt get\_random\_f(n, m, is\_complex)} & Generates random map $f$ & {\tt [A, b]} & None\\\hline
@@ -36,4 +41,34 @@
 	\end{cases}$ & {\tt [A\_new, b\_new, x0, y0]} & None\\\hline
 	\bf Boundary point $\partial F_c$ & Normal $c$ & {\tt boundary\_point(A, b, c)} & Calculates pre-image $x\colon f(x)\in\partial F_c$ & {\tt [x]} & If $c\cdot A<0$\\\hline
 \end{tabular}
+
+\newpage
+
+\section{Numerical parameters in {\rm library/get\_config.m}}
+
+\hspace{-7em}
+\renewcommand{\arraystretch}{2.2}
+\begin{tabular}{|p{47mm}|p{27mm}|p{34mm}|p{130mm}|c|}
+	\hline
+	\bf Parameter name & \bf Target function & \bf Purpose & \bf Description & \bf Default value\\\hline
+	{\tt Q\_inv\_eps} & {\tt get\_dz\_dc} & Pseudoinverse & Tolerance for {\tt pinv} function for $Q$ matrix & $10^{-5}$ \\\hline
+	{\tt c\_plus\_min\_lambda} & {\tt is\_c\_plus} & $\lambda > 0$ check & Minimal eigenvalue which is still considered $> 0$ & $10^{-4}$ \\\hline
+	{\tt c\_minus\_lambda\_min} & {\tt is\_nonconvex} & $\lambda > 0$ check & Maximal eigenvalue which is still considered to be $0$ & $10^{-7}$ \\\hline
+	{\tt c\_minus\_h\_rank} & {\tt is\_nonconvex} & Rank check & Tolerance for {\tt rank} function in homogeneous case & $10^{-7}$ \\\hline
+	{\tt c\_minus\_ortho} & {\tt is\_nonconvex} & Orthogonality criteria & Maximal value of scalar product of $|x_0^T (c \cdot b)|$ s.t. they are still considered orthogonal & $10^{-7}$ \\\hline
+	{\tt c\_minus\_f1f2rank} & {\tt is\_nonconvex} & Rank check & Tolerance for {\tt rank} function for $f_1 \nparallel f_2$ check & $10^{-7}$ \\\hline
+	{\tt descent\_min\_norm} & {\tt minimize\_z\_c} & Stopping criteria & Minimal norm of a vector (gradient, norm) & $10^{-3}$ \\\hline
+	{\tt descent\_max\_z} & {\tt minimize\_z\_c} & Stopping criteria & Maximal value of $z$ & $10^{9}$ \\\hline
+	{\tt descent\_rank\_Q} & {\tt minimize\_z\_c} & Stopping criteria & Tolerance for {\tt rank(Q)} check & $10^{-5}$ \\\hline
+	{\tt descent\_min\_beta} & {\tt minimize\_z\_c} & Stopping criteria & Minimal step in direction of the gradient & $10^{-15}$ \\\hline
+	{\tt descent\_theta} & {\tt minimize\_z\_c} & Step reduction & Multiplicative factor to reduce beta if projection failed & $0.5$ \\\hline
+	{\tt descent\_max\_cos} & {\tt minimize\_z\_c} & Stopping criteria & Maximal cos between grad and n s.t. they are still considered to be not parallel & $1-10^{-4}$ \\\hline
+	{\tt project\_descent\_max\_dist} & {\tt project\_descent} & Stopping criteria & Maximal tolerable distance to $C_-$ as value of constraint & $10^{-10}$ \\\hline
+	{\tt project\_descent\_min\_alpha} & {\tt project\_descent} & Stopping criteria & Minimal step in the direction of the gradient & $10^{-20}$ \\\hline
+	{\tt project\_descent\_theta} & {\tt project\_descent} & Step reduction & Multiplicative factor to reduce alpha & $0.4$ \\\hline
+	{\tt project\_bisection\_min\_rl} & {\tt project} & Stopping criteria & Minimal value of $|r - l|$ & $10^{-8}$ \\\hline
+	{\tt project\_bisection\_min\_value} & {\tt project} & Stopping criteria & Minimal value of distance to $C_-$ s.t. considered inside this set & $10^{-9}$ \\\hline
+	{\tt project\_bisection\_max\_value} & {\tt project} & Precondition & Maximal value of the initial distance to $C_-$ s.t. projection is not attempted & $10^{-3}$ \\\hline
+\end{tabular}
+
 \end{document}
