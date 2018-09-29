@@ -1,6 +1,8 @@
-# On the feasibility for the system of quadratic equations
+# CAQM: Convexity Analysis of Quadratic Maps
 
-Code for cutting convex parts from a quadratic image
+Code for various tasks for quadratic maps.
+
+See the paper <i>Geometry of quadratic maps via convex relaxation, Anatoly Dymarsky, Elena Gryazina, Sergei Volodin, Boris Polyak, 2018</i>
 
 ## Prerequisites
 * MATLAB
@@ -46,7 +48,10 @@ See [LICENSE.txt](LICENSE.txt)
 * [examples/maps](examples/maps/) -- sample quadratic maps
 * [tests/](tests/) -- code for testing the setup on each machine
 
+## Parameters
+The library contains several numerical constants the purpose of which is described on the second page of the supplementary functions document [doc/library.pdf](doc/library.pdf).
+
 ## Further reading
 Refer to the documentation in [doc/readme.pdf](doc/readme.pdf) and the article
 
-Copyright (c) 2015-2017 Anatoly Dymarsky, Elena Gryazina, Sergei Volodin, Boris Polyak
+Copyright (c) 2015-2018 Anatoly Dymarsky, Elena Gryazina, Sergei Volodin, Boris Polyak
