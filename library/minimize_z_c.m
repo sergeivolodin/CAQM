@@ -9,21 +9,23 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
         DEBUG = 0;
     end
 
+    config = get_config();
+
     % tolerance for ||dz_dc|| =0
-    eps_norm = get_config().descent_min_norm;
+    eps_norm = config.descent_min_norm;
     
     % maximal value for abs(z)
-    eps_z = get_config().descent_max_z;
+    eps_z = config.descent_max_z;
     
     % tolerance for rank(Q) == n - 1
-    eps_rank = get_config().descent_rank_Q;
+    eps_rank = config.descent_rank_Q;
     
     % minimal value for beta
     % after which iterations stop
-    beta_min = get_config().descent_min_beta;
+    beta_min = config.descent_min_beta;
     
     % theta multiplier for beta
-    theta = get_config().descent_theta;
+    theta = config.descent_theta;
     
     %% initializing
     % dimensions
@@ -39,7 +41,7 @@ function [z, c_array, z_array] = minimize_z_c(A, b, c, c_plus, beta_initial, max
     cos_theta_1 = 0;
     
     % thresold value for dz_dc || n
-    cos_theta_max = get_config().descent_max_cos;
+    cos_theta_max = config.descent_max_cos;
 
     % resulting z
     z = inf;

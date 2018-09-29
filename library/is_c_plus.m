@@ -14,5 +14,6 @@ function res = is_c_plus(A, c)
     eigens = eig(get_Ac(A, c));
 
     % calculating result
-    res = (min(eigens > get_config().c_plus_min_lambda) > 0);
+    config = get_config();
+    res = (min(eigens > config.c_plus_min_lambda) > 0);
 end

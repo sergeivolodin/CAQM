@@ -7,20 +7,22 @@ function [c_new, lambda] = project(A, b, c, x_0, delta_c, normal, search_area_si
     if nargin == 7
         DEBUG = 0;
     end
+
+    config = get_config();
     
     % minimal value
     % for r - l
-    min_rl = get_config().project_bisection_min_rl;
+    min_rl = config.project_bisection_min_rl;
     
     % if r - l > min_rl
     % but value < min_value
     % stop
-    min_value = get_config().project_bisection_min_value;
+    min_value = config.project_bisection_min_value;
     
     % if bisection stopped
     % but value > max_value
     % throw error
-    max_value = get_config().project_bisection_max_value;
+    max_value = config.project_bisection_max_value;
     
 %% initialization
 

@@ -8,9 +8,11 @@ function [c_new, distance] = project_descent(A, b, c, normal_1, normal_2, DEBUG)
     normals(:, 1) = normal_1;
     normals(:, 2) = normal_2;
 
-    eps_tolerance = get_config().project_descent_max_dist;
+    config = get_config();
+
+    eps_tolerance = config.project_descent_max_dist;
     
-    alpha_min = get_config().project_descent_min_alpha;
+    alpha_min = config.project_descent_min_alpha;
 
     if nargin == 5
         DEBUG = 0;
@@ -18,7 +20,7 @@ function [c_new, distance] = project_descent(A, b, c, normal_1, normal_2, DEBUG)
     
     alpha = 1;
     
-    theta = get_config().project_descent_theta;
+    theta = config.project_descent_theta;
     
 %% initialization
 

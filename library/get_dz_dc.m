@@ -4,6 +4,8 @@ function [Q, Q_inv, k, v, lambda_min, z, dz_dc, normal_re, normal_im, drho_dc] =
 % also outputs values used in calculation
 
 %%
+    config = get_config();
+
     % dimensions
     n = size(A, 1);
     m = size(A, 3);
@@ -22,7 +24,7 @@ function [Q, Q_inv, k, v, lambda_min, z, dz_dc, normal_re, normal_im, drho_dc] =
 
     % calculating v
     b_c = b * c;
-    Q_inv = pinv(Q, get_config().Q_inv_eps);
+    Q_inv = pinv(Q, config.Q_inv_eps);
     v = Q_inv * b_c;
 
     % z(c)

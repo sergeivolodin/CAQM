@@ -43,14 +43,16 @@ function r = is_nonconvex(A, b, c, check_f1_f2)
     if sum(diag(q2) < 0) > 0
         return
     end
-    
+   
+    config = get_config();
+ 
     % indexes: lambda < eps0
-    inde = find(abs(eig(Ac)) < get_config().c_minus_lambda_min);
+    inde = find(abs(eig(Ac)) < config.c_minus_lambda_min);
 
     % homogeneous case: just checking Rg == n - 2
     % Dropping non-collinearity test
     if norm(b) == 0
-        r = rank(Ac, eps0) == 2;
+        r = rank(Ac, config.c_minus_h_rank) == 2;
         return;
     end
 
@@ -61,7 +63,7 @@ function r = is_nonconvex(A, b, c, check_f1_f2)
         e = q1(:, inde);
         
         % check if b_c \bot e
-        if abs(e' * bc + bc' * e) < get_config().c_minus_ortho
+        if abs(e' * bc + bc' * e) < config.c_minus_ortho
             
             if check_f1_f2 && is_real
                 % e_0 from the article
@@ -77,10 +79,10 @@ function r = is_nonconvex(A, b, c, check_f1_f2)
 
                 if is_real
                     % check in real case: Rg == 2
-                    r = rank([f1'; f2'], get_config().c_minus_f1f2rank) == 2;
+                    r = rank([f1'; f2'], config.c_minus_f1f2rank) == 2;
                 else
                     % check in complex case: Rg >= 2
-                    r = rank([real(f1)'; imag(f1)'; f2'], get_config().c_minus_f1f2rank) >= 2;
+                    r = rank([real(f1)'; imag(f1)'; f2'], config.c_minus_f1f2rank) >= 2;
                 end
             else
                 r = 1;
