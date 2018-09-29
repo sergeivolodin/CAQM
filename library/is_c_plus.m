@@ -13,9 +13,6 @@ function res = is_c_plus(A, c)
     % get eigenvalues
     eigens = eig(get_Ac(A, c));
 
-    % tolerance for being > 0
-    eps = 1e-5;
-
     % calculating result
-    res = (min(eigens > 0.0001) > 0);
+    res = (min(eigens > get_config().c_plus_min_lambda) > 0);
 end

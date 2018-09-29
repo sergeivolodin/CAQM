@@ -10,17 +10,17 @@ function [c_new, lambda] = project(A, b, c, x_0, delta_c, normal, search_area_si
     
     % minimal value
     % for r - l
-    min_rl = 1e-8;
+    min_rl = get_config().project_bisection_min_rl;
     
     % if r - l > min_rl
     % but value < min_value
     % stop
-    min_value = 1e-9;
+    min_value = get_config().project_bisection_min_value;
     
     % if bisection stopped
     % but value > max_value
     % throw error
-    max_value = 1e-3;
+    max_value = get_config().project_bisection_max_value;
     
 %% initialization
 

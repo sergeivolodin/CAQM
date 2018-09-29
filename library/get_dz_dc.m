@@ -22,7 +22,7 @@ function [Q, Q_inv, k, v, lambda_min, z, dz_dc, normal_re, normal_im, drho_dc] =
 
     % calculating v
     b_c = b * c;
-    Q_inv = pinv(Q, 1e-5);
+    Q_inv = pinv(Q, get_config().Q_inv_eps);
     v = Q_inv * b_c;
 
     % z(c)
