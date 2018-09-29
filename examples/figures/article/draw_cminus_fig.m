@@ -47,7 +47,7 @@ function draw_cminus_fig(N, item_size, c_array, z_value, c_ans, c_plus, z_min, z
     set(s, 'FaceColor', [0 0 0], 'FaceAlpha', 0.05);
     set(s, 'EdgeColor', [0 0 0], 'EdgeAlpha', 0.1)
 
-    [~, objh] = legend([plot_end, plot_begin, plot_dest], {'End of Gradient Descent', 'Start of G. D. (certificate)', 'Global minimum'});
+    [~, objh] = legend([plot_end, plot_begin, plot_dest], {'End of Gradient Descent (GD)', 'Stochastic GD start from get\_c\_minus', 'Global minimum'});
     
     % increasing marker size for legend
     for i = 1:length(objh)

@@ -104,7 +104,7 @@ end
 [z_value, c_ans, z_min, z_max, i_min, j_min] = get_z_array(A_, b_, c_array, item_size);
 
 % saving data
-save('example06_c_minus.mat', 'N', 'item_size', 'c_array', 'z_value', 'c_ans', 'c_plus', 'z_min', 'z_max');;
+save('example06_c_minus.mat', 'N', 'item_size', 'c_array', 'z_value', 'c_ans', 'c_plus', 'z_min', 'z_max');
 
 %% plot the results
 % draw c_minus (gradient)
