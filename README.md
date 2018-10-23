@@ -2,7 +2,7 @@
 
 Code for various tasks for quadratic maps.
 
-See the paper <i>Geometry of quadratic maps via convex relaxation, Anatoly Dymarsky, Elena Gryazina, Sergei Volodin, Boris Polyak, 2018</i>
+See the paper <i>Geometry of quadratic maps via convex relaxation, Anatoly Dymarsky, Elena Gryazina, Sergei Volodin, Boris Polyak, 2018</i>, <a href="https://arxiv.org/abs/1810.00896">arXiv:1810:00896</a>
 
 ## Prerequisites
 * MATLAB
