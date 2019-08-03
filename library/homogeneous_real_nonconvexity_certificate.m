@@ -35,8 +35,8 @@ function c = homogeneous_real_nonconvexity_certificate(A)
         error('Not found');
     end
 
-    disp(gam)
-    disp(cvx_status)
+    fprintf('CVX Status: %s\n', cvx_status);
+    fprintf('Gamma: %.5f\n', gam);
      
     c = c;
 end

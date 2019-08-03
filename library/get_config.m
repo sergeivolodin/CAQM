@@ -5,6 +5,9 @@ function config = get_config()
     % Creating empty list
     config = [];
 
+    % is_nonconvex(): treat homogeneous non-convexity certificate as one for image of the unit sphere B_1(0) rather than of the whole space
+    config.homogeneous_sphere_image = false;
+
     % get_dz_dc(): tolerance for pinv() function for Q matrix
     config.Q_inv_eps = 1e-5;
 
