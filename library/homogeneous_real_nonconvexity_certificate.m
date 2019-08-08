@@ -2,7 +2,7 @@ function c = homogeneous_real_nonconvexity_certificate(A)
 %% c = homogeneous_real_nonconvexity_certificate(A)
 % obtain vector c s.t. lambda_min(c*A) -> max
 % and Tr(c*A)=0
-% and c ' * c == 1
+% and sum(c) == 1
 
 %% initializing
     c = [];
@@ -35,8 +35,8 @@ function c = homogeneous_real_nonconvexity_certificate(A)
         error('Not found');
     end
 
-    fprintf('CVX Status: %s\n', cvx_status);
-    fprintf('Gamma: %.5f\n', gam);
+%    fprintf('CVX Status: %s\n', cvx_status);
+%    fprintf('Gamma: %.5f\n', gam);
      
-    c = c;
+%    c = c;
 end

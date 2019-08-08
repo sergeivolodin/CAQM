@@ -14,7 +14,12 @@ for i=imin:imax
     is_deg(i) = is_deg_average(i, i, k);
 end
 
+% saving the result
+save('homogeneous_procedure_H.mat', 'is_deg', 'k');
+
 %% plotting the array
+% loading data
+load('homogeneous_procedure_H.m');
 figure;
 plot(is_deg);
 xlabel('$n=m$','interpreter','latex');
@@ -37,7 +42,6 @@ function res = is_degenerate(n, m)
 %% Is a random n, m map's resulting c give A_c with degenerate smallest eigenvalue?
 
 % loading the example 10 from the Article
-%load('./maps/article_example10_homog_R4_R4.mat');
 [A, b] = get_random_f(n, m, 0);
 
 % tolerance for eigenvalues
