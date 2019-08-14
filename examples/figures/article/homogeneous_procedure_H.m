@@ -21,11 +21,11 @@ save('homogeneous_procedure_H.mat', 'is_deg', 'k');
 % loading data
 load('homogeneous_procedure_H.mat');
 figure;
-plot(is_deg);
-xlabel('$n=m$','interpreter','latex');
+plot(is_deg, 'LineWidth', 2);
+xlabel('$n=m$','interpreter','latex','fontsize', 20);
+ylabel('$P(\#\lambda_{\min}(c_{Procedure}\cdot A_{Gauss})>1|n=m)$','interpreter','latex','fontsize', 15);
 ylim([-0.1, 1.1]);
 xticks(linspace(1, imax, imax));
-title('$P(\#\lambda_{\min}(c_{Procedure}\cdot A_{Gauss})>1|n=m)$ from 100 repetitions','interpreter','latex');
 
 %% Functions
 

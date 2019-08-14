@@ -86,18 +86,24 @@ for i = 1:(2 * N)
         % calculating minimal z value
         [value, idx] = min(all_z);
         
-        plot_line = plot(all_t, all_z);
-        plot_min = plot(all_t(idx), all_z(idx), '.', 'MarkerSize', 20, 'color', 'red');
+        if i / 2 == 1
+            style = '-';
+        else
+            style = '--';
+        end
         
-        text(all_t(idx), all_z(idx) + 0.001, sprintf('    z=%.4f', min(all_z)));
+        plot_line = plot(all_t, all_z, style, 'linewidth', 2);
+        plot_min = plot(all_t(idx), all_z(idx), '.', 'MarkerSize', 40, 'color', 'red');
+        
+        text(all_t(idx), all_z(idx) + 0.001, sprintf('  z=%.4f', min(all_z)), 'fontsize', 20);
         
         curves(end + 1) = plot_line;
         min_points(end + 1) = plot_min;
         min_values(end + 1) = min(all_z);
         
-        title('$z(c(t))$ curves for connected components', 'Interpreter', 'latex');
-        xlabel('t', 'Interpreter', 'latex');
-        ylabel('$z(c(t))$', 'Interpreter', 'latex');
+        %title('$z(c(t))$ curves for connected components', 'Interpreter', 'latex');
+        xlabel('t', 'Interpreter', 'latex', 'fontsize', 20);
+        ylabel('$z(c(t))$', 'Interpreter', 'latex', 'fontsize', 20);
         
         all_t = [];
         all_z = [];
@@ -106,10 +112,15 @@ end
 
 ylim([0 0.4]);
 
-[~, objh] = legend([curves(1), curves(2), min_points(1)], {'Connected component 1', 'Connected component 2', ...
-    'Minimum for connected component'});
+[hleg, objh] = legend([curves(1), curves(2), min_points(1)], {'CC 1', 'CC 2', ...
+    'Minimum for CC'});
+hleg.FontSize = 15;
 
 for h = 1:length(objh)
+    if isprop(objh(h), 'FontSize')
+        objh(h).FontSize = hleg.FontSize - 2;
+    end
+    
     if size(objh(h).Children) == 0
         continue
     end

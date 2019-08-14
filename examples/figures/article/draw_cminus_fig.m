@@ -34,21 +34,22 @@ function draw_cminus_fig(N, item_size, c_array, z_value, c_ans, c_plus, z_min, z
 
 %        plot_gd = scatter3(v(1, 2:end-1), v(2, 2:end-1), v(3, 2:end-1), 36, ...
 %            c_item_color(:, 2:end-1)', 'd');
-        plot_end = scatter3(v(1, end), v(2, end), v(3, end), 1500, c_item_color(:, end)', '.');
-        plot_begin = scatter3(v(1, 1), v(2, 1), v(3, 1), 800, c_item_color(:, 1)', '.');
+        plot_end = scatter3(v(1, end), v(2, end), v(3, end), 100, [1 0 0], 's','LineWidth',1,'MarkerFaceColor',[1 0 0]);
+        plot_begin = scatter3(v(1, 1), v(2, 1), v(3, 1), 300, [1 0.5 0], '>', 'LineWidth',2);
     end
 
     v = R * c_ans;
     v = v / norm(v);
-    plot_dest = scatter3(v(1), v(2), v(3), 1000, [1 0 0], 'p');
+    plot_dest = scatter3(v(1), v(2), v(3), 600, [0 0 1], 'p', 'LineWidth', 3);
 
     [Sx, Sy, Sz] = sphere(32);
     s = surf(Sx,Sy,Sz);
-    set(s, 'FaceColor', [0 0 0], 'FaceAlpha', 0.05);
+    set(s, 'FaceColor', [0 0 0], 'FaceAlpha', 0.1);
     set(s, 'EdgeColor', [0 0 0], 'EdgeAlpha', 0.1)
 
-    [~, objh] = legend([plot_end, plot_begin, plot_dest], {'End of Gradient Descent (GD)', 'Stochastic GD start from get\_c\_minus', 'Global minimum'});
-    
+    [legh, objh] = legend([plot_end, plot_begin, plot_dest], {'GD end', 'GD start', 'Glob. minimum'});
+    legh.FontSize = 13;
+     
     % increasing marker size for legend
     for i = 1:length(objh)
         if size(objh(i).Children) == 0
