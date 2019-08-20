@@ -54,7 +54,7 @@ for i = 1:(2 * N)
     % removing too large values z
     % criteria: z < median(z) * multiplier
     z_threshold = median(z_item_value_orig) * z_multiplier;
-    disp(median(z_item_value_orig));
+    %disp(median(z_item_value_orig));
     
     % need to stop plotting at s_curve to remove too large z
     [~, s_curve] = max(z_item_value_orig > z_threshold);
@@ -92,18 +92,16 @@ for i = 1:(2 * N)
             style = '--';
         end
         
-        plot_line = plot(all_t, all_z, style, 'linewidth', 2);
+        plot_line = plot(all_t, all_z, style, 'linewidth', 3);
         plot_min = plot(all_t(idx), all_z(idx), '.', 'MarkerSize', 40, 'color', 'red');
         
-        text(all_t(idx), all_z(idx) + 0.001, sprintf('  z=%.4f', min(all_z)), 'fontsize', 20);
+        text(all_t(idx), all_z(idx) + 0.02, sprintf('  z=%.4f', min(all_z)), 'fontsize', 20);
         
         curves(end + 1) = plot_line;
         min_points(end + 1) = plot_min;
         min_values(end + 1) = min(all_z);
         
         %title('$z(c(t))$ curves for connected components', 'Interpreter', 'latex');
-        xlabel('t', 'Interpreter', 'latex', 'fontsize', 20);
-        ylabel('$z(c(t))$', 'Interpreter', 'latex', 'fontsize', 20);
         
         all_t = [];
         all_z = [];
@@ -113,12 +111,17 @@ end
 ylim([0 0.4]);
 
 [hleg, objh] = legend([curves(1), curves(2), min_points(1)], {'CC 1', 'CC 2', ...
-    'Minimum for CC'});
-hleg.FontSize = 15;
+    'Minimum for CC'},'location','northwest');
+hleg.FontSize = 20;
+set(gca,'linewidth',1.5);
+ax = gca;
+ax.FontSize = 16; 
+xlim([-6 6]);
+set(hleg.BoxFace, 'ColorType','truecoloralpha', 'ColorData',uint8(255*[1;1;1;.5]));
 
 for h = 1:length(objh)
     if isprop(objh(h), 'FontSize')
-        objh(h).FontSize = hleg.FontSize - 2;
+        objh(h).FontSize = hleg.FontSize - 3;
     end
     
     if size(objh(h).Children) == 0
@@ -129,3 +132,6 @@ for h = 1:length(objh)
         objh(h).Children(1).MarkerSize = 8;
     end
 end
+
+xlabel('t', 'Interpreter', 'latex', 'fontsize', 25);
+ylabel('$z(c(t))$', 'Interpreter', 'latex', 'fontsize', 25);

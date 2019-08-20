@@ -91,18 +91,16 @@ for i = 1:(2 * N)
             style = '--';
         end
         
-        plot_line = plot(all_t, all_z, style, 'linewidth', 2);
+        plot_line = plot(all_t, all_z, style, 'linewidth', 3);
         plot_min = plot(all_t(idx), all_z(idx), '.', 'MarkerSize', 40, 'color', 'red');
         
-        text(all_t(idx), all_z(idx) + 0.001, sprintf('  z=%.4f', min(all_z)), 'fontsize', 20);
+        text(all_t(idx), all_z(idx) + 0.01, sprintf('  z=%.4f', min(all_z)), 'fontsize', 20);
         
         curves(end + 1) = plot_line;
         min_points(end + 1) = plot_min;
         min_values(end + 1) = min(all_z);
         
         %title('$z(c(t))$ curves for connected components', 'Interpreter', 'latex');
-        xlabel('t', 'Interpreter', 'latex', 'fontsize', 20);
-        ylabel('$z(c(t))$', 'Interpreter', 'latex', 'fontsize', 20);
         
         all_t = [];
         all_z = [];
@@ -110,12 +108,17 @@ for i = 1:(2 * N)
 end
 
 [hleg, objh] = legend([curves(1), curves(2), min_points(1)], {'CC 1', 'CC 2', ...
-    'Minimum for CC'});
-hleg.FontSize = 15;
+    'Minimum for CC'},'location','northwest');
+hleg.FontSize = 20;
+set(gca,'linewidth',1.5);
+ax = gca;
+ax.FontSize = 16; 
+xlim([-3 3]);
+set(hleg.BoxFace, 'ColorType','truecoloralpha', 'ColorData',uint8(255*[1;1;1;.5]));
 
 for h = 1:length(objh)
     if isprop(objh(h), 'FontSize')
-        objh(h).FontSize = hleg.FontSize - 2;
+        objh(h).FontSize = hleg.FontSize - 3;
     end
     
     if size(objh(h).Children) == 0
@@ -126,3 +129,6 @@ for h = 1:length(objh)
         objh(h).Children(1).MarkerSize = 12;
     end
 end
+
+xlabel('t', 'Interpreter', 'latex', 'fontsize', 25);
+ylabel('$z(c(t))$', 'Interpreter', 'latex', 'fontsize', 25);
