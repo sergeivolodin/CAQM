@@ -4,7 +4,7 @@
 \usepackage{indentfirst}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{graphicx}
+\usepackage{graphicx,physics}
 \usepackage{float}
 \usepackage{amsthm}
 \usepackage{authblk}
@@ -142,6 +142,10 @@ The full image of $f$ is denoted as $F$,
 	Set of normal vectors $c$, such that $\partial F_c$ is non-convex is denoted as $C_-$,
 	$$C_-=\{c\in\R^m\,\big|\,\mbox{Set }\partial F_c\mbox{ is non-convex}\}$$
 \end{definition}
+\begin{definition}
+	The image of a unit sphere of $f$ is denoted as $H$,
+	$$H=f(\{|x|=1\big|x\in\mathbb V\})\subset \mathbb{R}^m\ .$$
+\end{definition}
 
 \newpage
 
@@ -258,6 +262,23 @@ We note that non-convexity of $\partial F_c$ implies non-convexity of $F$.
 This function stops and returns $c$ if non-convexity of $\partial F_c$ was established during one of the iterations. If the vector $c$ was not found, an exception is produced.
 If $y$ and $k$ are not specified, the function uses default values $y=f(0)=0$ and $k=10$.
 
+\item {\bf "Non-convex direction" for real homogeneous maps and the image of the sphere,}\\\underline{\tt get\_c\_minus\_homog\_real\_H.m}
+\begin{verbatim}
+c = get_c_minus_homog_real_H(A)
+\end{verbatim}
+{\bf Input:} the map $f$ specified by matrices $A_k$\\
+{\bf Output:}  finds and returns vector $c$ such that $\partial H_c$ is non-convex using a deterministic procedure.\\
+{\bf Exception:} this functions throws an exception if such a vector $c$ was not found.
+
+The method implements the following convex problem described in the Appendix B of the Article:
+\begin{align}
+\max ~ \gamma & \nonumber\\
+\sum\limits_{i=1}^mc_i = 1 &\nonumber \\
+\Tr \left(c\cdot A\right) = 0 &\nonumber \\
+c\cdot A \succeq \gamma I &\nonumber 
+\end{align}
+
+The intuition is to increase the smallest eigenvalue, avoiding cases $c=0$ by $\sum c_i=1$. In addition, matrix $c\cdot A$ is required to have both positive and negative eigenvalues by $\Tr (c\cdot A)=0$. By increasing the smallest eigenvalue given the constraints, the goal is to make it equal to the second smallest, thus resulting in a degeneracy. In case if the problem was not solved, the function produces an exception. In case if the resulting $c$ does not result in a degenerate lowest eigenvalue, the function produces an exception.
 
 \item {\bf Nonconvexity certificate,\hskip 6pt}\underline{\tt  nonconvexity\_certificate.m} 
 	\begin{verbatim}
