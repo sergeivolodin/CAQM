@@ -1,15 +1,27 @@
-function r = is_nonconvex(A, b, c, check_f1_f2)
+function r = is_nonconvex(A, b, c, check_f1_f2, homogeneous_sphere_image)
 %% r = is_nonconvex(A, b, c, check_f1_f2)
 % check if c is a normal vector for a hyperplane
 % touching image F at nonconvex set
 % see Proposition 5.1
 % if check_f1_f2 == 1,
 % then check if u not parallel to v (see Article)
+% if config.homogeneous_sphere_image is true:
+% treat homogeneous non-convexity certificate as one for image of the unit sphere B_1(0) rather than of the whole space
 
 %% initialization
     
     if nargin == 3
         check_f1_f2 = 0;
+        homogeneous_sphere_image = 0;
+    end
+
+    if nargin == 4
+        homogeneous_sphere_image = 0;
+    end
+
+    % homogeneous case -> must have 0 b
+    if homogeneous_sphere_image
+        assert(norm(b) == 0, 'Please supply a homogeneous map with the homogeneous_sphere_image option');
     end
 
     % tolerance for lambda_min = 0
@@ -33,14 +45,15 @@ function r = is_nonconvex(A, b, c, check_f1_f2)
     
     % c * A
     Ac = get_Ac(A, c);
-    
+
     % eigens of c * A
     [q1, q2] = eig(Ac);
     [~, q3] = sort(diag(q2));
     q1 = q1(:, q3);
 
     % require: c * A >= 0
-    if sum(diag(q2) < 0) > 0
+    % sphere image -> can be negative
+    if sum(diag(q2) < 0) > 0 && ~homogeneous_sphere_image
         return
     end
    
@@ -48,10 +61,17 @@ function r = is_nonconvex(A, b, c, check_f1_f2)
  
     % indexes: lambda < eps0
     inde = find(abs(eig(Ac)) < config.c_minus_lambda_min);
-
     % homogeneous case: just checking Rg == n - 2
     % Dropping non-collinearity test
     if norm(b) == 0
+        % special case: checking image of a sphere H, dropping f1/f2 collinearity check
+        if homogeneous_sphere_image
+            eigs = eig(Ac);
+            smallest_eig_multiplicity = sum(abs(eigs - eigs(1)) < config.c_minus_lambda_min);
+            r = smallest_eig_multiplicity >= 2;
+            return;
+        end
+
         r = rank(Ac, config.c_minus_h_rank) == 2;
         return;
     end

@@ -121,3 +121,11 @@ c_plus = get_max_c_plus(A);
 rng(4);
 z_max = get_z_max(A, b, c_plus);
 assert(abs(z_max - 0.0073) < 1e-3);
+
+%% get_c_minus_homog_real_H test (nonconvex)
+rng(10);
+[A, ~] = get_random_f(10, 11);
+ 
+% Run the procedure
+c = get_c_minus_homog_real_H(A);
+assert(abs(norm(c)-0.3912) < 1e-2);

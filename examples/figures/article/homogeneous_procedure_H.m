@@ -46,37 +46,18 @@ function res = is_degenerate(n, m)
 % loading the example 10 from the Article
 [A, b] = get_random_f(n, m, 0);
 
-% tolerance for eigenvalues
-eps = 1e-6;
+% zeroing b
+b = zeros(n, m);
 
 % showing A
 %disp('A:');
 %disp(A);
 
 % obtaining c from the proposed procedure
-% will print some info
-c = homogeneous_real_nonconvexity_certificate(A);
-
-%disp('c:');
-%disp(c');
-
-% obtaining c * A
-Ac = get_Ac(A, c);
-
-% showing the trace and norm of c
-%fprintf('Trace of c*A: %.5f\n', trace(Ac));
-%fprintf('sum(c): %.5f\n', sum(c));
-
-% showing eigenvalues
-%disp('Eigenvalues of c*A:');
-%disp(eig(Ac)');
-%end
-
-eigs = eig(Ac);
-
-% multiplicity of the smallest eigenvalue
-smallest_eig_multiplicity = sum(abs(eigs-eigs(1)) < eps);
-
-% calculating the output
-res = smallest_eig_multiplicity > 1;
+    try
+        get_c_minus_homog_real_H(A);
+        res = 1;
+    catch
+        res = 0;
+    end
 end
