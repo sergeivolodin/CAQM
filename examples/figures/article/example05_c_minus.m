@@ -141,26 +141,31 @@ end
 
 %[LEGH, OBJH, OUTH, OUTM] = legend; % reading handles
 %[hleg, objh] = legend([OUTH; plot_path], OUTM{:}, 'Conn. comp.', 'Location', 'northeast'); % append new plot
-[hleg, objh] = legend;
-hleg.FontSize = 13;
+%[hleg, objh] = legend;
+%hleg.FontSize = 20;
 
-leg_size_hack = [10 10 10 10 10];
-s = 1;
+%set(gca,'linewidth',1.5);
+%ax = gca;
+%ax.FontSize = 16; 
+%set(hleg.BoxFace, 'ColorType','truecoloralpha', 'ColorData',uint8(255*[1;1;1;.5]));
 
-for h = 1:length(objh)
-    if isprop(objh(h), 'FontSize')
-        objh(h).FontSize = hleg.FontSize - 1;
-    end
-    
-    if size(objh(h).Children) == 0
-        continue
-    end
-    child = objh(h).Children(1);
-    if isprop(child, 'MarkerSize')
-        objh(h).Children(1).MarkerSize = leg_size_hack(s);
-        s = s + 1;
-    end
-end
+%leg_size_hack = [10 10 10 10 10];
+%s = 1;
+
+%for h = 1:length(objh)
+%    if isprop(objh(h), 'FontSize')
+%        objh(h).FontSize = hleg.FontSize - 3;
+%    end
+%    
+%    if size(objh(h).Children) == 0
+%        continue
+%    end
+%    child = objh(h).Children(1);
+%    if isprop(child, 'MarkerSize')
+%        objh(h).Children(1).MarkerSize = leg_size_hack(s);
+%        s = s + 1;
+%    end
+%end
 
 % fix view for the article
 view(-22, 5);

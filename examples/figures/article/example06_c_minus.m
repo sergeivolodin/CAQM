@@ -138,29 +138,32 @@ for i = 1:(2 * N)
     end
 end
 
-[LEGH, OBJH, OUTH, OUTM] = legend; % reading handles
-[hleg, objh] = legend([OUTH; plot_path], OUTM{:}, 'CC', 'Location', 'southeast'); % append new plot
+%[LEGH, OBJH, OUTH, OUTM] = legend; % reading handles
+%[hleg, objh] = legend([OUTH; plot_path], OUTM{:}, 'CC', 'Location', 'southeast'); % append new plot
 %[hleg, objh] = legend;
-hleg.FontSize = 13;
+%hleg.FontSize = 13;
 
+%set(gca,'linewidth',1);
+%ax = gca;
+%ax.FontSize = 16; 
 
-leg_size_hack = [10 10 10 10 10];
-s = 1;
+%leg_size_hack = [10 10 10 10 10];
+%s = 1;
 
-for h = 1:length(objh)
-    if isprop(objh(h), 'FontSize')
-        objh(h).FontSize = hleg.FontSize - 1;
-    end
+%for h = 1:length(objh)
+%    if isprop(objh(h), 'FontSize')
+%        objh(h).FontSize = hleg.FontSize - 1;
+%    end
     
-    if size(objh(h).Children) == 0
-        continue
-    end
-    child = objh(h).Children(1);
-    if isprop(child, 'MarkerSize')
-        objh(h).Children(1).MarkerSize = leg_size_hack(s);
-        s = s + 1;
-    end
-end
+%    if size(objh(h).Children) == 0
+%        continue
+%    end
+%    child = objh(h).Children(1);
+%    if isprop(child, 'MarkerSize')
+%        objh(h).Children(1).MarkerSize = leg_size_hack(s);
+%        s = s + 1;
+%    end
+%end
 
 % fix view for the article
 view(3, 55);

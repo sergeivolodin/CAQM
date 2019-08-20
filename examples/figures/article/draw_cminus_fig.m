@@ -47,17 +47,18 @@ function draw_cminus_fig(N, item_size, c_array, z_value, c_ans, c_plus, z_min, z
     set(s, 'FaceColor', [0 0 0], 'FaceAlpha', 0.1);
     set(s, 'EdgeColor', [0 0 0], 'EdgeAlpha', 0.1)
 
-    [legh, objh] = legend([plot_end, plot_begin, plot_dest], {'GD end', 'GD start', 'Glob. minimum'});
-    legh.FontSize = 13;
+% no legend
+%    [legh, objh] = legend([plot_end, plot_begin, plot_dest], {'GD end', 'GD start', 'Glob. minimum'});
+%    legh.FontSize = 13;
      
-    % increasing marker size for legend
-    for i = 1:length(objh)
-        if size(objh(i).Children) == 0
-            continue
-        end
-        child = objh(i).Children(1);
-        if isprop(child, 'MarkerSize')
-            objh(i).Children(1).MarkerSize = 8;
-        end
-    end
+%    % increasing marker size for legend
+%    for i = 1:length(objh)
+%        if size(objh(i).Children) == 0
+%            continue
+%        end
+%        child = objh(i).Children(1);
+%        if isprop(child, 'MarkerSize')
+%            objh(i).Children(1).MarkerSize = 8;
+%        end
+%    end
 end
