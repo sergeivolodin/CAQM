@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    606846,      10691]
-NotebookOptionsPosition[    605224,      10636]
-NotebookOutlinePosition[    605561,      10651]
-CellTagsIndexPosition[    605518,      10648]
+NotebookDataLength[    609390,      10742]
+NotebookOptionsPosition[    607805,      10688]
+NotebookOutlinePosition[    608142,      10703]
+CellTagsIndexPosition[    608099,      10700]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -160,7 +160,7 @@ Cell[BoxData[
   Function[BoxForm`e$, 
    MatrixForm[BoxForm`e$]]]], "Output",
  CellChangeTimes->{3.775316460224166*^9, 3.775316524647558*^9, 
-  3.775846302231958*^9}],
+  3.775846302231958*^9, 3.775848236494053*^9}],
 
 Cell[BoxData[
  TagBox[
@@ -186,7 +186,7 @@ Cell[BoxData[
   Function[BoxForm`e$, 
    MatrixForm[BoxForm`e$]]]], "Output",
  CellChangeTimes->{3.775316460224166*^9, 3.775316524647558*^9, 
-  3.775846302285356*^9}],
+  3.775846302231958*^9, 3.7758482364969997`*^9}],
 
 Cell[BoxData[
  TagBox[
@@ -208,7 +208,7 @@ Cell[BoxData[
   Function[BoxForm`e$, 
    MatrixForm[BoxForm`e$]]]], "Output",
  CellChangeTimes->{3.775316460224166*^9, 3.775316524647558*^9, 
-  3.775846302287427*^9}],
+  3.775846302231958*^9, 3.7758482364993887`*^9}],
 
 Cell[BoxData[
  TagBox[
@@ -231,7 +231,7 @@ Cell[BoxData[
   Function[BoxForm`e$, 
    MatrixForm[BoxForm`e$]]]], "Output",
  CellChangeTimes->{3.775316460224166*^9, 3.775316524647558*^9, 
-  3.775846302291103*^9}]
+  3.775846302231958*^9, 3.7758482365013933`*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -363,18 +363,33 @@ Cell[BoxData[
              ",", 
              RowBox[{"x2", "\[Rule]", 
               FractionBox[
-               TemplateBox[{"1"},
-                "OutputSizeLimit`Skeleton",
-                DisplayFunction->(FrameBox[
-                  
-                  RowBox[{
-                   "\" \[CenterEllipsis]\"", #, "\"\[CenterEllipsis] \""}], 
-                  Background -> GrayLevel[0.75], 
-                  BaseStyle -> {
-                   "Deploy", FontColor -> GrayLevel[1], FontSize -> Smaller, 
+               RowBox[{
+                TemplateBox[{"351"},
+                 "OutputSizeLimit`Skeleton",
+                 DisplayFunction->(FrameBox[
+                   
+                   RowBox[{
+                    "\" \[CenterEllipsis]\"", #, "\"\[CenterEllipsis] \""}], 
+                   Background -> GrayLevel[0.75], 
+                   BaseStyle -> {
+                    "Deploy", FontColor -> GrayLevel[1], FontSize -> Smaller, 
                     ShowStringCharacters -> False}, BaselinePosition -> 
-                  Baseline, ContentPadding -> False, FrameMargins -> 1, 
-                  FrameStyle -> GrayLevel[0.75], RoundingRadius -> 7]& )], 
+                   Baseline, ContentPadding -> False, FrameMargins -> 1, 
+                   FrameStyle -> GrayLevel[0.75], RoundingRadius -> 7]& )], 
+                "+", 
+                TemplateBox[{"1"},
+                 "OutputSizeLimit`Skeleton",
+                 DisplayFunction->(FrameBox[
+                   
+                   RowBox[{
+                    "\" \[CenterEllipsis]\"", #, "\"\[CenterEllipsis] \""}], 
+                   Background -> GrayLevel[0.75], 
+                   BaseStyle -> {
+                    "Deploy", FontColor -> GrayLevel[1], FontSize -> Smaller, 
+                    ShowStringCharacters -> False}, BaselinePosition -> 
+                   Baseline, ContentPadding -> False, FrameMargins -> 1, 
+                   FrameStyle -> GrayLevel[0.75], RoundingRadius -> 7]& )]}], 
+               
                TemplateBox[{"1"},
                 "OutputSizeLimit`Skeleton",
                 DisplayFunction->(FrameBox[
@@ -448,18 +463,49 @@ Cell[BoxData[
               ContentPadding -> False, FrameMargins -> 1, FrameStyle -> 
               GrayLevel[0.75], RoundingRadius -> 7]& )], ",", 
            RowBox[{"{", 
-            TemplateBox[{"1"},
-             "OutputSizeLimit`Skeleton",
-             DisplayFunction->(FrameBox[
-               
-               RowBox[{
-                "\" \[CenterEllipsis]\"", #, "\"\[CenterEllipsis] \""}], 
-               Background -> GrayLevel[0.75], 
-               BaseStyle -> {
-                "Deploy", FontColor -> GrayLevel[1], FontSize -> Smaller, 
-                 ShowStringCharacters -> False}, BaselinePosition -> Baseline,
-                ContentPadding -> False, FrameMargins -> 1, FrameStyle -> 
-               GrayLevel[0.75], RoundingRadius -> 7]& )], "}"}]}], "}"}],
+            RowBox[{
+             RowBox[{"x1", "\[Rule]", 
+              TemplateBox[{"1"},
+               "OutputSizeLimit`Skeleton",
+               DisplayFunction->(FrameBox[
+                 
+                 RowBox[{
+                  "\" \[CenterEllipsis]\"", #, "\"\[CenterEllipsis] \""}], 
+                 Background -> GrayLevel[0.75], 
+                 BaseStyle -> {
+                  "Deploy", FontColor -> GrayLevel[1], FontSize -> Smaller, 
+                   ShowStringCharacters -> False}, BaselinePosition -> 
+                 Baseline, ContentPadding -> False, FrameMargins -> 1, 
+                 FrameStyle -> GrayLevel[0.75], RoundingRadius -> 7]& )]}], 
+             ",", 
+             RowBox[{"x2", "\[Rule]", 
+              TemplateBox[{"1"},
+               "OutputSizeLimit`Skeleton",
+               DisplayFunction->(FrameBox[
+                 
+                 RowBox[{
+                  "\" \[CenterEllipsis]\"", #, "\"\[CenterEllipsis] \""}], 
+                 Background -> GrayLevel[0.75], 
+                 BaseStyle -> {
+                  "Deploy", FontColor -> GrayLevel[1], FontSize -> Smaller, 
+                   ShowStringCharacters -> False}, BaselinePosition -> 
+                 Baseline, ContentPadding -> False, FrameMargins -> 1, 
+                 FrameStyle -> GrayLevel[0.75], RoundingRadius -> 7]& )]}], 
+             ",", 
+             RowBox[{"x3", "\[Rule]", 
+              TemplateBox[{"1"},
+               "OutputSizeLimit`Skeleton",
+               DisplayFunction->(FrameBox[
+                 
+                 RowBox[{
+                  "\" \[CenterEllipsis]\"", #, "\"\[CenterEllipsis] \""}], 
+                 Background -> GrayLevel[0.75], 
+                 BaseStyle -> {
+                  "Deploy", FontColor -> GrayLevel[1], FontSize -> Smaller, 
+                   ShowStringCharacters -> False}, BaselinePosition -> 
+                 Baseline, ContentPadding -> False, FrameMargins -> 1, 
+                 FrameStyle -> GrayLevel[0.75], RoundingRadius -> 7]& )]}]}], 
+            "}"}]}], "}"}],
          Short[#, 5]& ],
         BaseStyle->{Deployed -> False},
         StripOnInput->False]},
@@ -513,7 +559,7 @@ Cell[BoxData[
            Appearance->None,
            
            ButtonFunction:>OutputSizeLimit`ButtonFunction[
-            Identity, 14, 33545644677621933388, 5/2],
+            Identity, 14, 33545657315877010936, 5/2],
            Enabled->True,
            Evaluator->Automatic,
            Method->"Queued"], 
@@ -543,7 +589,7 @@ Cell[BoxData[
            Appearance->None,
            
            ButtonFunction:>OutputSizeLimit`ButtonFunction[
-            Identity, 14, 33545644677621933388, 5 2],
+            Identity, 14, 33545657315877010936, 5 2],
            Enabled->True,
            Evaluator->Automatic,
            Method->"Queued"], 
@@ -573,7 +619,7 @@ Cell[BoxData[
            Appearance->None,
            
            ButtonFunction:>OutputSizeLimit`ButtonFunction[
-            Identity, 14, 33545644677621933388, Infinity],
+            Identity, 14, 33545657315877010936, Infinity],
            Enabled->True,
            Evaluator->Automatic,
            Method->"Queued"], 
@@ -592,7 +638,8 @@ Cell[BoxData[
              StyleBox[
               DynamicBox[ToBoxes[
                 FEPrivate`FrontEndResource["FEStrings", "sizeChangeLimit"], 
-                StandardForm]],
+                StandardForm],
+               ImageSizeCache->{98., {0., 9.}}],
               StripOnInput->False,
               DynamicUpdating->True], "SuggestionsBarControlActive",
              StripOnInput->False]}, Dynamic[
@@ -643,11 +690,8 @@ Cell[BoxData[
   Out[14]]], "Output",
  CellChangeTimes->{
   3.775316415606498*^9, {3.775316519802334*^9, 3.775316542434504*^9}, 
-   3.7758463180393753`*^9}]
+   3.7758463180393753`*^9, 3.775848258002902*^9}]
 }, Open  ]],
-
-Cell[BoxData[""], "Input",
- CellChangeTimes->{{3.7753049037401047`*^9, 3.7753049044648848`*^9}}],
 
 Cell[CellGroupData[{
 
@@ -691,7 +735,9 @@ Cell[BoxData[
              SuperscriptBox["Y1", "7"]}], "+", 
             RowBox[{"153541756463195685994560", " ", 
              SuperscriptBox["Y1", "8"]}], "+", 
-            TemplateBox[{"6118"},
+            RowBox[{"76983770751520392381312", " ", 
+             SuperscriptBox["Y1", "9"]}], "+", 
+            TemplateBox[{"6117"},
              "OutputSizeLimit`Skeleton",
              DisplayFunction->(FrameBox[
                
@@ -771,7 +817,7 @@ Cell[BoxData[
            Appearance->None,
            
            ButtonFunction:>OutputSizeLimit`ButtonFunction[
-            Identity, 16, 33545644677621933388, 5/2],
+            Identity, 16, 33545657315877010936, 5/2],
            Enabled->True,
            Evaluator->Automatic,
            Method->"Queued"], 
@@ -801,7 +847,7 @@ Cell[BoxData[
            Appearance->None,
            
            ButtonFunction:>OutputSizeLimit`ButtonFunction[
-            Identity, 16, 33545644677621933388, 5 2],
+            Identity, 16, 33545657315877010936, 5 2],
            Enabled->True,
            Evaluator->Automatic,
            Method->"Queued"], 
@@ -831,7 +877,7 @@ Cell[BoxData[
            Appearance->None,
            
            ButtonFunction:>OutputSizeLimit`ButtonFunction[
-            Identity, 16, 33545644677621933388, Infinity],
+            Identity, 16, 33545657315877010936, Infinity],
            Enabled->True,
            Evaluator->Automatic,
            Method->"Queued"], 
@@ -902,7 +948,7 @@ Cell[BoxData[
  CellChangeTimes->{{3.775304889991634*^9, 3.775304934396212*^9}, 
    3.775304968964828*^9, {3.7753050414820747`*^9, 3.7753050699429073`*^9}, 
    3.7753104959778337`*^9, 3.7753108270218277`*^9, 3.775316572327805*^9, 
-   3.775846394883689*^9}]
+   3.775846394883689*^9, 3.775848308614655*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1769,8 +1815,8 @@ xgbk+5DzJq+afiY+19xHuCpXy7+H0dB4qfSj7Gdjb+ZbJ17LdeRt8k3kvvK3
   Ticks->{Automatic, Automatic},
   TicksStyle->Directive[
     GrayLevel[0], 20]]], "Output",
- CellChangeTimes->{3.775305968846643*^9, 
-  3.7753166101581297`*^9},ImageCache->GraphicsData["CompressedBitmap", "\<\
+ CellChangeTimes->{3.775305968846643*^9, 3.7753166101581297`*^9, 
+  3.775848318634388*^9},ImageCache->GraphicsData["CompressedBitmap", "\<\
 eJztfQd0lUW39klOeqEJgiAoIiBFUEC66EUU/ATFgoqoiAJSRBELig0E+RBB
 ehMpUkWqFIFQAiQBQkijhIReAiQgUgRCSOC5+5l35uScw5sQuN51/3+tj7Vy
 Et7y7D0zu82emX3adPq4W5denT7u/k6ne1v26dS7W/d3Prr3qQ/6yCWnj8Ph
@@ -5994,8 +6040,8 @@ ZBWrWcNa1rGeDWzk/zFVJQ0=
  CellChangeTimes->{
   3.775307151061275*^9, 3.77530720223042*^9, {3.775307233698106*^9, 
    3.775307257895258*^9}, {3.775310500007515*^9, 3.7753105035260344`*^9}, 
-   3.7753108373326263`*^9, 3.775316662045014*^9, 
-   3.7758464098291483`*^9},ImageCache->GraphicsData["CompressedBitmap", "\<\
+   3.7753108373326263`*^9, 3.775316662045014*^9, 3.7758464098291483`*^9, 
+   3.775848332148181*^9},ImageCache->GraphicsData["CompressedBitmap", "\<\
 eJztfQd4VdXy7ya9EKp0aYICIgiKICogilgQ9YpY7vUKKBZEQbAXqgiIFOlI
 kyYIAiJI772E3pJACi2BEEjvycm89Vt7Zp99wjkn4b7/9/7/9713vi+B7LP3
 zKxZa82avrv2+uyDdz/u9Vmfd3rVe3pgr08+6PPOp/U69x+oLvmWMYwyH6if
@@ -9647,7 +9693,8 @@ pcSdzJDl2In16AV4MZMY0SzJsdeSK/OpkG/P/y9GoTAO
   3.775309128772835*^9, 3.775309461663398*^9, 3.775311076076192*^9, {
    3.775311119166135*^9, 3.775311154320973*^9}, 3.7753116552691813`*^9, {
    3.7753167122731028`*^9, 3.7753167192103453`*^9}, 3.775317944682301*^9, 
-   3.775846424724957*^9},ImageCache->GraphicsData["CompressedBitmap", "\<\
+   3.775846424724957*^9, 
+   3.7758483399835*^9},ImageCache->GraphicsData["CompressedBitmap", "\<\
 eJzlWwtwVcUZPuTe3CQ3IQECSHmUgBRQXqK8H6KOIiIIAlocKpUiCCiCFG0B
 5WVRKAQEBWuZOj4qjIxYtdCxSqVQUCxVEC0YaUEBrS1Whkd4SrZ3/937/Xs2
 e07OTa3tTDPDyXL2+77//3f37P5nz2bgqKnjxkwcNXX86FEl104ZNXnc+NE/
@@ -10158,7 +10205,8 @@ NKUZzWlBS1oRTGva0JZ2tKcDHelEZ7rQlW6E0J0e9KQXvcP+/9P9B5h7Hh0=
    3.775312256044198*^9, 3.77531227287197*^9}, 3.77531232407515*^9, {
    3.775312371481782*^9, 3.775312387722988*^9}, 3.775312454042943*^9, 
    3.775312550838414*^9, 3.775312970910349*^9, 3.775317868247123*^9, 
-   3.775317927953073*^9, 3.7753180827345552`*^9, 3.7758464703844757`*^9}]
+   3.775317927953073*^9, 3.7753180827345552`*^9, 3.7758464703844757`*^9, 
+   3.775848403269432*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -10168,7 +10216,7 @@ Cell[BoxData[
   RowBox[{"(*", " ", 
    RowBox[{"plotting", " ", "with", " ", "filling"}], " ", "*)"}], 
   "\[IndentingNewLine]", 
-  RowBox[{"poly", "=", 
+  RowBox[{
    RowBox[{
     RowBox[{"ListPolarPlot", "[", 
      RowBox[{
@@ -10237,8 +10285,9 @@ Cell[BoxData[
               
               ImageSize->
                Dynamic[{
-                Automatic, 1.35 CurrentValue["FontCapHeight"]/
-                 AbsoluteCurrentValue[Magnification]}],
+                Automatic, 
+                 1.35 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                  Magnification])}],
               PlotRangePadding->None], "\[InvisibleSpace]"}],
             "RGBColor[0.368417, 0.506779, 0.709798]"],
            Appearance->None,
@@ -10288,8 +10337,9 @@ Cell[BoxData[
                  
                  ImageSize->
                   Dynamic[{
-                   Automatic, 1.35 CurrentValue["FontCapHeight"]/
-                    AbsoluteCurrentValue[Magnification]}],
+                   Automatic, 
+                    1.35 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}],
                  PlotRangePadding->None], "\[InvisibleSpace]"}],
                "RGBColor[0.368417, 0.506779, 0.709798]"],
               Appearance->None,
@@ -10317,8 +10367,8 @@ Cell[BoxData[
              RGBColor[0.368417, 0.506779, 0.709798],
              Editable->False,
              Selectable->False]}], "}"}], "]"}], ",", 
-         RowBox[{"Polygon", "@", "#1"}]}], "}"}], "&"}], ")"}], "\n", 
-     "\n"}]}]}]}]], "Input",
+         RowBox[{"Polygon", "@", "#1"}]}], "}"}], "&"}], ")"}]}]}], "\n", 
+   "\n"}]}]], "Input",
  CellChangeTimes->{{3.775846647269278*^9, 3.775846647275526*^9}, {
   3.7758467388844423`*^9, 3.7758467908026114`*^9}, {3.775846855810163*^9, 
   3.775846878800991*^9}, {3.7758469778448677`*^9, 3.775846979316206*^9}, {
@@ -10326,7 +10376,8 @@ Cell[BoxData[
   3.7758471610786324`*^9}, {3.775847427039762*^9, 3.775847479651967*^9}, {
   3.775847543955578*^9, 3.775847599675263*^9}, {3.775847635087454*^9, 
   3.775847692139966*^9}, {3.775847726622123*^9, 3.7758477671121483`*^9}, {
-  3.775847857547615*^9, 3.775847865394661*^9}}],
+  3.775847857547615*^9, 3.775847865394661*^9}, {3.775848416698538*^9, 
+  3.775848417013064*^9}}],
 
 Cell[BoxData[
  GraphicsBox[{{{}, {}}, {}, {{}, GraphicsComplexBox[CompressedData["
@@ -10631,7 +10682,8 @@ NKUZzWlBS1oRTGva0JZ2tKcDHelEZ7rQlW6E0J0e9KQXvcP+/9P9B5h7Hh0=
  CellChangeTimes->{{3.775847455125901*^9, 3.77584746390511*^9}, {
    3.775847549209854*^9, 3.775847569495009*^9}, 3.775847600385936*^9, {
    3.7758476611933537`*^9, 3.775847692890417*^9}, {3.775847730846867*^9, 
-   3.77584776760078*^9}, 3.775847869395335*^9}]
+   3.77584776760078*^9}, 3.775847869395335*^9, {3.775848407300251*^9, 
+   3.7758484218072023`*^9}}]
 }, Open  ]]
 },
 WindowSize->{1366, 747},
@@ -10652,46 +10704,45 @@ CellTagsIndex->{}
 Notebook[{
 Cell[CellGroupData[{
 Cell[580, 22, 3963, 118, 341, "Input"],
-Cell[4546, 142, 706, 20, 74, "Output"],
-Cell[5255, 164, 794, 24, 74, "Output"],
-Cell[6052, 190, 706, 20, 74, "Output"],
-Cell[6761, 212, 728, 21, 74, "Output"]
+Cell[4546, 142, 728, 20, 74, "Output"],
+Cell[5277, 164, 818, 24, 74, "Output"],
+Cell[6098, 190, 730, 20, 74, "Output"],
+Cell[6831, 212, 752, 21, 74, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[7526, 238, 1448, 34, 77, "Input"],
-Cell[8977, 274, 15962, 371, 203, "Output"]
-}, Open  ]],
-Cell[24954, 648, 96, 1, 32, "Input"],
-Cell[CellGroupData[{
-Cell[25075, 653, 593, 14, 55, "Input"],
-Cell[25671, 669, 9480, 235, 181, "Output"]
+Cell[7620, 238, 1448, 34, 77, "Input"],
+Cell[9071, 274, 18201, 418, 259, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[35188, 909, 3130, 77, 187, "Input"],
-Cell[38321, 988, 61858, 1041, 385, 46157, 782, "CachedBoxData", "BoxData", \
+Cell[27309, 697, 593, 14, 55, "Input"],
+Cell[27905, 713, 9603, 237, 181, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[37545, 955, 3130, 77, 165, "Input"],
+Cell[40678, 1034, 61880, 1041, 385, 46157, 782, "CachedBoxData", "BoxData", \
 "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[100216, 2034, 3362, 85, 187, "Input"],
-Cell[103581, 2121, 253901, 4253, 393, 230675, 3871, "CachedBoxData", \
+Cell[102595, 2080, 3362, 85, 165, "Input"],
+Cell[105960, 2167, 253923, 4253, 393, 230675, 3871, "CachedBoxData", \
 "BoxData", "Output"]
 }, Open  ]],
-Cell[357497, 6377, 820, 21, 77, "Input"],
-Cell[358320, 6400, 1608, 36, 99, "Input"],
+Cell[359898, 6423, 820, 21, 77, "Input"],
+Cell[360721, 6446, 1608, 36, 99, "Input"],
 Cell[CellGroupData[{
-Cell[359953, 6440, 470, 7, 32, "Input"],
-Cell[360426, 6449, 199215, 3278, 238, 194237, 3195, "CachedBoxData", \
+Cell[362354, 6486, 470, 7, 32, "Input"],
+Cell[362827, 6495, 199239, 3279, 238, 194237, 3195, "CachedBoxData", \
 "BoxData", "Output"]
 }, Open  ]],
-Cell[559656, 9730, 1705, 47, 143, "Input"],
-Cell[561364, 9779, 690, 19, 77, "Input"],
+Cell[562081, 9777, 1705, 47, 143, "Input"],
+Cell[563789, 9826, 690, 19, 77, "Input"],
 Cell[CellGroupData[{
-Cell[562079, 9802, 2180, 52, 99, "Input"],
-Cell[564262, 9856, 17078, 304, 422, "Output"]
+Cell[564504, 9849, 2180, 52, 99, "Input"],
+Cell[566687, 9903, 17104, 305, 422, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[581377, 10165, 6899, 163, 169, "Input"],
-Cell[588279, 10330, 16929, 303, 422, "Output"]
+Cell[583828, 10213, 6977, 166, 169, "Input"],
+Cell[590808, 10381, 16981, 304, 422, "Output"]
 }, Open  ]]
 }
 ]
