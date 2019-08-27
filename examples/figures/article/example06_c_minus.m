@@ -135,8 +135,8 @@ for i = 1:(2 * N)
     end
 
     % plotting path
-    plot_path = line(v(1, :), v(2, :), v(3, :), 'Color', 'green', 'LineWidth', 2);
-    plot_path.Color(4) = 0.8;
+    plot_path = line(v(1, :), v(2, :), v(3, :), 'Color', [0 0.8 0], 'LineWidth', 2);
+    plot_path.Color(4) = 0.95;
     
     if mod(i, 2) == 0
         text(mean(v(1, :)) - 0.5, mean(v(2, :)) + 0.9, mean(v(3, :)), sprintf('CC %d', i / 2), 'fontsize', 20)
