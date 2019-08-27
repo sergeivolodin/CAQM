@@ -34,17 +34,44 @@ function draw_cminus_fig(N, item_size, c_array, z_value, c_ans, c_plus, z_min, z
 
 %        plot_gd = scatter3(v(1, 2:end-1), v(2, 2:end-1), v(3, 2:end-1), 36, ...
 %            c_item_color(:, 2:end-1)', 'd');
+        %plot_end = scatter3(v(1, end), v(2, end), v(3, end), 100, [1 0 0], 's','LineWidth',1,'MarkerFaceColor',[1 0 0]);
+        %plot_end.MarkerEdgeAlpha = 0.7;
+        plot_begin = scatter3(v(1, 1), v(2, 1), v(3, 1), 300, [1 0.5 0], '>', 'LineWidth', 2);
+        plot_begin.MarkerEdgeAlpha = 0.6;
+        %plot_begin.MarkerFaceAlpha = 0.1;
+    end
+    
+    for i = 1:N
+        s = item_size(i);
+        c_item_array = [];
+
+        if s == 1
+            c_item_array(:, 1) = c_array(i, :, 1)';
+            c_item_array(:, 2) = c_array(i, :, 1)';
+        else
+            c_item_array(:, :) = c_array(i, :, 1:s);
+        end
+
+        v = R * c_item_array;
+
+        for j = 1:size(v, 2)
+            v(:, j) = v(:, j) / norm(v(:, j));
+        end
+
+%        plot_gd = scatter3(v(1, 2:end-1), v(2, 2:end-1), v(3, 2:end-1), 36, ...
+%            c_item_color(:, 2:end-1)', 'd');
         plot_end = scatter3(v(1, end), v(2, end), v(3, end), 100, [1 0 0], 's','LineWidth',1,'MarkerFaceColor',[1 0 0]);
-        plot_begin = scatter3(v(1, 1), v(2, 1), v(3, 1), 300, [1 0.5 0], '>', 'LineWidth',2);
+        plot_end.MarkerEdgeAlpha = 1;
     end
 
     v = R * c_ans;
     v = v / norm(v);
     plot_dest = scatter3(v(1), v(2), v(3), 600, [0 0 1], 'p', 'LineWidth', 3);
+    plot_dest.MarkerEdgeAlpha = 0.7;
 
-    [Sx, Sy, Sz] = sphere(32);
+    [Sx, Sy, Sz] = sphere(50);
     s = surf(Sx,Sy,Sz);
-    set(s, 'FaceColor', [0 0 0], 'FaceAlpha', 0.1);
+    set(s, 'FaceColor', [0 0 0], 'FaceAlpha', 0.03);
     set(s, 'EdgeColor', [0 0 0], 'EdgeAlpha', 0.1)
 
 % no legend

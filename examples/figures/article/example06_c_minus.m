@@ -109,6 +109,10 @@ save('example06_c_minus.mat', 'N', 'item_size', 'c_array', 'z_value', 'c_ans', '
 %% plot the results
 % draw c_minus (gradient)
 hold on;
+
+% no opengl -> vector output
+set(gcf,'renderer','Painters');
+
 load('example06_c_minus.mat');
 draw_cminus_fig(N, item_size, c_array, z_value, c_ans, c_plus, z_min, z_max)
 
@@ -132,6 +136,7 @@ for i = 1:(2 * N)
 
     % plotting path
     plot_path = line(v(1, :), v(2, :), v(3, :), 'Color', 'green', 'LineWidth', 2);
+    plot_path.Color(4) = 0.8;
     
     if mod(i, 2) == 0
         text(mean(v(1, :)) - 0.5, mean(v(2, :)) + 0.9, mean(v(3, :)), sprintf('CC %d', i / 2), 'fontsize', 20)
