@@ -5,7 +5,7 @@ Code for various tasks for quadratic maps.
 See the paper <i>Geometry of quadratic maps via convex relaxation, Anatoly Dymarsky, Elena Gryazina, Sergei Volodin, Boris Polyak, 2018</i>, <a href="https://arxiv.org/abs/1810.00896">arXiv:1810.00896</a>
 
 ## Prerequisites
-* MATLAB 9.6 (2019a) with Parallel Computing toolbox
+* MATLAB (tested with 9.6-2019a) with Parallel Computing toolbox
 * <a href="http://cvxr.com/cvx/download/">CVX</a>. Tested with `Version 2.1, Build 1127 (95903bf)`
 * Tested on Linux (Debian 10.1) amd64 kernel `4.19.0-6-amd64`, Java version `1.8.0_181`
 * Mathematica 12 for semi-analytical tests and figures 4, 7
