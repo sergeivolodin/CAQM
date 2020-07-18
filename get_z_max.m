@@ -210,6 +210,9 @@ function z_max = get_z_max(A, b, c_plus, z_max_guess, k, DEBUG)
         h = waitbar(0, 'Gradient descent');
     end
 
+    global c_array_export;
+    c_array_export = c_array;
+    
 %% gradient descent
     processed = 0;
 
