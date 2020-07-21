@@ -26,9 +26,10 @@ function [time, found_c, z_max] = measure_performance(n, m, k)
     global c_array_export;
     [A, b] = get_random_f(n, m);
     tic
-        c_plus = get_max_c_plus(A);
-        z_max_guess = 10 * trace(get_Ac(A, c_plus));
-        z_max = get_z_max(A, b, c_plus, z_max_guess, k, 1);
+        
+        %c_plus = get_max_c_plus(A);
+        %z_max_guess = 10 * trace(get_Ac(A, c_plus));
+        %z_max = get_z_max(A, b, c_plus, z_max_guess, k, 1);
     time = toc;
 
     found_c = 0;
