@@ -1,8 +1,8 @@
 clear all;
 
 nmin = 4;
-nmax = 20;
-repetitions = 10;
+nmax = 50;
+repetitions = 3;
 k = 100;
 L = length(nmin:nmax);
 results = zeros(L, repetitions, 3);
