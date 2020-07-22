@@ -1,14 +1,15 @@
 clear all;
 
 nmin = 4;
-nmax = 50;
+nmax = 500;
 repetitions = 3;
 k = 100;
+howmuch = 100;
 L = length(nmin:nmax);
 results = zeros(L, repetitions, 3);
 
 i = 1;
-for n = nmin:nmax
+for n = round(linspace(nmin, nmax, howmuch))
     for j = 1:repetitions
         if results(i, j, 1) ~= 0
             fprintf("n=m=%d rep=%d\n", n, j);
@@ -19,30 +20,45 @@ for n = nmin:nmax
         [time, found_c, z_max] = measure_performance(n, n, k);
         results(i, j, :) = [time, found_c, z_max];
         
-        fprintf("n=m=%d rep=%d time=%.2f found_c=%d\n\n", n, j, time, found_c);
+        fprintf("n=m=%d rep=%d time=%.10f found_c=%d\n\n", n, j, time, found_c);
     end
     i = i + 1;
 end
 
-save('plot_performance', 'nmin', 'nmax', 'repetitions', 'k', 'L', 'results');
+save('plot_performance', 'nmin', 'nmax', 'repetitions', 'k', 'L', 'results', 'howmuch');
 
-function [time, found_c, z_max] = measure_performance(n, m, k)
+function found_c = count_c_minus()
     global c_array_export;
-    [A, b] = get_random_f(n, m);
-    tic
-        c_plus = get_max_c_plus(A);
-        z_max_guess = 10 * trace(get_Ac(A, c_plus));
-        %z_max = get_z_max(A, b, c_plus, z_max_guess, k, 1);
-        z_max = 0;
-        get_c_array(A, b, c_plus, z_max_guess, k);
-    time = toc;
-
     found_c = 0;
+    k = size(c_array_export, 2);
     for i=1:k
         if norm(c_array_export(:, i))
             found_c = found_c + 1;
         end
     end
+end
+
+function [time, found_c, z_max] = measure_performance(n, m, k)
+    [A, b] = get_random_f(n, m);
+    tic
+    
+        %z_max = get_z_max(A, b, c_plus, z_max_guess, k, 1);
+        z_max = 0;
+        while 1
+            a_ = -10;
+            b_ = 2;
+            c_plus = get_c_plus(A);
+            
+            z_max_guess = 10 ^ (rand() * (b_ - a_) + a_); %10 * trace(get_Ac(A, c_plus));
+            fprintf("z_max_guess=%.10f\n", z_max_guess);
+            get_c_array(A, b, c_plus, z_max_guess, k, 1);
+            if count_c_minus() > 0
+                break
+            end
+            z_max = z_max_guess;
+        end
+    time = toc;
+    found_c = count_c_minus();
 end
 
 function c_array = get_c_array(A, b, c_plus, z_max_guess, k, DEBUG)
