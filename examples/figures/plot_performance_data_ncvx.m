@@ -5,7 +5,8 @@ nmax = 100;
 repetitions = 3;
 k = 100;
 howmuch = 10;
-L = length(nmin:nmax);
+ns = round(linspace(nmin, nmax, howmuch));
+L = length(ns);
 results = zeros(L, repetitions, 4);
 
 i = 1;
@@ -25,7 +26,7 @@ for n = round(linspace(nmin, nmax, howmuch))
     i = i + 1;
 end
 
-save('plot_performance', 'nmin', 'nmax', 'repetitions', 'k', 'L', 'results', 'howmuch');
+save('plot_performance', 'nmin', 'nmax', 'repetitions', 'k', 'L', 'results', 'howmuch', 'ns');
 
 function found_c = count_c_minus()
     global c_array_export;

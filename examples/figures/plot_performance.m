@@ -5,7 +5,7 @@ figure
 hold on;
 for i=1:repetitions
     s = round(linspace(nmin, nmax, howmuch))
-    s = s(1:25)
+    %s = s(1:25)
     l = size(s, 2)
     plot(s, log10(results(1:l, i, 1)))
 end
