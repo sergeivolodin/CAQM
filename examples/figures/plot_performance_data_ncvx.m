@@ -1,12 +1,12 @@
 clear all;
 
 nmin = 4;
-nmax = 500;
+nmax = 100;
 repetitions = 3;
 k = 100;
-howmuch = 100;
+howmuch = 10;
 L = length(nmin:nmax);
-results = zeros(L, repetitions, 3);
+results = zeros(L, repetitions, 4);
 
 i = 1;
 for n = round(linspace(nmin, nmax, howmuch))
@@ -17,10 +17,10 @@ for n = round(linspace(nmin, nmax, howmuch))
             fprintf("Skipping");
             continue
         end
-        [time, found_c, z_max] = measure_performance(n, n, k);
-        results(i, j, :) = [time, found_c, z_max];
+        [time, found_c, z_max, attempts] = measure_performance(n, n, k);
+        results(i, j, :) = [time, found_c, z_max, attempts];
         
-        fprintf("n=m=%d rep=%d time=%.10f found_c=%d\n\n", n, j, time, found_c);
+        fprintf("n=m=%d rep=%d time=%.10f found_c=%d attempts=%d\n\n", n, j, time, found_c, attempts);
     end
     i = i + 1;
 end
@@ -38,12 +38,13 @@ function found_c = count_c_minus()
     end
 end
 
-function [time, found_c, z_max] = measure_performance(n, m, k)
+function [time, found_c, z_max, attempts] = measure_performance(n, m, k)
     [A, b] = get_random_f(n, m);
     tic
     
         %z_max = get_z_max(A, b, c_plus, z_max_guess, k, 1);
         z_max = 0;
+        attempts = 0;
         while 1
             a_ = -10;
             b_ = 2;
@@ -56,6 +57,7 @@ function [time, found_c, z_max] = measure_performance(n, m, k)
                 break
             end
             z_max = z_max_guess;
+            attempts = attempts + 1;
         end
     time = toc;
     found_c = count_c_minus();
