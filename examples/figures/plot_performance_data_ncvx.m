@@ -2,9 +2,9 @@ clear all;
 
 nmin = 4;
 nmax = 100;
-repetitions = 3;
+repetitions = 5;
 k = 100;
-howmuch = 10;
+howmuch = 30;
 ns = round(linspace(nmin, nmax, howmuch));
 L = length(ns);
 results = zeros(L, repetitions, 4);
@@ -47,7 +47,7 @@ function [time, found_c, z_max, attempts] = measure_performance(n, m, k)
         z_max = 0;
         attempts = 0;
         while 1
-            a_ = -10;
+            a_ = -11;
             b_ = 2;
             c_plus = get_c_plus(A);
             

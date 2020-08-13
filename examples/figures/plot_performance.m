@@ -40,7 +40,7 @@ hold off;
 figure
 hold on;
 for i=1:repetitions
-    plot(ns, log10(results(:, i, 1) / (1 + results(:, i, 4))))
+    plot(ns, log10((results(:, i, 1) / (1 + results(:, i, 4)))))
 end
 ylabel('log10(mean attempt time)')
 xlabel('dimension');
