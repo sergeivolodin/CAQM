@@ -40,6 +40,7 @@ function found_c = count_c_minus()
 end
 
 function [time, found_c, z_max, attempts] = measure_performance(n, m, k)
+    % change at every iteration?
     [A, b] = get_random_f(n, m);
     tic
     

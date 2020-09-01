@@ -45,3 +45,5 @@ end
 ylabel('log10(mean attempt time)')
 xlabel('dimension');
 hold off;
+
+plot(log10(ns), log10(median(results(:, :, 1) ./ (1 + results(:, :, 4)), 2)))
